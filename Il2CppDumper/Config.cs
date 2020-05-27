@@ -10,4 +10,7 @@
         public bool DumpMethodOffset { get; set; } = true;
         public bool DumpTypeDefIndex { get; set; } = true;
         public bool GenerateDummyDll { get; set; } = true;
-  
+        public bool GenerateStruct { get; set; } = true;
+        public bool DummyDllAddToken { get; set; } = true;
+        public bool RequireAnyKey { get; set; } = true;
+ 
