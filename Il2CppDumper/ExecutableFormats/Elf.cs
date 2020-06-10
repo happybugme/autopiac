@@ -10,4 +10,13 @@ namespace Il2CppDumper
     {
         private Elf32_Ehdr elfHeader;
         private Elf32_Phdr[] programSegment;
-        private Elf32_Dyn[] dynamic
+        private Elf32_Dyn[] dynamicSection;
+        private Elf32_Sym[] symbolTable;
+        private Elf32_Shdr[] sectionTable;
+        private Elf32_Phdr pt_dynamic;
+
+        /*
+        * LDR R1, [X]
+        * ADD R0, X, X
+        * ADD R2, X, X
+ 
