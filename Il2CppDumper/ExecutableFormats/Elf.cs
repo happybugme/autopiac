@@ -19,4 +19,6 @@ namespace Il2CppDumper
         * LDR R1, [X]
         * ADD R0, X, X
         * ADD R2, X, X
- 
+        */
+        private static readonly string ARMFeatureBytes = "? 0x10 ? 0xE7 ? 0x00 ? 0xE0 ? 0x20 ? 0xE0";
+        private static readonly string X86FeatureBytes = "? 0x10 ? 0xE7 ? 0x0
