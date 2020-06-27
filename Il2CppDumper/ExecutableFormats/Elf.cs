@@ -31,4 +31,7 @@ namespace Il2CppDumper
 
         protected override void Load()
         {
-    
+            elfHeader = ReadClass<Elf32_Ehdr>(0);
+            programSegment = ReadClassArray<Elf32_Phdr>(elfHeader.e_phoff, elfHeader.e_phnum);
+            if (IsDumped)
+            {
