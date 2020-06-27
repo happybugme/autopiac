@@ -35,3 +35,7 @@ namespace Il2CppDumper
             programSegment = ReadClassArray<Elf32_Phdr>(elfHeader.e_phoff, elfHeader.e_phnum);
             if (IsDumped)
             {
+                FixedProgramSegment();
+            }
+            pt_dynamic = programSegment.First(x => x.p_type == PT_DYNAMIC);
+            dynamicSection = ReadClassArray<Elf32_Dyn>(pt_dynamic.
