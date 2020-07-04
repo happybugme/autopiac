@@ -45,4 +45,9 @@ namespace Il2CppDumper
             }
             ReadSymbol();
             if (!IsDumped)
-         
+            {
+                RelocationProcessing();
+                if (CheckProtection())
+                {
+                    Console.WriteLine("ERROR: This file may be protected.");
+                
