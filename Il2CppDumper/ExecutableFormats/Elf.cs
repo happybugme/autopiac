@@ -96,4 +96,6 @@ namespace Il2CppDumper
         public override bool Search()
         {
             var _GLOBAL_OFFSET_TABLE_ = dynamicSection.First(x => x.d_tag == DT_PLTGOT).d_un;
-   
+            var execs = programSegment.Where(x => x.p_type == PT_LOAD && (x.p_flags & PF_X) == 1).ToArray();
+            var resultList = new List<int>();
+            var featureBytes = elfHead
