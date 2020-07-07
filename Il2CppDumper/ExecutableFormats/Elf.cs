@@ -59,4 +59,6 @@ namespace Il2CppDumper
             try
             {
                 var names = new List<string>();
-                sectionTab
+                sectionTable = ReadClassArray<Elf32_Shdr>(elfHeader.e_shoff, elfHeader.e_shnum);
+                var shstrndx = sectionTable[elfHeader.e_shstrndx].sh_offset;
+                foreach 
