@@ -79,4 +79,10 @@ namespace Il2CppDumper
 
         public override ulong MapVATR(ulong addr)
         {
-            var phdr = programSegment.First(x => addr >= x.p_vaddr 
+            var phdr = programSegment.First(x => addr >= x.p_vaddr && addr <= x.p_vaddr + x.p_memsz);
+            return addr - phdr.p_vaddr + phdr.p_offset;
+        }
+
+        public override ulong MapRTVA(ulong addr)
+        {
+            var phdr = programSegme
