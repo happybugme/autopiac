@@ -50,4 +50,13 @@ namespace Il2CppDumper
                 if (CheckProtection())
                 {
                     Console.WriteLine("ERROR: This file may be protected.");
-                
+                }
+            }
+        }
+
+        protected override bool CheckSection()
+        {
+            try
+            {
+                var names = new List<string>();
+                sectionTab
