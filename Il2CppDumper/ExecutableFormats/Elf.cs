@@ -90,4 +90,10 @@ namespace Il2CppDumper
             {
                 return 0;
             }
-         
+            return addr - phdr.p_offset + phdr.p_vaddr;
+        }
+
+        public override bool Search()
+        {
+            var _GLOBAL_OFFSET_TABLE_ = dynamicSection.First(x => x.d_tag == DT_PLTGOT).d_un;
+   
