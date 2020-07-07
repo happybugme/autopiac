@@ -72,4 +72,11 @@ namespace Il2CppDumper
                 return true;
             }
             catch
-       
+            {
+                return false;
+            }
+        }
+
+        public override ulong MapVATR(ulong addr)
+        {
+            var phdr = programSegment.First(x => addr >= x.p_vaddr 
