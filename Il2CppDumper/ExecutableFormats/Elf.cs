@@ -106,4 +106,10 @@ namespace Il2CppDumper
                 foreach (var temp in buff.Search(featureBytes))
                 {
                     var bin = buff[temp + 2].HexToBin();
-   
+                    if (bin[3] == '1') //LDR
+                    {
+                        resultList.Add(temp);
+                    }
+                }
+            }
+     
