@@ -102,4 +102,8 @@ namespace Il2CppDumper
             foreach (var exec in execs)
             {
                 Position = exec.p_offset;
-                var buff = ReadB
+                var buff = ReadBytes((int)exec.p_filesz);
+                foreach (var temp in buff.Search(featureBytes))
+                {
+                    var bin = buff[temp + 2].HexToBin();
+   
