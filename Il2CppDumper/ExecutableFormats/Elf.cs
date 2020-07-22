@@ -117,4 +117,9 @@ namespace Il2CppDumper
                 uint codeRegistration = 0;
                 uint metadataRegistration = 0;
                 var result = (uint)resultList[0];
-     
+                if (Version < 24)
+                {
+                    if (elfHeader.e_machine == EM_ARM)
+                    {
+                        Position = result + 0x14;
+                     
