@@ -112,4 +112,9 @@ namespace Il2CppDumper
                     }
                 }
             }
+            if (resultList.Count == 1)
+            {
+                uint codeRegistration = 0;
+                uint metadataRegistration = 0;
+                var result = (uint)resultList[0];
      
