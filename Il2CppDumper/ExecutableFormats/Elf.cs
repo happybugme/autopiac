@@ -125,4 +125,9 @@ namespace Il2CppDumper
                         codeRegistration = ReadUInt32() + _GLOBAL_OFFSET_TABLE_;
                         Position = result + 0x18;
                         var ptr = ReadUInt32() + _GLOBAL_OFFSET_TABLE_;
-                 
+                        Position = MapVATR(ptr);
+                        metadataRegistration = ReadUInt32();
+                    }
+                }
+                else if (Version >= 24)
+           
