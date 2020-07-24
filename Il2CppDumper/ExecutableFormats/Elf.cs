@@ -122,4 +122,7 @@ namespace Il2CppDumper
                     if (elfHeader.e_machine == EM_ARM)
                     {
                         Position = result + 0x14;
-                     
+                        codeRegistration = ReadUInt32() + _GLOBAL_OFFSET_TABLE_;
+                        Position = result + 0x18;
+                        var ptr = ReadUInt32() + _GLOBAL_OFFSET_TABLE_;
+                 
