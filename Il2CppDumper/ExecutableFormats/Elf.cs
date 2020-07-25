@@ -130,4 +130,8 @@ namespace Il2CppDumper
                     }
                 }
                 else if (Version >= 24)
-           
+                {
+                    if (elfHeader.e_machine == EM_ARM)
+                    {
+                        Position = result + 0x14;
+                        codeRegistratio
