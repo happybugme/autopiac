@@ -134,4 +134,7 @@ namespace Il2CppDumper
                     if (elfHeader.e_machine == EM_ARM)
                     {
                         Position = result + 0x14;
-                        codeRegistratio
+                        codeRegistration = ReadUInt32() + result + 0xcu + (uint)ImageBase;
+                        Position = result + 0x10;
+                        var ptr = ReadUInt32() + result + 0x8;
+                    
