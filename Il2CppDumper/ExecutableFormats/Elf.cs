@@ -137,4 +137,8 @@ namespace Il2CppDumper
                         codeRegistration = ReadUInt32() + result + 0xcu + (uint)ImageBase;
                         Position = result + 0x10;
                         var ptr = ReadUInt32() + result + 0x8;
-                    
+                        Position = MapVATR(ptr + ImageBase);
+                        metadataRegistration = ReadUInt32();
+                    }
+                }
+                Console.WriteLine("CodeReg
