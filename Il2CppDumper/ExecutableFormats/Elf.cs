@@ -157,4 +157,8 @@ namespace Il2CppDumper
             return AutoPlusInit(codeRegistration, metadataRegistration);
         }
 
-        pub
+        public override bool SymbolSearch()
+        {
+            uint codeRegistration = 0;
+            uint metadataRegistration = 0;
+            var dynstrOffset = MapVATR(dynamicSect
