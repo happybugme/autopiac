@@ -161,4 +161,7 @@ namespace Il2CppDumper
         {
             uint codeRegistration = 0;
             uint metadataRegistration = 0;
-            var dynstrOffset = MapVATR(dynamicSect
+            var dynstrOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_STRTAB).d_un);
+            foreach (var symbol in symbolTable)
+            {
+                var name = ReadStringToNull(dynstrOffset + symbol.
