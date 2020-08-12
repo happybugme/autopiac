@@ -174,4 +174,8 @@ namespace Il2CppDumper
                         metadataRegistration = symbol.st_value;
                         break;
                 }
-       
+            }
+            if (codeRegistration > 0 && metadataRegistration > 0)
+            {
+                Console.WriteLine("Detected Symbol !");
+             
