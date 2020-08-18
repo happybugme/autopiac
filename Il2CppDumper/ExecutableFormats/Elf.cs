@@ -206,4 +206,8 @@ namespace Il2CppDumper
                     hash = dynamicSection.First(x => x.d_tag == DT_GNU_HASH);
                     var addr = MapVATR(hash.d_un);
                     Position = addr;
-                    var nbuc
+                    var nbuckets = ReadUInt32();
+                    var symoffset = ReadUInt32();
+                    var bloom_size = ReadUInt32();
+                    var bloom_shift = ReadUInt32();
+               
