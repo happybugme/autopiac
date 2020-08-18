@@ -185,4 +185,11 @@ namespace Il2CppDumper
             }
             Console.WriteLine("ERROR: No symbol is detected");
             return false;
-     
+        }
+
+        private void ReadSymbol()
+        {
+            try
+            {
+                var symbolCount = 0u;
+                var hash = dynamicSection.FirstOrDefault(x => x.d_
