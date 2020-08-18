@@ -192,4 +192,9 @@ namespace Il2CppDumper
             try
             {
                 var symbolCount = 0u;
-                var hash = dynamicSection.FirstOrDefault(x => x.d_
+                var hash = dynamicSection.FirstOrDefault(x => x.d_tag == DT_HASH);
+                if (hash != null)
+                {
+                    var addr = MapVATR(hash.d_un);
+                    Position = addr;
+                    v
