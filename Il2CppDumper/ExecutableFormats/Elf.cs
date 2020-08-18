@@ -178,4 +178,6 @@ namespace Il2CppDumper
             if (codeRegistration > 0 && metadataRegistration > 0)
             {
                 Console.WriteLine("Detected Symbol !");
-             
+                Console.WriteLine("CodeRegistration : {0:x}", codeRegistration);
+                Console.WriteLine("MetadataRegistration : {0:x}", metadataRegistration);
+                Init(co
