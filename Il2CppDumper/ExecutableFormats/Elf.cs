@@ -210,4 +210,6 @@ namespace Il2CppDumper
                     var symoffset = ReadUInt32();
                     var bloom_size = ReadUInt32();
                     var bloom_shift = ReadUInt32();
-               
+                    var buckets_address = addr + 16 + (4 * bloom_size);
+                    var buckets = ReadClassArray<uint>(buckets_address, nbuckets);
+                    var last_symbol = buckets.Ma
