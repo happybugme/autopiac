@@ -235,4 +235,12 @@ namespace Il2CppDumper
                 symbolTable = ReadClassArray<Elf32_Sym>(dynsymOffset, symbolCount);
             }
             catch
-      
+            {
+                // ignored
+            }
+        }
+
+        private void RelocationProcessing()
+        {
+            Console.WriteLine("Applying relocations...");
+   
