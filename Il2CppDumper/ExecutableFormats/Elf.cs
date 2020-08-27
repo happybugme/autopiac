@@ -253,4 +253,9 @@ namespace Il2CppDumper
                 {
                     var type = rel.r_info & 0xff;
                     var sym = rel.r_info >> 8;
-                    switch 
+                    switch (type)
+                    {
+                        case R_386_32 when isx86:
+                        case R_ARM_ABS32 when !isx86:
+                            {
+                                var
