@@ -221,4 +221,8 @@ namespace Il2CppDumper
                     {
                         var chains_base_address = buckets_address + 4 * nbuckets;
                         Position = chains_base_address + (last_symbol - symoffset) * 4;
-     
+                        while (true)
+                        {
+                            var chain_entry = ReadUInt32();
+                            ++last_symbol;
+                            if ((
