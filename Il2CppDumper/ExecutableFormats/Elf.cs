@@ -243,4 +243,7 @@ namespace Il2CppDumper
         private void RelocationProcessing()
         {
             Console.WriteLine("Applying relocations...");
-   
+            try
+            {
+                var reldynOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_REL).d_un);
+                var reldynSize = dynamicSection.Fi
