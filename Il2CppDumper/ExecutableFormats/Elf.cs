@@ -258,4 +258,8 @@ namespace Il2CppDumper
                         case R_386_32 when isx86:
                         case R_ARM_ABS32 when !isx86:
                             {
-                                var
+                                var symbol = symbolTable[sym];
+                                Position = MapVATR(rel.r_offset);
+                                Write(symbol.st_value);
+                                break;
+                
