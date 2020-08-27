@@ -246,4 +246,7 @@ namespace Il2CppDumper
             try
             {
                 var reldynOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_REL).d_un);
-                var reldynSize = dynamicSection.Fi
+                var reldynSize = dynamicSection.First(x => x.d_tag == DT_RELSZ).d_un;
+                var relTable = ReadClassArray<Elf32_Rel>(reldynOffset, reldynSize / 8);
+                var isx86 = elfHeader.e_machine == 0x3;
+     
