@@ -249,4 +249,8 @@ namespace Il2CppDumper
                 var reldynSize = dynamicSection.First(x => x.d_tag == DT_RELSZ).d_un;
                 var relTable = ReadClassArray<Elf32_Rel>(reldynOffset, reldynSize / 8);
                 var isx86 = elfHeader.e_machine == 0x3;
-     
+                foreach (var rel in relTable)
+                {
+                    var type = rel.r_info & 0xff;
+                    var sym = rel.r_info >> 8;
+                    switch 
