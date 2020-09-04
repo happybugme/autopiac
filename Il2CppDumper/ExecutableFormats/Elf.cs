@@ -262,4 +262,14 @@ namespace Il2CppDumper
                                 Position = MapVATR(rel.r_offset);
                                 Write(symbol.st_value);
                                 break;
-                
+                            }
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        private bool 
