@@ -272,4 +272,11 @@ namespace Il2CppDumper
             }
         }
 
-        private bool 
+        private bool CheckProtection()
+        {
+            try
+            {
+                //.init_proc
+                if (dynamicSection.Any(x => x.d_tag == DT_INIT))
+                {
+   
