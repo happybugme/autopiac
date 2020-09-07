@@ -287,4 +287,8 @@ namespace Il2CppDumper
                 foreach (var symbol in symbolTable)
                 {
                     var name = ReadStringToNull(dynstrOffset + symbol.st_name);
-  
+                    switch (name)
+                    {
+                        case "JNI_OnLoad":
+                            Console.WriteLine("WARNING: find JNI_OnLoad");
+        
