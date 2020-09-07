@@ -299,4 +299,12 @@ namespace Il2CppDumper
                     Console.WriteLine("WARNING: find SHT_LOUSER section");
                     return true;
                 }
-          
+            }
+            catch
+            {
+                // ignored
+            }
+            return false;
+        }
+
+        public override ulong GetRVA(ulong poin
