@@ -294,4 +294,9 @@ namespace Il2CppDumper
                             return true;
                     }
                 }
-                if (sectionTable != null && sectionTable.Any(x => x.sh_type == 
+                if (sectionTable != null && sectionTable.Any(x => x.sh_type == SHT_LOUSER))
+                {
+                    Console.WriteLine("WARNING: find SHT_LOUSER section");
+                    return true;
+                }
+          
