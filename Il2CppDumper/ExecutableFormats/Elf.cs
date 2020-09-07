@@ -291,4 +291,7 @@ namespace Il2CppDumper
                     {
                         case "JNI_OnLoad":
                             Console.WriteLine("WARNING: find JNI_OnLoad");
-        
+                            return true;
+                    }
+                }
+                if (sectionTable != null && sectionTable.Any(x => x.sh_type == 
