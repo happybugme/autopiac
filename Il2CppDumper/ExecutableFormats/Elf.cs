@@ -321,4 +321,8 @@ namespace Il2CppDumper
             for (uint i = 0; i < programSegment.Length; i++)
             {
                 Position = elfHeader.e_phoff + i * 32u + 4u;
-                var phdr = pr
+                var phdr = programSegment[i];
+                phdr.p_offset = phdr.p_vaddr;
+                Write(phdr.p_offset);
+                phdr.p_vaddr += (uint)ImageBase;
+                Write(phdr.p_vaddr)
