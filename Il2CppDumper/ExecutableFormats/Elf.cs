@@ -325,4 +325,12 @@ namespace Il2CppDumper
                 phdr.p_offset = phdr.p_vaddr;
                 Write(phdr.p_offset);
                 phdr.p_vaddr += (uint)ImageBase;
-                Write(phdr.p_vaddr)
+                Write(phdr.p_vaddr);
+                Position += 4;
+                phdr.p_filesz = phdr.p_memsz;
+                Write(phdr.p_filesz);
+            }
+        }
+
+        private void FixedDynamicSection()
+     
