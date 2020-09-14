@@ -349,4 +349,8 @@ namespace Il2CppDumper
                     case DT_FINI:
                     case DT_REL:
                     case DT_JMPREL:
-               
+                    case DT_INIT_ARRAY:
+                    case DT_FINI_ARRAY:
+                        dyn.d_un += (uint)ImageBase;
+                        Write(dyn.d_un);
+                        brea
