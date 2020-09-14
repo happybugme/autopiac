@@ -333,4 +333,8 @@ namespace Il2CppDumper
         }
 
         private void FixedDynamicSection()
-     
+        {
+            for (uint i = 0; i < dynamicSection.Length; i++)
+            {
+                Position = pt_dynamic.p_offset + i * 8 + 4;
+                var dyn = dynamicSection[i];
