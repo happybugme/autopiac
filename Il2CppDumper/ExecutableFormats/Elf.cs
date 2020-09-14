@@ -344,4 +344,9 @@ namespace Il2CppDumper
                     case DT_HASH:
                     case DT_STRTAB:
                     case DT_SYMTAB:
-   
+                    case DT_RELA:
+                    case DT_INIT:
+                    case DT_FINI:
+                    case DT_REL:
+                    case DT_JMPREL:
+               
