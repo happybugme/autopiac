@@ -360,4 +360,10 @@ namespace Il2CppDumper
 
         public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
         {
-            var dataList = ne
+            var dataList = new List<Elf32_Phdr>();
+            var execList = new List<Elf32_Phdr>();
+            foreach (var phdr in programSegment)
+            {
+                if (phdr.p_memsz != 0ul)
+                {
+                 
