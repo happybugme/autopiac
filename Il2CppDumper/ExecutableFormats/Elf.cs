@@ -353,4 +353,11 @@ namespace Il2CppDumper
                     case DT_FINI_ARRAY:
                         dyn.d_un += (uint)ImageBase;
                         Write(dyn.d_un);
-                        brea
+                        break;
+                }
+            }
+        }
+
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var dataList = ne
