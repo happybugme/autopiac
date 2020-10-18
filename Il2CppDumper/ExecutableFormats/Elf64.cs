@@ -20,4 +20,7 @@ namespace Il2CppDumper
             Load();
         }
 
-   
+        protected override void Load()
+        {
+            elfHeader = ReadClass<Elf64_Ehdr>(0);
+            programSegment = ReadClassArray<Elf64_Phdr>(elfHeader.e_phoff, elfH
