@@ -11,4 +11,13 @@ namespace Il2CppDumper
         private Elf64_Ehdr elfHeader;
         private Elf64_Phdr[] programSegment;
         private Elf64_Dyn[] dynamicSection;
-        private Elf6
+        private Elf64_Sym[] symbolTable;
+        private Elf64_Shdr[] sectionTable;
+        private Elf64_Phdr pt_dynamic;
+
+        public Elf64(Stream stream) : base(stream)
+        {
+            Load();
+        }
+
+   
