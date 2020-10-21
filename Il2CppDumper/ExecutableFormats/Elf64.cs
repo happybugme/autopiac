@@ -34,4 +34,10 @@ namespace Il2CppDumper
             {
                 FixedDynamicSection();
             }
-           
+            ReadSymbol();
+            if (!IsDumped)
+            {
+                RelocationProcessing();
+                if (CheckProtection())
+                {
+                    Console.Write
