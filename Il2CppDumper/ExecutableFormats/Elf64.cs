@@ -29,4 +29,9 @@ namespace Il2CppDumper
                 FixedProgramSegment();
             }
             pt_dynamic = programSegment.First(x => x.p_type == PT_DYNAMIC);
-            dynamicS
+            dynamicSection = ReadClassArray<Elf64_Dyn>(pt_dynamic.p_offset, pt_dynamic.p_filesz / 16L);
+            if (IsDumped)
+            {
+                FixedDynamicSection();
+            }
+           
