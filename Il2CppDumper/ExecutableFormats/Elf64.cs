@@ -23,4 +23,10 @@ namespace Il2CppDumper
         protected override void Load()
         {
             elfHeader = ReadClass<Elf64_Ehdr>(0);
-            programSegment = ReadClassArray<Elf64_Phdr>(elfHeader.e_phoff, elfH
+            programSegment = ReadClassArray<Elf64_Phdr>(elfHeader.e_phoff, elfHeader.e_phnum);
+            if (IsDumped)
+            {
+                FixedProgramSegment();
+            }
+            pt_dynamic = programSegment.First(x => x.p_type == PT_DYNAMIC);
+            dynamicS
