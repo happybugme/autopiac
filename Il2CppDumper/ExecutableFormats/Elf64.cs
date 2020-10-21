@@ -56,4 +56,12 @@ namespace Il2CppDumper
                 {
                     names.Add(ReadStringToNull(shstrndx + section.sh_name));
                 }
-                if 
+                if (!names.Contains(".text"))
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch
+            {
+      
