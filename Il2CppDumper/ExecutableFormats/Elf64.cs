@@ -49,4 +49,6 @@ namespace Il2CppDumper
         {
             try
             {
-               
+                var names = new List<string>();
+                sectionTable = ReadClassArray<Elf64_Shdr>(elfHeader.e_shoff, elfHeader.e_shnum);
+                var shstrndx = sectionTable[elfHeader.e_shstrndx].sh
