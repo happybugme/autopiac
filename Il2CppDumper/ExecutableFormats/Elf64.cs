@@ -40,4 +40,13 @@ namespace Il2CppDumper
                 RelocationProcessing();
                 if (CheckProtection())
                 {
-                    Console.Write
+                    Console.WriteLine("ERROR: This file may be protected.");
+                }
+            }
+        }
+
+        protected override bool CheckSection()
+        {
+            try
+            {
+               
