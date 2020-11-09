@@ -81,4 +81,12 @@ namespace Il2CppDumper
             {
                 return 0;
             }
-            return a
+            return addr - phdr.p_offset + phdr.p_vaddr;
+        }
+
+        public override bool Search()
+        {
+            return false;
+        }
+
+        public override bool PlusSearch(int methodCount, 
