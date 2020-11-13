@@ -89,4 +89,7 @@ namespace Il2CppDumper
             return false;
         }
 
-        public override bool PlusSearch(int methodCount, 
+        public override bool PlusSearch(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var sectionHelper = GetSectionHelper(methodCount, typeDefinitionsCount, imageCount);
+            var codeR
