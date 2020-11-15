@@ -101,4 +101,7 @@ namespace Il2CppDumper
         {
             ulong codeRegistration = 0ul;
             ulong metadataRegistration = 0ul;
-            ulong dynstrOffset = MapV
+            ulong dynstrOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_STRTAB).d_un);
+            foreach (var symbol in symbolTable)
+            {
+                var name = ReadStringToNull(dynstrOffset
