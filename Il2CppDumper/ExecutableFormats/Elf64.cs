@@ -95,3 +95,10 @@ namespace Il2CppDumper
             var codeRegistration = sectionHelper.FindCodeRegistration();
             var metadataRegistration = sectionHelper.FindMetadataRegistration();
             return AutoPlusInit(codeRegistration, metadataRegistration);
+        }
+
+        public override bool SymbolSearch()
+        {
+            ulong codeRegistration = 0ul;
+            ulong metadataRegistration = 0ul;
+            ulong dynstrOffset = MapV
