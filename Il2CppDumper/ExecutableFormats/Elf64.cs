@@ -113,3 +113,9 @@ namespace Il2CppDumper
                     case "g_MetadataRegistration":
                         metadataRegistration = symbol.st_value;
                         break;
+                }
+            }
+            if (codeRegistration > 0 && metadataRegistration > 0)
+            {
+                Console.WriteLine("Detected Symbol !");
+                Console.W
