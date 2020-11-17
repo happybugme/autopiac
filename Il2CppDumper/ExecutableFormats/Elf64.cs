@@ -109,4 +109,7 @@ namespace Il2CppDumper
                 {
                     case "g_CodeRegistration":
                         codeRegistration = symbol.st_value;
-  
+                        break;
+                    case "g_MetadataRegistration":
+                        metadataRegistration = symbol.st_value;
+                        break;
