@@ -121,4 +121,12 @@ namespace Il2CppDumper
                 Console.WriteLine("CodeRegistration : {0:x}", codeRegistration);
                 Console.WriteLine("MetadataRegistration : {0:x}", metadataRegistration);
                 Init(codeRegistration, metadataRegistration);
-             
+                return true;
+            }
+            Console.WriteLine("ERROR: No symbol is detected");
+            return false;
+        }
+
+        private void ReadSymbol()
+        {
+       
