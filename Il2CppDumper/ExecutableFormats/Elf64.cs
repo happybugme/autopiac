@@ -129,4 +129,8 @@ namespace Il2CppDumper
 
         private void ReadSymbol()
         {
-       
+            try
+            {
+                var symbolCount = 0u;
+                var hash = dynamicSection.FirstOrDefault(x => x.d_tag == DT_HASH);
+                if (hash != nul
