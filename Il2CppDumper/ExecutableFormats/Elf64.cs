@@ -133,4 +133,9 @@ namespace Il2CppDumper
             {
                 var symbolCount = 0u;
                 var hash = dynamicSection.FirstOrDefault(x => x.d_tag == DT_HASH);
-                if (hash != nul
+                if (hash != null)
+                {
+                    var addr = MapVATR(hash.d_un);
+                    Position = addr;
+                    var nbucket = ReadUInt32();
+        
