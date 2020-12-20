@@ -138,4 +138,9 @@ namespace Il2CppDumper
                     var addr = MapVATR(hash.d_un);
                     Position = addr;
                     var nbucket = ReadUInt32();
-        
+                    var nchain = ReadUInt32();
+                    symbolCount = nchain;
+                }
+                else
+                {
+                    hash = dynamicSection.First(x => x.d_ta
