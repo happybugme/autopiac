@@ -147,4 +147,7 @@ namespace Il2CppDumper
                     var addr = MapVATR(hash.d_un);
                     Position = addr;
                     var nbuckets = ReadUInt32();
-                    var symoffset = ReadUInt32(
+                    var symoffset = ReadUInt32();
+                    var bloom_size = ReadUInt32();
+                    var bloom_shift = ReadUInt32();
+                    var buckets_address = addr + 16 + (8 * bloom_size)
