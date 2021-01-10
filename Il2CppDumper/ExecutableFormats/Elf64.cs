@@ -185,4 +185,5 @@ namespace Il2CppDumper
             Console.WriteLine("Applying relocations...");
             try
             {
-             
+                var relaOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_RELA).d_un);
+                var relaSize = dynamicSection.First(x => x.d_tag == DT_RELASZ).d_un;
