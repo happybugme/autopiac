@@ -171,4 +171,9 @@ namespace Il2CppDumper
                         symbolCount = last_symbol;
                     }
                 }
-                var dynsymOffset = Ma
+                var dynsymOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_SYMTAB).d_un);
+                symbolTable = ReadClassArray<Elf64_Sym>(dynsymOffset, symbolCount);
+            }
+            catch
+            {
+ 
