@@ -154,4 +154,9 @@ namespace Il2CppDumper
                     var buckets = ReadClassArray<uint>(buckets_address, nbuckets);
                     var last_symbol = buckets.Max();
                     if (last_symbol < symoffset)
-         
+                    {
+                        symbolCount = symoffset;
+                    }
+                    else
+                    {
+                        var chains_base_address = buckets_add
