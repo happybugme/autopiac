@@ -159,4 +159,8 @@ namespace Il2CppDumper
                     }
                     else
                     {
-                        var chains_base_address = buckets_add
+                        var chains_base_address = buckets_address + 4 * nbuckets;
+                        Position = chains_base_address + (last_symbol - symoffset) * 4;
+                        while (true)
+                        {
+                   
