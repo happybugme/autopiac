@@ -176,4 +176,13 @@ namespace Il2CppDumper
             }
             catch
             {
- 
+                // ignored
+            }
+        }
+
+        private void RelocationProcessing()
+        {
+            Console.WriteLine("Applying relocations...");
+            try
+            {
+             
