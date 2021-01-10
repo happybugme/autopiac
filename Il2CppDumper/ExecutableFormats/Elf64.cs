@@ -163,4 +163,7 @@ namespace Il2CppDumper
                         Position = chains_base_address + (last_symbol - symoffset) * 4;
                         while (true)
                         {
+                            var chain_entry = ReadUInt32();
+                            ++last_symbol;
+                            if ((chain_entry & 1) != 0)
                    
