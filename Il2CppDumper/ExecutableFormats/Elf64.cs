@@ -166,4 +166,9 @@ namespace Il2CppDumper
                             var chain_entry = ReadUInt32();
                             ++last_symbol;
                             if ((chain_entry & 1) != 0)
-                   
+                                break;
+                        }
+                        symbolCount = last_symbol;
+                    }
+                }
+                var dynsymOffset = Ma
