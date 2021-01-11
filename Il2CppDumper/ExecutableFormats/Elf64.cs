@@ -187,3 +187,7 @@ namespace Il2CppDumper
             {
                 var relaOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_RELA).d_un);
                 var relaSize = dynamicSection.First(x => x.d_tag == DT_RELASZ).d_un;
+                var relaTable = ReadClassArray<Elf64_Rela>(relaOffset, relaSize / 24L);
+                foreach (var rela in relaTable)
+                {
+                    var 
