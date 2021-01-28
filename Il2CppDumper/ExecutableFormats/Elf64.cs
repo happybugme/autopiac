@@ -221,4 +221,9 @@ namespace Il2CppDumper
             {
                 //.init_proc
                 if (dynamicSection.Any(x => x.d_tag == DT_INIT))
-             
+                {
+                    Console.WriteLine("WARNING: find .init_proc");
+                    return true;
+                }
+                //JNI_OnLoad
+                ul
