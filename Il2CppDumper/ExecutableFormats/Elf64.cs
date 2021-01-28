@@ -190,4 +190,7 @@ namespace Il2CppDumper
                 var relaTable = ReadClassArray<Elf64_Rela>(relaOffset, relaSize / 24L);
                 foreach (var rela in relaTable)
                 {
-                    var 
+                    var type = rela.r_info & 0xffffffff;
+                    var sym = rela.r_info >> 32;
+                    (ulong value, bool recognized) result = (type, elfHeader.e_machine) switch
+                    {
