@@ -204,4 +204,12 @@ namespace Il2CppDumper
                     };
                     if (result.recognized)
                     {
-                        Position = MapVATR(re
+                        Position = MapVATR(rela.r_offset);
+                        Write(result.value);
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+        
