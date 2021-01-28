@@ -198,4 +198,10 @@ namespace Il2CppDumper
                         (R_AARCH64_RELATIVE, EM_AARCH64) => (rela.r_addend, true),
 
                         (R_X86_64_64, EM_X86_64) => (symbolTable[sym].st_value + rela.r_addend, true),
-                        (R_X86_64_RELATIVE, EM_X86_64) => (rela.
+                        (R_X86_64_RELATIVE, EM_X86_64) => (rela.r_addend, true),
+
+                        _ => (0, false)
+                    };
+                    if (result.recognized)
+                    {
+                        Position = MapVATR(re
