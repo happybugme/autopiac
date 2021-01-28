@@ -226,4 +226,7 @@ namespace Il2CppDumper
                     return true;
                 }
                 //JNI_OnLoad
-                ul
+                ulong dynstrOffset = MapVATR(dynamicSection.First(x => x.d_tag == DT_STRTAB).d_un);
+                foreach (var symbol in symbolTable)
+                {
+                    var name = ReadStringToNull
