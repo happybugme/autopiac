@@ -195,4 +195,7 @@ namespace Il2CppDumper
                     (ulong value, bool recognized) result = (type, elfHeader.e_machine) switch
                     {
                         (R_AARCH64_ABS64, EM_AARCH64) => (symbolTable[sym].st_value + rela.r_addend, true),
-                        (R_AARCH64_RELATIVE, EM_AARCH64) => 
+                        (R_AARCH64_RELATIVE, EM_AARCH64) => (rela.r_addend, true),
+
+                        (R_X86_64_64, EM_X86_64) => (symbolTable[sym].st_value + rela.r_addend, true),
+                        (R_X86_64_RELATIVE, EM_X86_64) => (rela.
