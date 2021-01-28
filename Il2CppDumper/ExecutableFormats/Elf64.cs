@@ -194,3 +194,5 @@ namespace Il2CppDumper
                     var sym = rela.r_info >> 32;
                     (ulong value, bool recognized) result = (type, elfHeader.e_machine) switch
                     {
+                        (R_AARCH64_ABS64, EM_AARCH64) => (symbolTable[sym].st_value + rela.r_addend, true),
+                        (R_AARCH64_RELATIVE, EM_AARCH64) => 
