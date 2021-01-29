@@ -233,4 +233,8 @@ namespace Il2CppDumper
                     switch (name)
                     {
                         case "JNI_OnLoad":
-                            Console.Wri
+                            Console.WriteLine("WARNING: find JNI_OnLoad");
+                            return true;
+                    }
+                }
+                if (sectionTable != null && sectionTable.Any(x => x.sh_type ==
