@@ -243,4 +243,13 @@ namespace Il2CppDumper
                     return true;
                 }
             }
- 
+            catch
+            {
+                // ignored
+            }
+            return false;
+        }
+
+        public override ulong GetRVA(ulong pointer)
+        {
+            if (I
