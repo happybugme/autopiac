@@ -252,4 +252,13 @@ namespace Il2CppDumper
 
         public override ulong GetRVA(ulong pointer)
         {
-            if (I
+            if (IsDumped)
+            {
+                return pointer - ImageBase;
+            }
+            return pointer;
+        }
+
+        private void FixedProgramSegment()
+        {
+            for (uint i = 0;
