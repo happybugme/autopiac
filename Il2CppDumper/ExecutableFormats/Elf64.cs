@@ -261,4 +261,8 @@ namespace Il2CppDumper
 
         private void FixedProgramSegment()
         {
-            for (uint i = 0;
+            for (uint i = 0; i < programSegment.Length; i++)
+            {
+                Position = elfHeader.e_phoff + i * 56u + 8u;
+                var phdr = programSegment[i];
+                phdr.p_of
