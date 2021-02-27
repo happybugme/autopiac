@@ -282,4 +282,9 @@ namespace Il2CppDumper
                 Position = pt_dynamic.p_offset + i * 16 + 8;
                 var dyn = dynamicSection[i];
                 switch (dyn.d_tag)
-            
+                {
+                    case DT_PLTGOT:
+                    case DT_HASH:
+                    case DT_STRTAB:
+                    case DT_SYMTAB:
+                    case DT_RE
