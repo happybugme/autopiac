@@ -270,4 +270,11 @@ namespace Il2CppDumper
                 phdr.p_vaddr += ImageBase;
                 Write(phdr.p_vaddr);
                 Position += 8;
-                phdr.p_filesz 
+                phdr.p_filesz = phdr.p_memsz;
+                Write(phdr.p_filesz);
+            }
+        }
+
+        private void FixedDynamicSection()
+        {
+            for (uint i = 0; i < 
