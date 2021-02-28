@@ -301,4 +301,7 @@ namespace Il2CppDumper
             }
         }
 
-     
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var dataList = new List<Elf64_Phdr>();
+            var execList = new List<El
