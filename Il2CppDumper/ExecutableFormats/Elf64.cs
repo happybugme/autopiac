@@ -310,4 +310,9 @@ namespace Il2CppDumper
                 if (phdr.p_memsz != 0ul)
                 {
                     switch (phdr.p_flags)
-                
+                    {
+                        case 1u: //PF_X
+                        case 3u:
+                        case 5u:
+                        case 7u:
+                            execList.Add(phdr);
