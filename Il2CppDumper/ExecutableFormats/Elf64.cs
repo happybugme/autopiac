@@ -316,3 +316,8 @@ namespace Il2CppDumper
                         case 5u:
                         case 7u:
                             execList.Add(phdr);
+                            break;
+                        case 2u: //PF_W && PF_R
+                        case 4u:
+                        case 6u:
+                         
