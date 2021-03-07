@@ -320,4 +320,10 @@ namespace Il2CppDumper
                         case 2u: //PF_W && PF_R
                         case 4u:
                         case 6u:
-                         
+                            dataList.Add(phdr);
+                            break;
+                    }
+                }
+            }
+            var data = dataList.ToArray();
+            var exec = exe
