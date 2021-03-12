@@ -333,4 +333,5 @@ namespace Il2CppDumper
             sectionHelper.SetSection(SearchSectionType.Bss, data);
             return sectionHelper;
         }
-   
+    }
+}
