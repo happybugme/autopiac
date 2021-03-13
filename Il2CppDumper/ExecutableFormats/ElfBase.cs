@@ -10,4 +10,6 @@ namespace Il2CppDumper
 
         public override bool CheckDump() => !CheckSection();
 
-        public void Reload() => Loa
+        public void Reload() => Load();
+    }
+}
