@@ -11,4 +11,10 @@
         [ArrayLength(Length = 7)]
         public byte[] ei_pad;
         public ushort e_type;
-    
+        public ushort e_machine;
+        public uint e_version;
+        public uint e_entry;
+        public uint e_phoff;
+        public uint e_shoff;
+        public uint e_flags;
+        p
