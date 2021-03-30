@@ -17,4 +17,9 @@
         public uint e_phoff;
         public uint e_shoff;
         public uint e_flags;
-        p
+        public ushort e_ehsize;
+        public ushort e_phentsize;
+        public ushort e_phnum;
+        public ushort e_shentsize;
+        public ushort e_shnum;
+        public ushort e_shstrndx
