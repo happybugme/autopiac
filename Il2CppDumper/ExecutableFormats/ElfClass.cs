@@ -22,4 +22,12 @@
         public ushort e_phnum;
         public ushort e_shentsize;
         public ushort e_shnum;
-        public ushort e_shstrndx
+        public ushort e_shstrndx;
+    }
+
+    public class Elf32_Phdr
+    {
+        public uint p_type;
+        public uint p_offset;
+        public uint p_vaddr;
+        public uint p_padd
