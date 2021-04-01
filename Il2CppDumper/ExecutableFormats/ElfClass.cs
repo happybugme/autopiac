@@ -39,4 +39,10 @@
 
     public class Elf32_Shdr
     {
-        public uint s
+        public uint sh_name;
+        public uint sh_type;
+        public uint sh_flags;
+        public uint sh_addr;
+        public uint sh_offset;
+        public uint sh_size;
+        public uint sh_link
