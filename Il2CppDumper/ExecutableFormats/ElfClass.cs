@@ -54,4 +54,13 @@
     public class Elf32_Sym
     {
         public uint st_name;
-        public uint st_v
+        public uint st_value;
+        public uint st_size;
+        public byte st_info;
+        public byte st_other;
+        public ushort st_shndx;
+    }
+
+    public class Elf32_Dyn
+    {
+        public int d_ta
