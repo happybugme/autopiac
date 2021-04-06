@@ -63,4 +63,16 @@
 
     public class Elf32_Dyn
     {
-        public int d_ta
+        public int d_tag;
+        public uint d_un;
+    }
+
+    public class Elf32_Rel
+    {
+        public uint r_offset;
+        public uint r_info;
+    }
+
+    public class Elf64_Ehdr
+    {
+        publ
