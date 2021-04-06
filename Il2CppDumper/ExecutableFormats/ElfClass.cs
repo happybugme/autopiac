@@ -81,4 +81,9 @@
         public byte ei_version;
         public byte ei_osabi;
         public byte ei_abiversion;
-     
+        [ArrayLength(Length = 7)]
+        public byte[] ei_pad;
+        public ushort e_type;
+        public ushort e_machine;
+        public uint e_version;
+        public 
