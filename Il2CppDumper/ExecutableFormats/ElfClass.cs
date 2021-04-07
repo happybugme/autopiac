@@ -92,4 +92,13 @@
         public uint e_flags;
         public ushort e_ehsize;
         public ushort e_phentsize;
-        public ushort e_
+        public ushort e_phnum;
+        public ushort e_shentsize;
+        public ushort e_shnum;
+        public ushort e_shstrndx;
+    }
+
+    public class Elf64_Phdr
+    {
+        public uint p_type;
+        public u
