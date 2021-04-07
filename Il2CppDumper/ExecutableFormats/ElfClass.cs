@@ -86,4 +86,10 @@
         public ushort e_type;
         public ushort e_machine;
         public uint e_version;
-        public 
+        public ulong e_entry;
+        public ulong e_phoff;
+        public ulong e_shoff;
+        public uint e_flags;
+        public ushort e_ehsize;
+        public ushort e_phentsize;
+        public ushort e_
