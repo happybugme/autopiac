@@ -110,4 +110,11 @@
         public ulong p_align;
     }
 
-    public class Elf64_S
+    public class Elf64_Shdr
+    {
+        public uint sh_name;
+        public uint sh_type;
+        public ulong sh_flags;
+        public ulong sh_addr;
+        public ulong sh_offset;
+        public ulo
