@@ -134,4 +134,14 @@
         public ulong st_size;
     }
 
-    publ
+    public class Elf64_Dyn
+    {
+        public long d_tag;
+        public ulong d_un;
+    }
+
+    public class Elf64_Rela
+    {
+        public ulong r_offset;
+        public ulong r_info;
+        public ulong r_
