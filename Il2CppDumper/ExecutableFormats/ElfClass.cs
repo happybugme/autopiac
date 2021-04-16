@@ -117,4 +117,13 @@
         public ulong sh_flags;
         public ulong sh_addr;
         public ulong sh_offset;
-        public ulo
+        public ulong sh_size;
+        public uint sh_link;
+        public uint sh_info;
+        public ulong sh_addralign;
+        public ulong sh_entsize;
+    }
+
+    public class Elf64_Sym
+    {
+        publ
