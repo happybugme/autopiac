@@ -144,4 +144,12 @@
     {
         public ulong r_offset;
         public ulong r_info;
-        public ulong r_
+        public ulong r_addend;
+    }
+
+    public static class ElfConstants
+    {
+        //e_machine
+        public const int EM_386 = 3;
+        public const int EM_ARM = 40;
+        public const int EM_X
