@@ -171,4 +171,8 @@
         public const int DT_RELASZ = 8;
         public const int DT_INIT = 12;
         public const int DT_FINI = 13;
-      
+        public const int DT_REL = 17;
+        public const int DT_RELSZ = 18;
+        public const int DT_JMPREL = 23;
+        public const int DT_INIT_ARRAY = 25;
+        public const int DT_
