@@ -166,4 +166,9 @@
         public const int DT_PLTGOT = 3;
         public const int DT_HASH = 4;
         public const int DT_STRTAB = 5;
-        publi
+        public const int DT_SYMTAB = 6;
+        public const int DT_RELA = 7;
+        public const int DT_RELASZ = 8;
+        public const int DT_INIT = 12;
+        public const int DT_FINI = 13;
+      
