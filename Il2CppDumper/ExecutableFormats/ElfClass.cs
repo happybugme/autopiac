@@ -152,4 +152,11 @@
         //e_machine
         public const int EM_386 = 3;
         public const int EM_ARM = 40;
-        public const int EM_X
+        public const int EM_X86_64 = 62;
+        public const int EM_AARCH64 = 183;
+
+        //p_type
+        public const int PT_LOAD = 1;
+        public const int PT_DYNAMIC = 2;
+
+        //p_f
