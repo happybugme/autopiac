@@ -159,4 +159,11 @@
         public const int PT_LOAD = 1;
         public const int PT_DYNAMIC = 2;
 
-        //p_f
+        //p_flags
+        public const int PF_X = 1;
+
+        //d_tag
+        public const int DT_PLTGOT = 3;
+        public const int DT_HASH = 4;
+        public const int DT_STRTAB = 5;
+        publi
