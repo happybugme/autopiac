@@ -175,4 +175,11 @@
         public const int DT_RELSZ = 18;
         public const int DT_JMPREL = 23;
         public const int DT_INIT_ARRAY = 25;
-        public const int DT_
+        public const int DT_FINI_ARRAY = 26;
+        public const int DT_GNU_HASH = 0x6ffffef5;
+
+        //sh_type
+        public const uint SHT_LOUSER = 0x80000000;
+
+        //ARM relocs
+        public const int R_ARM
