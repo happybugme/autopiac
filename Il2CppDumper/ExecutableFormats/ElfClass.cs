@@ -189,4 +189,10 @@
 
         //AArch64 relocs
         public const int R_AARCH64_ABS64 = 257;
-        public const int R_AARCH64_REL
+        public const int R_AARCH64_RELATIVE = 1027;
+
+        //AMD x86-64 relocations
+        public const int R_X86_64_64 = 1;
+        public const int R_X86_64_RELATIVE = 8;
+    }
+}
