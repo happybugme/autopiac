@@ -182,4 +182,11 @@
         public const uint SHT_LOUSER = 0x80000000;
 
         //ARM relocs
-        public const int R_ARM
+        public const int R_ARM_ABS32 = 2;
+
+        //i386 relocs
+        public const int R_386_32 = 1;
+
+        //AArch64 relocs
+        public const int R_AARCH64_ABS64 = 257;
+        public const int R_AARCH64_REL
