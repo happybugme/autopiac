@@ -11,4 +11,10 @@ namespace Il2CppDumper
     {
         private static readonly byte[] FeatureBytes1 = { 0x0, 0x22 };//MOVS R2, #0
         private static readonly byte[] FeatureBytes2 = { 0x78, 0x44, 0x79, 0x44 };//ADD R0, PC and ADD R1, PC
-        private readonly List<
+        private readonly List<MachoSection> sections = new();
+        private readonly ulong vmaddr;
+
+        public Macho(Stream stream) : base(stream)
+        {
+            Is32Bit = true;
+            Position += 16; //skip
