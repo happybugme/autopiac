@@ -17,4 +17,8 @@ namespace Il2CppDumper
         public Macho(Stream stream) : base(stream)
         {
             Is32Bit = true;
-            Position += 16; //skip
+            Position += 16; //skip magic, cputype, cpusubtype, filetype
+            var ncmds = ReadUInt32();
+            Position += 8; //skip sizeofcmds, flags
+            for (var i = 0; i < ncmds; i++)
+         
