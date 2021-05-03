@@ -21,4 +21,10 @@ namespace Il2CppDumper
             var ncmds = ReadUInt32();
             Position += 8; //skip sizeofcmds, flags
             for (var i = 0; i < ncmds; i++)
-         
+            {
+                var pos = Position;
+                var cmd = ReadUInt32();
+                var cmdsize = ReadUInt32();
+                switch (cmd)
+                {
+                    case 1:
