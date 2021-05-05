@@ -27,4 +27,7 @@ namespace Il2CppDumper
                 var cmdsize = ReadUInt32();
                 switch (cmd)
                 {
-                    case 1:
+                    case 1: //LC_SEGMENT
+                        var segname = Encoding.UTF8.GetString(ReadBytes(16)).TrimEnd('\0');
+                        if (segname == "__TEXT") //__PAGEZERO
+         
