@@ -35,4 +35,8 @@ namespace Il2CppDumper
                         }
                         else
                         {
-                            Position += 
+                            Position += 4;
+                        }
+                        Position += 20; //skip vmsize, fileoff, filesize, maxprot, initprot
+                        var nsects = ReadUInt32();
+                  
