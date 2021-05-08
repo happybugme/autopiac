@@ -30,4 +30,9 @@ namespace Il2CppDumper
                     case 1: //LC_SEGMENT
                         var segname = Encoding.UTF8.GetString(ReadBytes(16)).TrimEnd('\0');
                         if (segname == "__TEXT") //__PAGEZERO
-         
+                        {
+                            vmaddr = ReadUInt32();
+                        }
+                        else
+                        {
+                            Position += 
