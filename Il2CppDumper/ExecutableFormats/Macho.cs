@@ -45,4 +45,7 @@ namespace Il2CppDumper
                             var section = new MachoSection();
                             sections.Add(section);
                             section.sectname = Encoding.UTF8.GetString(ReadBytes(16)).TrimEnd('\0');
-                           
+                            Position += 16; //skip segname
+                            section.addr = ReadUInt32();
+                            section.size = ReadUInt32();
+                            section.offset = ReadUIn
