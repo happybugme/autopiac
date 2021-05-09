@@ -51,4 +51,8 @@ namespace Il2CppDumper
                             section.offset = ReadUInt32();
                             Position += 12; //skip align, reloff, nreloc
                             section.flags = ReadUInt32();
-                            Position += 8
+                            Position += 8; //skip reserved1, reserved2
+                        }
+                        break;
+                    case 0x21: //LC_ENCRYPTION_INFO
+                        Positio
