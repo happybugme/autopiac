@@ -55,4 +55,8 @@ namespace Il2CppDumper
                         }
                         break;
                     case 0x21: //LC_ENCRYPTION_INFO
-                        Positio
+                        Position += 8;
+                        var cryptID = ReadUInt32();
+                        if (cryptID != 0)
+                        {
+                            C
