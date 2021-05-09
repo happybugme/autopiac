@@ -48,4 +48,7 @@ namespace Il2CppDumper
                             Position += 16; //skip segname
                             section.addr = ReadUInt32();
                             section.size = ReadUInt32();
-                            section.offset = ReadUIn
+                            section.offset = ReadUInt32();
+                            Position += 12; //skip align, reloff, nreloc
+                            section.flags = ReadUInt32();
+                            Position += 8
