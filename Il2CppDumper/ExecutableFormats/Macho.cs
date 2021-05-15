@@ -63,4 +63,10 @@ namespace Il2CppDumper
                         }
                         break;
                 }
-          
+                Position = pos + cmdsize;//next
+            }
+        }
+
+        public override void Init(ulong codeRegistration, ulong metadataRegistration)
+        {
+            base.Init(co
