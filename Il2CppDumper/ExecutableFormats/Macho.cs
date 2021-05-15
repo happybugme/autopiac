@@ -71,4 +71,9 @@ namespace Il2CppDumper
         {
             base.Init(codeRegistration, metadataRegistration);
             methodPointers = methodPointers.Select(x => x - 1).ToArray();
-            customAttributeGenerators = custom
+            customAttributeGenerators = customAttributeGenerators.Select(x => x - 1).ToArray();
+        }
+
+        public override ulong MapVATR(ulong addr)
+        {
+            var section = sections.First(x => addr >= x.addr &&
