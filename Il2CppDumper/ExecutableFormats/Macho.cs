@@ -69,4 +69,6 @@ namespace Il2CppDumper
 
         public override void Init(ulong codeRegistration, ulong metadataRegistration)
         {
-            base.Init(co
+            base.Init(codeRegistration, metadataRegistration);
+            methodPointers = methodPointers.Select(x => x - 1).ToArray();
+            customAttributeGenerators = custom
