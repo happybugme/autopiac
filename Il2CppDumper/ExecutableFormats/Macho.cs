@@ -76,4 +76,10 @@ namespace Il2CppDumper
 
         public override ulong MapVATR(ulong addr)
         {
-            var section = sections.First(x => addr >= x.addr &&
+            var section = sections.First(x => addr >= x.addr && addr <= x.addr + x.size);
+            return addr - section.addr + section.offset;
+        }
+
+        public override ulong MapRTVA(ulong addr)
+        {
+            var section = sections.FirstOrDefa
