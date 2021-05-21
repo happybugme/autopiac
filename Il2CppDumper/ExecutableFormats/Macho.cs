@@ -87,4 +87,11 @@ namespace Il2CppDumper
             {
                 return 0;
             }
-            return addr - section.offset + 
+            return addr - section.offset + section.addr;
+        }
+
+        public override bool Search()
+        {
+            if (Version < 21)
+            {
+                var __mod_init_func = sections.First(x => x.sectname == "__mod_i
