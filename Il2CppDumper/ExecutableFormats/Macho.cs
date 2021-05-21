@@ -94,4 +94,8 @@ namespace Il2CppDumper
         {
             if (Version < 21)
             {
-                var __mod_init_func = sections.First(x => x.sectname == "__mod_i
+                var __mod_init_func = sections.First(x => x.sectname == "__mod_init_func");
+                var addrs = ReadClassArray<uint>(__mod_init_func.offset, __mod_init_func.size / 4u);
+                foreach (var a in addrs)
+                {
+    
