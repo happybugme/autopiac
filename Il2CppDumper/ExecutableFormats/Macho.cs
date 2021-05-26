@@ -98,4 +98,9 @@ namespace Il2CppDumper
                 var addrs = ReadClassArray<uint>(__mod_init_func.offset, __mod_init_func.size / 4u);
                 foreach (var a in addrs)
                 {
-    
+                    if (a > 0)
+                    {
+                        var i = a - 1;
+                        Position = MapVATR(i);
+                        Position += 4;
+ 
