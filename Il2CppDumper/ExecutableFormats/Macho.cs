@@ -106,4 +106,8 @@ namespace Il2CppDumper
                         var buff = ReadBytes(2);
                         if (FeatureBytes1.SequenceEqual(buff))
                         {
-                  
+                            Position += 12;
+                            buff = ReadBytes(4);
+                            if (FeatureBytes2.SequenceEqual(buff))
+                            {
+                
