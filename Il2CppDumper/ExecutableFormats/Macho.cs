@@ -112,4 +112,7 @@ namespace Il2CppDumper
                             {
                                 Position = MapVATR(i) + 10;
                                 var subaddr = DecodeMov(ReadBytes(8)) + i + 24u - 1u;
-                                var rsubaddr = Ma
+                                var rsubaddr = MapVATR(subaddr);
+                                Position = rsubaddr;
+                                var ptr = DecodeMov(ReadBytes(8)) + subaddr + 16u;
+                        
