@@ -121,4 +121,6 @@ namespace Il2CppDumper
                                 buff = ReadBytes(4);
                                 Position = rsubaddr + 14;
                                 buff = buff.Concat(ReadBytes(4)).ToArray();
-                          
+                                var codeRegistration = DecodeMov(buff) + subaddr + 22u;
+                                Console.WriteLine("CodeRegistration : {0:x}", codeRegistration);
+                     
