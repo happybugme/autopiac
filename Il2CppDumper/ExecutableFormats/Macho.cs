@@ -118,4 +118,7 @@ namespace Il2CppDumper
                                 Position = MapVATR(ptr);
                                 var metadataRegistration = ReadUInt32();
                                 Position = rsubaddr + 8;
-                                bu
+                                buff = ReadBytes(4);
+                                Position = rsubaddr + 14;
+                                buff = buff.Concat(ReadBytes(4)).ToArray();
+                          
