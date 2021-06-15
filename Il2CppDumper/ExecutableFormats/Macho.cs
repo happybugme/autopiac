@@ -132,4 +132,7 @@ namespace Il2CppDumper
                 }
                 return false;
             }
- 
+            else
+            {
+                var __mod_init_func = sections.First(x => x.sectname == "__mod_init_func");
+                var addrs = ReadClassArray<uint>(__mod_init_func.offset, _
