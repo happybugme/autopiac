@@ -135,4 +135,9 @@ namespace Il2CppDumper
             else
             {
                 var __mod_init_func = sections.First(x => x.sectname == "__mod_init_func");
-                var addrs = ReadClassArray<uint>(__mod_init_func.offset, _
+                var addrs = ReadClassArray<uint>(__mod_init_func.offset, __mod_init_func.size / 4u);
+                foreach (var a in addrs)
+                {
+                    if (a > 0)
+                    {
+                        var i = a -
