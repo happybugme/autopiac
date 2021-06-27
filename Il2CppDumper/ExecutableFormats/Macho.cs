@@ -140,4 +140,9 @@ namespace Il2CppDumper
                 {
                     if (a > 0)
                     {
-                        var i = a -
+                        var i = a - 1;
+                        Position = MapVATR(i);
+                        Position += 4;
+                        var buff = ReadBytes(2);
+                        if (FeatureBytes1.SequenceEqual(buff))
+    
