@@ -149,4 +149,7 @@ namespace Il2CppDumper
                             Position += 12;
                             buff = ReadBytes(4);
                             if (FeatureBytes2.SequenceEqual(buff))
-         
+                            {
+                                Position = MapVATR(i) + 10;
+                                var subaddr = DecodeMov(ReadBytes(8)) + i + 24u - 1u;
+               
