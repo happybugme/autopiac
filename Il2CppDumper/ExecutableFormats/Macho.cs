@@ -164,4 +164,11 @@ namespace Il2CppDumper
                                 var codeRegistration = DecodeMov(buff) + subaddr + 26u;
                                 Console.WriteLine("CodeRegistration : {0:x}", codeRegistration);
                                 Console.WriteLine("MetadataRegistration : {0:x}", metadataRegistration);
-                                Init(codeRegistration, met
+                                Init(codeRegistration, metadataRegistration);
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+  
