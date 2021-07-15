@@ -192,4 +192,7 @@ namespace Il2CppDumper
             return pointer - vmaddr;
         }
 
-        public override SectionHelper GetSectionHelper
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var data = sections.Where(x => x.sectname == "__const").ToArray();
+            var code = 
