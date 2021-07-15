@@ -184,4 +184,12 @@ namespace Il2CppDumper
 
         public override bool SymbolSearch()
         {
-            return f
+            return false;
+        }
+
+        public override ulong GetRVA(ulong pointer)
+        {
+            return pointer - vmaddr;
+        }
+
+        public override SectionHelper GetSectionHelper
