@@ -195,4 +195,6 @@ namespace Il2CppDumper
         public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
         {
             var data = sections.Where(x => x.sectname == "__const").ToArray();
-            var code = 
+            var code = sections.Where(x => x.flags == 0x80000400).ToArray();
+            var bss = sections.Where(x => x.flags == 1u).ToArray();
+            var sectionHelper = new SectionHelper(this, methodCou
