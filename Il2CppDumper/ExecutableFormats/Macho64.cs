@@ -201,3 +201,89 @@ namespace Il2CppDumper
                  * B sub
                  */
                 var __mod_init_func = sections.First(x => x.sectname == "__mod_init_func");
+                var addrs = ReadClassArray<ulong>(__mod_init_func.offset, __mod_init_func.size / 8);
+                foreach (var i in addrs)
+                {
+                    if (i > 0)
+                    {
+                        Position = MapVATR(i) + 16;
+                        var buff = ReadBytes(4);
+                        if (FeatureBytes2.SequenceEqual(buff))
+                        {
+                            buff = ReadBytes(4);
+                            if (FeatureBytes1.SequenceEqual(buff))
+                            {
+                                Position -= 16;
+                                var subaddr = DecodeAdr(i + 8, ReadBytes(4));
+                                var rsubaddr = MapVATR(subaddr);
+                                Position = rsubaddr;
+                                codeRegistration = DecodeAdrp(subaddr, ReadBytes(4));
+                                codeRegistration += DecodeAdd(ReadBytes(4));
+                                Position = rsubaddr + 8;
+                                metadataRegistration = DecodeAdrp(subaddr + 8, ReadBytes(4));
+                                metadataRegistration += DecodeAdd(ReadBytes(4));
+                            }
+                        }
+                    }
+                }
+            }
+            if (codeRegistration != 0 && metadataRegistration != 0)
+            {
+                Console.WriteLine("CodeRegistration : {0:x}", codeRegistration);
+                Console.WriteLine("MetadataRegistration : {0:x}", metadataRegistration);
+                Init(codeRegistration, metadataRegistration);
+                return true;
+            }
+            return false;
+        }
+
+        public override bool PlusSearch(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var sectionHelper = GetSectionHelper(methodCount, typeDefinitionsCount, imageCount);
+            var codeRegistration = sectionHelper.FindCodeRegistration();
+            var metadataRegistration = sectionHelper.FindMetadataRegistration();
+            return AutoPlusInit(codeRegistration, metadataRegistration);
+        }
+
+        public override bool SymbolSearch()
+        {
+            return false;
+        }
+
+        public override ulong GetRVA(ulong pointer)
+        {
+            return pointer - vmaddr;
+        }
+
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var data = sections.Where(x => x.sectname == "__const" || x.sectname == "__cstring" || x.sectname == "__data").ToArray();
+            var code = sections.Where(x => x.flags == 0x80000400).ToArray();
+            var bss = sections.Where(x => x.flags == 1u).ToArray();
+            var sectionHelper = new SectionHelper(this, methodCount, typeDefinitionsCount, metadataUsagesCount, imageCount);
+            sectionHelper.SetSection(SearchSectionType.Exec, code);
+            sectionHelper.SetSection(SearchSectionType.Data, data);
+            sectionHelper.SetSection(SearchSectionType.Bss, bss);
+            return sectionHelper;
+        }
+
+        public override bool CheckDump() => false;
+
+        public override ulong ReadUIntPtr()
+        {
+            var pointer = ReadUInt64();
+            if (pointer > vmaddr + 0xFFFFFFFF)
+            {
+                var addr = Position;
+                var section = sections.First(x => addr >= x.offset && addr <= x.offset + x.size);
+                if (section.sectname == "__const" || section.sectname == "__data")
+                {
+                    var rva = pointer - vmaddr;
+                    rva &= 0xFFFFFFFF;
+                    pointer = rva + vmaddr;
+                }
+            }
+            return pointer;
+        }
+    }
+}
