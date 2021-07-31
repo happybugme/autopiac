@@ -11,4 +11,13 @@
 
     public class MachoSection64Bit
     {
-        public st
+        public string sectname;
+        public ulong addr;
+        public ulong size;
+        public ulong offset;
+        public uint flags;
+    }
+
+    public class Fat
+    {
+        public uint offse
