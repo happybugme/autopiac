@@ -10,4 +10,11 @@ namespace Il2CppDumper
         public MachoFat(Stream stream) : base(stream)
         {
             Position += 4;
-            var size = BinaryPrimitives.ReadInt32BigEndian(ReadBytes
+            var size = BinaryPrimitives.ReadInt32BigEndian(ReadBytes(4));
+            fats = new Fat[size];
+            for (var i = 0; i < size; i++)
+            {
+                Position += 8;
+                fats[i] = new Fat
+                {
+                    offset = Bin
