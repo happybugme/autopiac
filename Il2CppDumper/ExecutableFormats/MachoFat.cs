@@ -17,4 +17,7 @@ namespace Il2CppDumper
                 Position += 8;
                 fats[i] = new Fat
                 {
-                    offset = Bin
+                    offset = BinaryPrimitives.ReadUInt32BigEndian(ReadBytes(4)),
+                    size = BinaryPrimitives.ReadUInt32BigEndian(ReadBytes(4))
+                };
+                Position 
