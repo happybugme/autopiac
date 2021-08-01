@@ -20,4 +20,8 @@
 
     public class Fat
     {
-        public uint offse
+        public uint offset;
+        public uint size;
+        public uint magic;
+    }
+}
