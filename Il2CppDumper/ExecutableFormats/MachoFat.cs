@@ -20,4 +20,13 @@ namespace Il2CppDumper
                     offset = BinaryPrimitives.ReadUInt32BigEndian(ReadBytes(4)),
                     size = BinaryPrimitives.ReadUInt32BigEndian(ReadBytes(4))
                 };
-                Position 
+                Position += 4;
+            }
+            for (var i = 0; i < size; i++)
+            {
+                Position = fats[i].offset;
+                fats[i].magic = ReadUInt32();
+            }
+        }
+
+   
