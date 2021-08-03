@@ -29,4 +29,10 @@ namespace Il2CppDumper
             }
         }
 
-   
+        public byte[] GetMacho(int index)
+        {
+            Position = fats[index].offset;
+            return ReadBytes((int)fats[index].size);
+        }
+    }
+}
