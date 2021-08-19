@@ -18,4 +18,8 @@ namespace Il2CppDumper
             }
             Position = dosHeader.Lfanew;
             if (ReadUInt32() != 0x4550u) //Signature
- 
+            {
+                throw new InvalidDataException("ERROR: Invalid PE file");
+            }
+            var fileHeader = ReadClass<FileHeader>();
+            var pos = Positio
