@@ -14,4 +14,8 @@ namespace Il2CppDumper
             var dosHeader = ReadClass<DosHeader>();
             if (dosHeader.Magic != 0x5A4D)
             {
-         
+                throw new InvalidDataException("ERROR: Invalid PE file");
+            }
+            Position = dosHeader.Lfanew;
+            if (ReadUInt32() != 0x4550u) //Signature
+ 
