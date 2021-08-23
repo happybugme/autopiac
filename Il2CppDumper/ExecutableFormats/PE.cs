@@ -22,4 +22,10 @@ namespace Il2CppDumper
                 throw new InvalidDataException("ERROR: Invalid PE file");
             }
             var fileHeader = ReadClass<FileHeader>();
-            var pos = Positio
+            var pos = Position;
+            var magic = ReadUInt16();
+            Position -= 2;
+            if (magic == 0x10b)
+            {
+                Is32Bit = true;
+       
