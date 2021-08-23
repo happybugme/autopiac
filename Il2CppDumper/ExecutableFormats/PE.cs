@@ -28,4 +28,9 @@ namespace Il2CppDumper
             if (magic == 0x10b)
             {
                 Is32Bit = true;
-       
+                var optionalHeader = ReadClass<OptionalHeader>();
+                ImageBase = optionalHeader.ImageBase;
+            }
+            else if (magic == 0x20b)
+            {
+   
