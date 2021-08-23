@@ -33,4 +33,9 @@ namespace Il2CppDumper
             }
             else if (magic == 0x20b)
             {
-   
+                var optionalHeader = ReadClass<OptionalHeader64>();
+                ImageBase = optionalHeader.ImageBase;
+            }
+            else
+            {
+                throw new NotSupportedException($"Inva
