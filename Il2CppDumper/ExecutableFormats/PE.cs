@@ -38,4 +38,7 @@ namespace Il2CppDumper
             }
             else
             {
-                throw new NotSupportedException($"Inva
+                throw new NotSupportedException($"Invalid Optional header magic {magic}");
+            }
+            Position = pos + fileHeader.SizeOfOptionalHeader;
+            sections = ReadClassArray<SectionHeader>(fileHeade
