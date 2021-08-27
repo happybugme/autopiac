@@ -41,4 +41,11 @@ namespace Il2CppDumper
                 throw new NotSupportedException($"Invalid Optional header magic {magic}");
             }
             Position = pos + fileHeader.SizeOfOptionalHeader;
-            sections = ReadClassArray<SectionHeader>(fileHeade
+            sections = ReadClassArray<SectionHeader>(fileHeader.NumberOfSections);
+        }
+
+        public void LoadFromMemory(ulong addr)
+        {
+            ImageBase = addr;
+            foreach (var section in sections)
+            {
