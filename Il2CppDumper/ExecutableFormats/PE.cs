@@ -49,3 +49,9 @@ namespace Il2CppDumper
             ImageBase = addr;
             foreach (var section in sections)
             {
+                section.PointerToRawData = section.VirtualAddress;
+                section.SizeOfRawData = section.VirtualSize;
+            }
+        }
+
+   
