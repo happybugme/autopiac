@@ -72,4 +72,12 @@ namespace Il2CppDumper
             {
                 return 0ul;
             }
-            return addr - section.PointerToRawData + section.VirtualAddress + ImageBas
+            return addr - section.PointerToRawData + section.VirtualAddress + ImageBase;
+        }
+
+        public override bool Search()
+        {
+            return false;
+        }
+
+        public override bool PlusSearch(int methodCount, int typeDefinition
