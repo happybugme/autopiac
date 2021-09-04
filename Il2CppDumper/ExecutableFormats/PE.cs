@@ -62,4 +62,9 @@ namespace Il2CppDumper
             {
                 return 0ul;
             }
-            return addr - section.VirtualAddress + section.PointerToRawDat
+            return addr - section.VirtualAddress + section.PointerToRawData;
+        }
+
+        public override ulong MapRTVA(ulong addr)
+        {
+            var section = sections.FirstOrDefault(x => addr >= x.PointerToRawData && addr <= x.PointerToRawData + x.SizeO
