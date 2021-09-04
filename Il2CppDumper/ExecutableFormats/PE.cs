@@ -80,4 +80,7 @@ namespace Il2CppDumper
             return false;
         }
 
-        public override bool PlusSearch(int methodCount, int typeDefinition
+        public override bool PlusSearch(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var sectionHelper = GetSectionHelper(methodCount, typeDefinitionsCount, imageCount);
+            var codeRegistration = sectionHelper.FindCod
