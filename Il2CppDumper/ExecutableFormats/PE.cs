@@ -88,4 +88,13 @@ namespace Il2CppDumper
             return AutoPlusInit(codeRegistration, metadataRegistration);
         }
 
-  
+        public override bool SymbolSearch()
+        {
+            return false;
+        }
+
+        public override ulong GetRVA(ulong pointer)
+        {
+            return pointer - ImageBase;
+        }
+
