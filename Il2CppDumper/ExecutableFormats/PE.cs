@@ -98,3 +98,7 @@ namespace Il2CppDumper
             return pointer - ImageBase;
         }
 
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var execList = new List<SectionHeader>();
+            var data
