@@ -101,4 +101,9 @@ namespace Il2CppDumper
         public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
         {
             var execList = new List<SectionHeader>();
-            var data
+            var dataList = new List<SectionHeader>();
+            foreach (var section in sections)
+            {
+                switch (section.Characteristics)
+                {
+                    cas
