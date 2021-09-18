@@ -106,4 +106,9 @@ namespace Il2CppDumper
             {
                 switch (section.Characteristics)
                 {
-                    cas
+                    case 0x60000020:
+                        execList.Add(section);
+                        break;
+                    case 0x40000040:
+                    case 0xC0000040:
+            
