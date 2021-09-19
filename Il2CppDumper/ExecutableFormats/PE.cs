@@ -111,4 +111,8 @@ namespace Il2CppDumper
                         break;
                     case 0x40000040:
                     case 0xC0000040:
-            
+                        dataList.Add(section);
+                        break;
+                }
+            }
+            var sectionHelper = new SectionHelper(this, methodCount, typeDefinitions
