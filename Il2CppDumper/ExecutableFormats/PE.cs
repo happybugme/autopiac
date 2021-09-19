@@ -115,4 +115,7 @@ namespace Il2CppDumper
                         break;
                 }
             }
-            var sectionHelper = new SectionHelper(this, methodCount, typeDefinitions
+            var sectionHelper = new SectionHelper(this, methodCount, typeDefinitionsCount, metadataUsagesCount, imageCount);
+            var data = dataList.ToArray();
+            var exec = execList.ToArray();
+            sectionHelper.SetSection(Search
