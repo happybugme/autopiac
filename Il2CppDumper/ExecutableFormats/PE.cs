@@ -120,4 +120,13 @@ namespace Il2CppDumper
             var exec = execList.ToArray();
             sectionHelper.SetSection(SearchSectionType.Exec, ImageBase, exec);
             sectionHelper.SetSection(SearchSectionType.Data, ImageBase, data);
-            sectionHelper.SetSection(SearchSectionType.Bss, ImageBase, data)
+            sectionHelper.SetSection(SearchSectionType.Bss, ImageBase, data);
+            return sectionHelper;
+        }
+
+        public override bool CheckDump()
+        {
+            if (Is32Bit)
+            {
+                return ImageBase != 0x10000000;
+         
