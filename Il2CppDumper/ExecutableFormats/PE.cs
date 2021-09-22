@@ -129,4 +129,11 @@ namespace Il2CppDumper
             if (Is32Bit)
             {
                 return ImageBase != 0x10000000;
-         
+            }
+            else
+            {
+                return ImageBase != 0x180000000;
+            }
+        }
+    }
+}
