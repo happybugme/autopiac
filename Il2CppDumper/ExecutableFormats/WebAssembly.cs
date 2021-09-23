@@ -9,4 +9,10 @@ namespace Il2CppDumper
 
         public WebAssembly(Stream stream) : base(stream)
         {
-            Is32Bit = tru
+            Is32Bit = true;
+            var magic = ReadUInt32();
+            var version = ReadInt32();
+            while (Position < Length)
+            {
+                var id = ReadULeb128();
+                var l
