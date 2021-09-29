@@ -15,4 +15,9 @@ namespace Il2CppDumper
             while (Position < Length)
             {
                 var id = ReadULeb128();
-                var l
+                var len = ReadULeb128();
+                if (id == 11)
+                {
+                    var count = ReadULeb128();
+                    dataSections = new DataSection[count];
+         
