@@ -20,4 +20,8 @@ namespace Il2CppDumper
                 {
                     var count = ReadULeb128();
                     dataSections = new DataSection[count];
-         
+                    for (int i = 0; i < count; i++)
+                    {
+                        var dataSection = new DataSection();
+                        dataSections[i] = dataSection;
+                        dataS
