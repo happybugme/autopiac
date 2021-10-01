@@ -24,4 +24,7 @@ namespace Il2CppDumper
                     {
                         var dataSection = new DataSection();
                         dataSections[i] = dataSection;
-                        dataS
+                        dataSection.Index = ReadULeb128();
+                        var opCode = ReadByte();
+                        if (opCode != 0x41) //i32.const
+                       
