@@ -27,4 +27,9 @@ namespace Il2CppDumper
                         dataSection.Index = ReadULeb128();
                         var opCode = ReadByte();
                         if (opCode != 0x41) //i32.const
-                       
+                        {
+                            throw new InvalidOperationException();
+                        }
+                        dataSection.Offset = ReadULeb128();
+                        opCode = ReadByte();
+     
