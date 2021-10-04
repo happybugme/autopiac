@@ -32,4 +32,8 @@ namespace Il2CppDumper
                         }
                         dataSection.Offset = ReadULeb128();
                         opCode = ReadByte();
-     
+                        if (opCode != 0xB) //end
+                        {
+                            throw new InvalidOperationException();
+                        }
+                  
