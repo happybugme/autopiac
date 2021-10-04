@@ -36,4 +36,12 @@ namespace Il2CppDumper
                         {
                             throw new InvalidOperationException();
                         }
-                  
+                        dataSection.Data = ReadBytes((int)ReadULeb128());
+                    }
+                    break;
+                }
+                Position += len;
+            }
+        }
+
+  
