@@ -44,4 +44,8 @@ namespace Il2CppDumper
             }
         }
 
-  
+        public WebAssemblyMemory CreateMemory()
+        {
+            var last = dataSections[^1];
+            var bssStart = last.Offset + (uint)last.Data.Length;
+            var stream
