@@ -52,4 +52,9 @@ namespace Il2CppDumper
             foreach (var dataSection in dataSections)
             {
                 stream.Position = dataSection.Offset;
-                stream.Write(dat
+                stream.Write(dataSection.Data, 0, dataSection.Data.Length);
+            }
+            return new WebAssemblyMemory(stream, bssStart);
+        }
+    }
+}
