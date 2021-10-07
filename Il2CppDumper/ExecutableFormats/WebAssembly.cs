@@ -48,4 +48,8 @@ namespace Il2CppDumper
         {
             var last = dataSections[^1];
             var bssStart = last.Offset + (uint)last.Data.Length;
-            var stream
+            var stream = new MemoryStream(new byte[Length]);
+            foreach (var dataSection in dataSections)
+            {
+                stream.Position = dataSection.Offset;
+                stream.Write(dat
