@@ -17,4 +17,10 @@ namespace Il2CppDumper
             return addr;
         }
 
-        p
+        public override ulong MapRTVA(ulong addr)
+        {
+            return addr;
+        }
+
+        public override bool PlusSearch(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
