@@ -7,3 +7,14 @@ namespace Il2CppDumper
         private readonly uint bssStart;
 
         public WebAssemblyMemory(Stream stream, uint bssStart) : base(stream)
+        {
+            Is32Bit = true;
+            this.bssStart = bssStart;
+        }
+
+        public override ulong MapVATR(ulong addr)
+        {
+            return addr;
+        }
+
+        p
