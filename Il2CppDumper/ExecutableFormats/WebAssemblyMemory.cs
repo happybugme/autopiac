@@ -24,3 +24,6 @@ namespace Il2CppDumper
 
         public override bool PlusSearch(int methodCount, int typeDefinitionsCount, int imageCount)
         {
+            var sectionHelper = GetSectionHelper(methodCount, typeDefinitionsCount, imageCount);
+            var codeRegistration = sectionHelper.FindCodeRegistration();
+            v
