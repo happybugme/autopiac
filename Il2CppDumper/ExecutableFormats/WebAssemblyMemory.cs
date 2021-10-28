@@ -26,4 +26,8 @@ namespace Il2CppDumper
         {
             var sectionHelper = GetSectionHelper(methodCount, typeDefinitionsCount, imageCount);
             var codeRegistration = sectionHelper.FindCodeRegistration();
-            v
+            var metadataRegistration = sectionHelper.FindMetadataRegistration();
+            return AutoPlusInit(codeRegistration, metadataRegistration);
+        }
+
+        public override bool Sea
