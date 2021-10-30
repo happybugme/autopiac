@@ -30,4 +30,14 @@ namespace Il2CppDumper
             return AutoPlusInit(codeRegistration, metadataRegistration);
         }
 
-        public override bool Sea
+        public override bool Search()
+        {
+            return false;
+        }
+
+        public override bool SymbolSearch()
+        {
+            return false;
+        }
+
+        public override SectionHelper Get
