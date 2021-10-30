@@ -40,4 +40,9 @@ namespace Il2CppDumper
             return false;
         }
 
-        public override SectionHelper Get
+        public override SectionHelper GetSectionHelper(int methodCount, int typeDefinitionsCount, int imageCount)
+        {
+            var exec = new SearchSection
+            {
+                offset = 0,
+                offsetEnd = (ulong)m
