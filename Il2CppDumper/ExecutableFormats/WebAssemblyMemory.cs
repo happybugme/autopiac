@@ -45,4 +45,10 @@ namespace Il2CppDumper
             var exec = new SearchSection
             {
                 offset = 0,
-                offsetEnd = (ulong)m
+                offsetEnd = (ulong)methodCount, //hack
+                address = 0,
+                addressEnd = (ulong)methodCount //hack
+            };
+            var data = new SearchSection
+            {
+                offset 
