@@ -51,4 +51,11 @@ namespace Il2CppDumper
             };
             var data = new SearchSection
             {
-                offset 
+                offset = 1024,
+                offsetEnd = Length,
+                address = 1024,
+                addressEnd = Length
+            };
+            var bss = new SearchSection
+            {
+                
