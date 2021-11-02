@@ -58,4 +58,8 @@ namespace Il2CppDumper
             };
             var bss = new SearchSection
             {
-                
+                offset = bssStart,
+                offsetEnd = long.MaxValue, //hack
+                address = bssStart,
+                addressEnd = long.MaxValue //hack
+      
