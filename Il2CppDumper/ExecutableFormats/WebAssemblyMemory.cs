@@ -64,4 +64,7 @@ namespace Il2CppDumper
                 addressEnd = long.MaxValue //hack
             };
             var sectionHelper = new SectionHelper(this, methodCount, typeDefinitionsCount, metadataUsagesCount, imageCount);
-            sectionHelper.SetSection(SearchSecti
+            sectionHelper.SetSection(SearchSectionType.Exec, exec);
+            sectionHelper.SetSection(SearchSectionType.Data, data);
+            sectionHelper.SetSection(SearchSectionType.Bss, bss);
+            return sect
