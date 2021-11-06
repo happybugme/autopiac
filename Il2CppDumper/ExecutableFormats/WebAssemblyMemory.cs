@@ -62,4 +62,6 @@ namespace Il2CppDumper
                 offsetEnd = long.MaxValue, //hack
                 address = bssStart,
                 addressEnd = long.MaxValue //hack
-      
+            };
+            var sectionHelper = new SectionHelper(this, methodCount, typeDefinitionsCount, metadataUsagesCount, imageCount);
+            sectionHelper.SetSection(SearchSecti
