@@ -67,4 +67,9 @@ namespace Il2CppDumper
             sectionHelper.SetSection(SearchSectionType.Exec, exec);
             sectionHelper.SetSection(SearchSectionType.Data, data);
             sectionHelper.SetSection(SearchSectionType.Bss, bss);
-            return sect
+            return sectionHelper;
+        }
+
+        public override bool CheckDump() => false;
+    }
+}
