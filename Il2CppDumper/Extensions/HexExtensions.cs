@@ -15,4 +15,9 @@ namespace Il2CppDumper
             var result = new StringBuilder(bytes.Length * 8);
             foreach (var b in bytes)
             {
-                result.Insert(0, b.HexToBin())
+                result.Insert(0, b.HexToBin());
+            }
+            return result.ToString();
+        }
+    }
+}
