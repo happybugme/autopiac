@@ -225,3 +225,28 @@ namespace Il2CppDumper
         }
 
         public ulong PointerSize
+        {
+            get => Is32Bit ? 4ul : 8ul;
+        }
+
+        public BinaryReader Reader => reader;
+
+        public BinaryWriter Writer => writer;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                reader.Dispose();
+                writer.Dispose();
+                stream.Close();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+    }
+}
