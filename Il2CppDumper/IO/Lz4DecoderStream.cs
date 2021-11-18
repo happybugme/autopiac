@@ -346,3 +346,196 @@ namespace Il2CppDumper
 
             phase = DecodePhase.ReadToken;
             goto readToken;
+
+        finish:
+            nRead = count - nToRead;
+
+            int nToBuf = nRead < DecBufLen ? nRead : DecBufLen;
+            int repPos = offset - nToBuf;
+
+            if (nToBuf == DecBufLen)
+            {
+                Buffer.BlockCopy(buffer, repPos, decBuf, 0, DecBufLen);
+                decodeBufferPos = 0;
+            }
+            else
+            {
+                int decPos = decodeBufferPos;
+
+                while (nToBuf-- != 0)
+                    decBuf[decPos++ & DecBufMask] = buffer[repPos++];
+
+                decodeBufferPos = decPos & DecBufMask;
+            }
+
+#if LOCAL_SHADOW
+			this.phase = phase;
+			this.inBufPos = inBufPos;
+#endif
+            return nRead;
+        }
+
+        private int ReadByteCore()
+        {
+            var buf = decodeBuffer;
+
+            if (inBufPos == inBufEnd)
+            {
+                int nRead = input.Read(buf, DecBufLen,
+                    InBufLen < inputLength ? InBufLen : (int)inputLength);
+
+#if CHECK_EOF
+                if (nRead == 0)
+                    return -1;
+#endif
+
+                inputLength -= nRead;
+
+                inBufPos = DecBufLen;
+                inBufEnd = DecBufLen + nRead;
+            }
+
+            return buf[inBufPos++];
+        }
+
+        private int ReadOffsetCore()
+        {
+            var buf = decodeBuffer;
+
+            if (inBufPos == inBufEnd)
+            {
+                int nRead = input.Read(buf, DecBufLen,
+                    InBufLen < inputLength ? InBufLen : (int)inputLength);
+
+#if CHECK_EOF
+                if (nRead == 0)
+                    return -1;
+#endif
+
+                inputLength -= nRead;
+
+                inBufPos = DecBufLen;
+                inBufEnd = DecBufLen + nRead;
+            }
+
+            if (inBufEnd - inBufPos == 1)
+            {
+                buf[DecBufLen] = buf[inBufPos];
+
+                int nRead = input.Read(buf, DecBufLen + 1,
+                    InBufLen - 1 < inputLength ? InBufLen - 1 : (int)inputLength);
+
+#if CHECK_EOF
+                if (nRead == 0)
+                {
+                    inBufPos = DecBufLen;
+                    inBufEnd = DecBufLen + 1;
+
+                    return -1;
+                }
+#endif
+
+                inputLength -= nRead;
+
+                inBufPos = DecBufLen;
+                inBufEnd = DecBufLen + nRead + 1;
+            }
+
+            int ret = (buf[inBufPos + 1] << 8) | buf[inBufPos];
+            inBufPos += 2;
+
+            return ret;
+        }
+
+        private int ReadCore(byte[] buffer, int offset, int count)
+        {
+            int nToRead = count;
+
+            var buf = decodeBuffer;
+            int inBufLen = inBufEnd - inBufPos;
+
+            int fromBuf = nToRead < inBufLen ? nToRead : inBufLen;
+            if (fromBuf != 0)
+            {
+                var bufPos = inBufPos;
+
+                for (int c = fromBuf; c-- != 0;)
+                    buffer[offset++] = buf[bufPos++];
+
+                inBufPos = bufPos;
+                nToRead -= fromBuf;
+            }
+
+            if (nToRead != 0)
+            {
+                int nRead;
+
+                if (nToRead >= InBufLen)
+                {
+                    nRead = input.Read(buffer, offset,
+                        nToRead < inputLength ? nToRead : (int)inputLength);
+                    nToRead -= nRead;
+                }
+                else
+                {
+                    nRead = input.Read(buf, DecBufLen,
+                        InBufLen < inputLength ? InBufLen : (int)inputLength);
+
+                    inBufPos = DecBufLen;
+                    inBufEnd = DecBufLen + nRead;
+
+                    fromBuf = nToRead < nRead ? nToRead : nRead;
+
+                    var bufPos = inBufPos;
+
+                    for (int c = fromBuf; c-- != 0;)
+                        buffer[offset++] = buf[bufPos++];
+
+                    inBufPos = bufPos;
+                    nToRead -= fromBuf;
+                }
+
+                inputLength -= nRead;
+            }
+
+            return count - nToRead;
+        }
+
+        #region Stream internals
+
+        public override bool CanRead => true;
+
+        public override bool CanSeek => false;
+
+        public override bool CanWrite => false;
+
+        public override void Flush()
+        {
+        }
+
+        public override long Length => throw new NotSupportedException();
+
+        public override long Position
+        {
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
+}
