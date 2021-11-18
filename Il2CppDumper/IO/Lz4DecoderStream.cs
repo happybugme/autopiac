@@ -166,3 +166,183 @@ namespace Il2CppDumper
 
                 case 0xF:
                     phase = DecodePhase.ReadExLiteralLength;
+                    goto readExLiteralLength;
+
+                default:
+                    phase = DecodePhase.CopyLiteral;
+                    goto copyLiteral;
+            }
+
+        readExLiteralLength:
+            int exLitLen;
+            if (inBufPos < inBufEnd)
+            {
+                exLitLen = decBuf[inBufPos++];
+            }
+            else
+            {
+#if LOCAL_SHADOW
+				this.inBufPos = inBufPos;
+#endif
+                exLitLen = ReadByteCore();
+#if LOCAL_SHADOW
+				inBufPos = this.inBufPos;
+				inBufEnd = this.inBufEnd;
+#endif
+
+#if CHECK_EOF
+                if (exLitLen == -1)
+                    goto finish;
+#endif
+            }
+
+            litLen += exLitLen;
+            if (exLitLen == 255)
+                goto readExLiteralLength;
+
+            phase = DecodePhase.CopyLiteral;
+            goto copyLiteral;
+
+        copyLiteral:
+            int nReadLit = litLen < nToRead ? litLen : nToRead;
+            if (nReadLit != 0)
+            {
+                if (inBufPos + nReadLit <= inBufEnd)
+                {
+                    int ofs = offset;
+
+                    for (int c = nReadLit; c-- != 0;)
+                        buffer[ofs++] = decBuf[inBufPos++];
+
+                    nRead = nReadLit;
+                }
+                else
+                {
+#if LOCAL_SHADOW
+					this.inBufPos = inBufPos;
+#endif
+                    nRead = ReadCore(buffer, offset, nReadLit);
+#if LOCAL_SHADOW
+					inBufPos = this.inBufPos;
+					inBufEnd = this.inBufEnd;
+#endif
+#if CHECK_EOF
+                    if (nRead == 0)
+                        goto finish;
+#endif
+                }
+
+                offset += nRead;
+                nToRead -= nRead;
+
+                litLen -= nRead;
+
+                if (litLen != 0)
+                    goto copyLiteral;
+            }
+
+            if (nToRead == 0)
+                goto finish;
+
+            phase = DecodePhase.ReadOffset;
+            goto readOffset;
+
+        readOffset:
+            if (inBufPos + 1 < inBufEnd)
+            {
+                matDst = (decBuf[inBufPos + 1] << 8) | decBuf[inBufPos];
+                inBufPos += 2;
+            }
+            else
+            {
+#if LOCAL_SHADOW
+				this.inBufPos = inBufPos;
+#endif
+                matDst = ReadOffsetCore();
+#if LOCAL_SHADOW
+				inBufPos = this.inBufPos;
+				inBufEnd = this.inBufEnd;
+#endif
+#if CHECK_EOF
+                if (matDst == -1)
+                    goto finish;
+#endif
+            }
+
+            if (matLen == 15 + 4)
+            {
+                phase = DecodePhase.ReadExMatchLength;
+                goto readExMatchLength;
+            }
+            else
+            {
+                phase = DecodePhase.CopyMatch;
+                goto copyMatch;
+            }
+
+        readExMatchLength:
+            int exMatLen;
+            if (inBufPos < inBufEnd)
+            {
+                exMatLen = decBuf[inBufPos++];
+            }
+            else
+            {
+#if LOCAL_SHADOW
+				this.inBufPos = inBufPos;
+#endif
+                exMatLen = ReadByteCore();
+#if LOCAL_SHADOW
+				inBufPos = this.inBufPos;
+				inBufEnd = this.inBufEnd;
+#endif
+#if CHECK_EOF
+                if (exMatLen == -1)
+                    goto finish;
+#endif
+            }
+
+            matLen += exMatLen;
+            if (exMatLen == 255)
+                goto readExMatchLength;
+
+            phase = DecodePhase.CopyMatch;
+            goto copyMatch;
+
+        copyMatch:
+            int nCpyMat = matLen < nToRead ? matLen : nToRead;
+            if (nCpyMat != 0)
+            {
+                nRead = count - nToRead;
+
+                int bufDst = matDst - nRead;
+                if (bufDst > 0)
+                {
+                    //offset is fairly far back, we need to pull from the buffer
+
+                    int bufSrc = decodeBufferPos - bufDst;
+                    if (bufSrc < 0)
+                        bufSrc += DecBufLen;
+                    int bufCnt = bufDst < nCpyMat ? bufDst : nCpyMat;
+
+                    for (int c = bufCnt; c-- != 0;)
+                        buffer[offset++] = decBuf[bufSrc++ & DecBufMask];
+                }
+                else
+                {
+                    bufDst = 0;
+                }
+
+                int sOfs = offset - matDst;
+                for (int i = bufDst; i < nCpyMat; i++)
+                    buffer[offset++] = buffer[sOfs++];
+
+                nToRead -= nCpyMat;
+                matLen -= nCpyMat;
+            }
+
+            if (nToRead == 0)
+                goto finish;
+
+            phase = DecodePhase.ReadToken;
+            goto readToken;
