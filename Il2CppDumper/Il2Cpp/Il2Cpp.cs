@@ -247,3 +247,91 @@ namespace Il2CppDumper
 
         public T MapVATR<T>(ulong addr) where T : new()
         {
+            return ReadClass<T>(MapVATR(addr));
+        }
+
+        public T[] MapVATR<T>(ulong addr, ulong count) where T : new()
+        {
+            return ReadClassArray<T>(MapVATR(addr), count);
+        }
+
+        public T[] MapVATR<T>(ulong addr, long count) where T : new()
+        {
+            return ReadClassArray<T>(MapVATR(addr), count);
+        }
+
+        public int GetFieldOffsetFromIndex(int typeIndex, int fieldIndexInType, int fieldIndex, bool isValueType, bool isStatic)
+        {
+            try
+            {
+                var offset = -1;
+                if (fieldOffsetsArePointers)
+                {
+                    var ptr = fieldOffsets[typeIndex];
+                    if (ptr > 0)
+                    {
+                        Position = MapVATR(ptr) + 4ul * (ulong)fieldIndexInType;
+                        offset = ReadInt32();
+                    }
+                }
+                else
+                {
+                    offset = (int)fieldOffsets[fieldIndex];
+                }
+                if (offset > 0)
+                {
+                    if (isValueType && !isStatic)
+                    {
+                        if (Is32Bit)
+                        {
+                            offset -= 8;
+                        }
+                        else
+                        {
+                            offset -= 16;
+                        }
+                    }
+                }
+                return offset;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public Il2CppType GetIl2CppType(ulong pointer)
+        {
+            if (!typeDic.TryGetValue(pointer, out var type))
+            {
+                return null;
+            }
+            return type;
+        }
+
+        public ulong GetMethodPointer(string imageName, Il2CppMethodDefinition methodDef)
+        {
+            if (Version >= 24.2)
+            {
+                var methodToken = methodDef.token;
+                var ptrs = codeGenModuleMethodPointers[imageName];
+                var methodPointerIndex = methodToken & 0x00FFFFFFu;
+                return ptrs[methodPointerIndex - 1];
+            }
+            else
+            {
+                var methodIndex = methodDef.methodIndex;
+                if (methodIndex >= 0)
+                {
+                    return methodPointers[methodIndex];
+                }
+            }
+            return 0;
+        }
+
+        public virtual ulong GetRVA(ulong pointer)
+        {
+            return pointer;
+        }
+    }
+}
