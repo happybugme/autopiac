@@ -265,3 +265,40 @@ namespace Il2CppDumper
         public long methodPointerCount;
         public ulong methodPointers;
         [Version(Min = 24.5, Max = 24.5)]
+        [Version(Min = 27.1)]
+        public long adjustorThunkCount;
+        [Version(Min = 24.5, Max = 24.5)]
+        [Version(Min = 27.1)]
+        public ulong adjustorThunks;
+        public ulong invokerIndices;
+        public ulong reversePInvokeWrapperCount;
+        public ulong reversePInvokeWrapperIndices;
+        public long rgctxRangesCount;
+        public ulong rgctxRanges;
+        public long rgctxsCount;
+        public ulong rgctxs;
+        public ulong debuggerMetadata;
+        [Version(Min = 27, Max = 27.2)]
+        public ulong customAttributeCacheGenerator;
+        [Version(Min = 27)]
+        public ulong moduleInitializer;
+        [Version(Min = 27)]
+        public ulong staticConstructorTypeIndices;
+        [Version(Min = 27)]
+        public ulong metadataRegistration; // Per-assembly mode only
+        [Version(Min = 27)]
+        public ulong codeRegistaration; // Per-assembly mode only
+    }
+
+    public class Il2CppRange
+    {
+        public int start;
+        public int length;
+    }
+
+    public class Il2CppTokenRangePair
+    {
+        public uint token;
+        public Il2CppRange range;
+    }
+}
