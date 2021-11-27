@@ -11,4 +11,7 @@ namespace Il2CppDumper
     {
         public Il2CppGlobalMetadataHeader header;
         public Il2CppImageDefinition[] imageDefs;
-        public Il2CppAssemb
+        public Il2CppAssemblyDefinition[] assemblyDefs;
+        public Il2CppTypeDefinition[] typeDefs;
+        public Il2CppMethodDefinition[] methodDefs;
+        public Il2CppParameterDefinition[] pa
