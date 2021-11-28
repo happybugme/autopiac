@@ -14,4 +14,7 @@ namespace Il2CppDumper
         public Il2CppAssemblyDefinition[] assemblyDefs;
         public Il2CppTypeDefinition[] typeDefs;
         public Il2CppMethodDefinition[] methodDefs;
-        public Il2CppParameterDefinition[] pa
+        public Il2CppParameterDefinition[] parameterDefs;
+        public Il2CppFieldDefinition[] fieldDefs;
+        private readonly Dictionary<int, Il2CppFieldDefaultValue> fieldDefaultValuesDic;
+        private readonly Dictionary<int,
