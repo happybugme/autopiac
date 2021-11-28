@@ -22,4 +22,7 @@ namespace Il2CppDumper
         public Il2CppCustomAttributeTypeRange[] attributeTypeRanges;
         public Il2CppCustomAttributeDataRange[] attributeDataRanges;
         private readonly Dictionary<Il2CppImageDefinition, Dictionary<uint, int>> attributeTypeRangesDic;
-        pu
+        public Il2CppStringLiteral[] stringLiterals;
+        private readonly Il2CppMetadataUsageList[] metadataUsageLists;
+        private readonly Il2CppMetadataUsagePair[] metadataUsagePairs;
+        public int
