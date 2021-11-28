@@ -17,4 +17,7 @@ namespace Il2CppDumper
         public Il2CppParameterDefinition[] parameterDefs;
         public Il2CppFieldDefinition[] fieldDefs;
         private readonly Dictionary<int, Il2CppFieldDefaultValue> fieldDefaultValuesDic;
-        private readonly Dictionary<int,
+        private readonly Dictionary<int, Il2CppParameterDefaultValue> parameterDefaultValuesDic;
+        public Il2CppPropertyDefinition[] propertyDefs;
+        public Il2CppCustomAttributeTypeRange[] attributeTypeRanges;
+       
