@@ -20,4 +20,6 @@ namespace Il2CppDumper
         private readonly Dictionary<int, Il2CppParameterDefaultValue> parameterDefaultValuesDic;
         public Il2CppPropertyDefinition[] propertyDefs;
         public Il2CppCustomAttributeTypeRange[] attributeTypeRanges;
-       
+        public Il2CppCustomAttributeDataRange[] attributeDataRanges;
+        private readonly Dictionary<Il2CppImageDefinition, Dictionary<uint, int>> attributeTypeRangesDic;
+        pu
