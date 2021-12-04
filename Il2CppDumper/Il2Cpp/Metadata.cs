@@ -28,4 +28,8 @@ namespace Il2CppDumper
         public int[] attributeTypes;
         public int[] interfaceIndices;
         public Dictionary<Il2CppMetadataUsage, SortedDictionary<uint, uint>> metadataUsageDic;
-        public long metadata
+        public long metadataUsagesCount;
+        public int[] nestedTypeIndices;
+        public Il2CppEventDefinition[] eventDefs;
+        public Il2CppGenericContainer[] genericContainers;
+        public Il2CppFieldRef[] fieldRe
