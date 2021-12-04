@@ -25,4 +25,7 @@ namespace Il2CppDumper
         public Il2CppStringLiteral[] stringLiterals;
         private readonly Il2CppMetadataUsageList[] metadataUsageLists;
         private readonly Il2CppMetadataUsagePair[] metadataUsagePairs;
-        public int
+        public int[] attributeTypes;
+        public int[] interfaceIndices;
+        public Dictionary<Il2CppMetadataUsage, SortedDictionary<uint, uint>> metadataUsageDic;
+        public long metadata
