@@ -32,4 +32,8 @@ namespace Il2CppDumper
         public int[] nestedTypeIndices;
         public Il2CppEventDefinition[] eventDefs;
         public Il2CppGenericContainer[] genericContainers;
-        public Il2CppFieldRef[] fieldRe
+        public Il2CppFieldRef[] fieldRefs;
+        public Il2CppGenericParameter[] genericParameters;
+        public int[] constraintIndices;
+        public uint[] vtableMethods;
+   
