@@ -36,4 +36,10 @@ namespace Il2CppDumper
         public Il2CppGenericParameter[] genericParameters;
         public int[] constraintIndices;
         public uint[] vtableMethods;
-   
+        public Il2CppRGCTXDefinition[] rgctxEntries;
+
+        private readonly Dictionary<uint, string> stringCache = new();
+
+        public Metadata(Stream stream) : base(stream)
+        {
+       
