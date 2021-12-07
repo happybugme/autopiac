@@ -50,4 +50,8 @@ namespace Il2CppDumper
             var version = ReadInt32();
             if (version < 0 || version > 1000)
             {
-                throw new InvalidDataException("ERROR: Metadata file supplied is 
+                throw new InvalidDataException("ERROR: Metadata file supplied is not valid metadata file.");
+            }
+            if (version < 16 || version > 29)
+            {
+                throw new NotSupportedException($"ERROR: Metadata file supplied is no
