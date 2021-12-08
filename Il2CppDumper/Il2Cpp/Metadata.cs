@@ -54,4 +54,8 @@ namespace Il2CppDumper
             }
             if (version < 16 || version > 29)
             {
-                throw new NotSupportedException($"ERROR: Metadata file supplied is no
+                throw new NotSupportedException($"ERROR: Metadata file supplied is not a supported version[{version}].");
+            }
+            Version = version;
+            header = ReadClass<Il2CppGlobalMetadataHeader>(0);
+            if (ve
