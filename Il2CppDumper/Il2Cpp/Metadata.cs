@@ -58,4 +58,10 @@ namespace Il2CppDumper
             }
             Version = version;
             header = ReadClass<Il2CppGlobalMetadataHeader>(0);
-            if (ve
+            if (version == 24)
+            {
+                if (header.stringLiteralOffset == 264)
+                {
+                    Version = 24.2;
+                    header = ReadClass<Il2CppGlobalMetadataHeader>(0);
+          
