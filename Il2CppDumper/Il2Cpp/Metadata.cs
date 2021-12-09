@@ -93,4 +93,5 @@ namespace Il2CppDumper
             {
                 Version = 24.1;
             }
-            typeDefs = ReadMetadataClass
+            typeDefs = ReadMetadataClassArray<Il2CppTypeDefinition>(header.typeDefinitionsOffset, header.typeDefinitionsSize);
+            methodDefs = ReadMetadataClassArray<Il2CppMethodDefinition>(header.methodsOffset, header.method
