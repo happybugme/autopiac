@@ -83,4 +83,9 @@ namespace Il2CppDumper
             if (Version == 24.1 && header.assembliesSize / 64 == imageDefs.Length)
             {
                 v241Plus = true;
-     
+            }
+            if (v241Plus)
+            {
+                Version = 24.4;
+            }
+            assemblyDefs = ReadMetadataClassArray<Il2CppAssemblyDefinition>(head
