@@ -64,4 +64,8 @@ namespace Il2CppDumper
                 {
                     Version = 24.2;
                     header = ReadClass<Il2CppGlobalMetadataHeader>(0);
-          
+                }
+                else
+                {
+                    imageDefs = ReadMetadataClassArray<Il2CppImageDefinition>(header.imagesOffset, header.imagesSize);
+                 
