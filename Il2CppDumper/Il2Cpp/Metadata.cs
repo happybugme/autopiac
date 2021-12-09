@@ -68,4 +68,10 @@ namespace Il2CppDumper
                 else
                 {
                     imageDefs = ReadMetadataClassArray<Il2CppImageDefinition>(header.imagesOffset, header.imagesSize);
-                 
+                    if (imageDefs.Any(x => x.token != 1))
+                    {
+                        Version = 24.1;
+                    }
+                }
+            }
+            imageDefs =
