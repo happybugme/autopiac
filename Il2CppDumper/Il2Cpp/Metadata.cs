@@ -88,4 +88,9 @@ namespace Il2CppDumper
             {
                 Version = 24.4;
             }
-            assemblyDefs = ReadMetadataClassArray<Il2CppAssemblyDefinition>(head
+            assemblyDefs = ReadMetadataClassArray<Il2CppAssemblyDefinition>(header.assembliesOffset, header.assembliesSize);
+            if (v241Plus)
+            {
+                Version = 24.1;
+            }
+            typeDefs = ReadMetadataClass
