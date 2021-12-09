@@ -94,4 +94,6 @@ namespace Il2CppDumper
                 Version = 24.1;
             }
             typeDefs = ReadMetadataClassArray<Il2CppTypeDefinition>(header.typeDefinitionsOffset, header.typeDefinitionsSize);
-            methodDefs = ReadMetadataClassArray<Il2CppMethodDefinition>(header.methodsOffset, header.method
+            methodDefs = ReadMetadataClassArray<Il2CppMethodDefinition>(header.methodsOffset, header.methodsSize);
+            parameterDefs = ReadMetadataClassArray<Il2CppParameterDefinition>(header.parametersOffset, header.parametersSize);
+            fieldDefs = Rea
