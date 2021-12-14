@@ -100,4 +100,6 @@ namespace Il2CppDumper
             var fieldDefaultValues = ReadMetadataClassArray<Il2CppFieldDefaultValue>(header.fieldDefaultValuesOffset, header.fieldDefaultValuesSize);
             var parameterDefaultValues = ReadMetadataClassArray<Il2CppParameterDefaultValue>(header.parameterDefaultValuesOffset, header.parameterDefaultValuesSize);
             fieldDefaultValuesDic = fieldDefaultValues.ToDictionary(x => x.fieldIndex);
-            parameterDefaultValuesDic = parameterDefaultValues.ToDictionary(x => x.par
+            parameterDefaultValuesDic = parameterDefaultValues.ToDictionary(x => x.parameterIndex);
+            propertyDefs = ReadMetadataClassArray<Il2CppPropertyDefinition>(header.propertiesOffset, header.propertiesSize);
+            interfaceIndices = ReadClassArray
