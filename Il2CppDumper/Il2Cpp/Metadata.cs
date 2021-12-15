@@ -102,4 +102,6 @@ namespace Il2CppDumper
             fieldDefaultValuesDic = fieldDefaultValues.ToDictionary(x => x.fieldIndex);
             parameterDefaultValuesDic = parameterDefaultValues.ToDictionary(x => x.parameterIndex);
             propertyDefs = ReadMetadataClassArray<Il2CppPropertyDefinition>(header.propertiesOffset, header.propertiesSize);
-            interfaceIndices = ReadClassArray
+            interfaceIndices = ReadClassArray<int>(header.interfacesOffset, header.interfacesSize / 4);
+            nestedTypeIndices = ReadClassArray<int>(header.nestedTypesOffset, header.nestedTypesSize / 4);
+            eventDefs = Re
