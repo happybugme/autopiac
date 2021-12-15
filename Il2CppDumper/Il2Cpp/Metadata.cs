@@ -104,4 +104,5 @@ namespace Il2CppDumper
             propertyDefs = ReadMetadataClassArray<Il2CppPropertyDefinition>(header.propertiesOffset, header.propertiesSize);
             interfaceIndices = ReadClassArray<int>(header.interfacesOffset, header.interfacesSize / 4);
             nestedTypeIndices = ReadClassArray<int>(header.nestedTypesOffset, header.nestedTypesSize / 4);
-            eventDefs = Re
+            eventDefs = ReadMetadataClassArray<Il2CppEventDefinition>(header.eventsOffset, header.eventsSize);
+            genericContainers = ReadMetadataClassArray<Il2CppGenericContainer>(header.generi
