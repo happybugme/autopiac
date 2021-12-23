@@ -115,4 +115,5 @@ namespace Il2CppDumper
                 fieldRefs = ReadMetadataClassArray<Il2CppFieldRef>(header.fieldRefsOffset, header.fieldRefsSize);
                 if (Version < 27)
                 {
-  
+                    metadataUsageLists = ReadMetadataClassArray<Il2CppMetadataUsageList>(header.metadataUsageListsOffset, header.metadataUsageListsCount);
+                    metadataUsagePairs 
