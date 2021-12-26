@@ -120,4 +120,7 @@ namespace Il2CppDumper
 
                     ProcessingMetadataUsage();
                 }
-    
+            }
+            if (Version > 20 && Version < 29)
+            {
+                attributeTypeRanges = ReadMetadataClassArray<Il2CppCustomAttributeTypeRange>(header.attribu
