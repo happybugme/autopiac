@@ -116,4 +116,8 @@ namespace Il2CppDumper
                 if (Version < 27)
                 {
                     metadataUsageLists = ReadMetadataClassArray<Il2CppMetadataUsageList>(header.metadataUsageListsOffset, header.metadataUsageListsCount);
-                    metadataUsagePairs 
+                    metadataUsagePairs = ReadMetadataClassArray<Il2CppMetadataUsagePair>(header.metadataUsagePairsOffset, header.metadataUsagePairsCount);
+
+                    ProcessingMetadataUsage();
+                }
+    
