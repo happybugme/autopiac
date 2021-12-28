@@ -128,4 +128,9 @@ namespace Il2CppDumper
             }
             if (Version >= 29)
             {
-                attributeDataRanges = ReadMetadataClassArray<Il2CppCustomAttributeDataRange>(header.attributeDataRangeOffset, header.attributeDataRan
+                attributeDataRanges = ReadMetadataClassArray<Il2CppCustomAttributeDataRange>(header.attributeDataRangeOffset, header.attributeDataRangeSize);
+            }
+            if (Version > 24)
+            {
+                attributeTypeRangesDic = new Dictionary<Il2CppImageDefinition, Dictionary<uint, int>>();
+                foreach 
