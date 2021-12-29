@@ -133,4 +133,8 @@ namespace Il2CppDumper
             if (Version > 24)
             {
                 attributeTypeRangesDic = new Dictionary<Il2CppImageDefinition, Dictionary<uint, int>>();
-                foreach 
+                foreach (var imageDef in imageDefs)
+                {
+                    var dic = new Dictionary<uint, int>();
+                    attributeTypeRangesDic[imageDef] = dic;
+                    var end = im
