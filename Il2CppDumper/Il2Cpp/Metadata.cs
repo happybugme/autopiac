@@ -137,4 +137,6 @@ namespace Il2CppDumper
                 {
                     var dic = new Dictionary<uint, int>();
                     attributeTypeRangesDic[imageDef] = dic;
-                    var end = im
+                    var end = imageDef.customAttributeStart + imageDef.customAttributeCount;
+                    for (int i = imageDef.customAttributeStart; i < end; i++)
+                    {
