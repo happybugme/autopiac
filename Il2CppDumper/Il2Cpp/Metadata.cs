@@ -140,3 +140,8 @@ namespace Il2CppDumper
                     var end = imageDef.customAttributeStart + imageDef.customAttributeCount;
                     for (int i = imageDef.customAttributeStart; i < end; i++)
                     {
+                        if (Version >= 29)
+                        {
+                            dic.Add(attributeDataRanges[i].token, i);
+                        }
+               
