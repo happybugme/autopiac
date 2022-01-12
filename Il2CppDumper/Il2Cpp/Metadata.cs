@@ -174,4 +174,9 @@ namespace Il2CppDumper
 
         public uint GetDefaultValueFromIndex(int index)
         {
-            return (ui
+            return (uint)(header.fieldAndParameterDefaultValueDataOffset + index);
+        }
+
+        public string GetStringFromIndex(uint index)
+        {
+            if (!stringCache.TryGetValue(in
