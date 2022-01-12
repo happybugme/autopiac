@@ -168,4 +168,10 @@ namespace Il2CppDumper
         }
 
         public bool GetParameterDefaultValueFromIndex(int index, out Il2CppParameterDefaultValue value)
-        
+        {
+            return parameterDefaultValuesDic.TryGetValue(index, out value);
+        }
+
+        public uint GetDefaultValueFromIndex(int index)
+        {
+            return (ui
