@@ -179,4 +179,9 @@ namespace Il2CppDumper
 
         public string GetStringFromIndex(uint index)
         {
-            if (!stringCache.TryGetValue(in
+            if (!stringCache.TryGetValue(index, out var result))
+            {
+                result = ReadStringToNull(header.stringOffset + index);
+                stringCache.Add(index, result);
+            }
+            return re
