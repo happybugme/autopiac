@@ -153,4 +153,10 @@ namespace Il2CppDumper
             }
             if (Version <= 24.1)
             {
-                rgctxEntries = ReadMetadataClassArray<Il2CppRGCTXDefinition>(header.rgctxEntriesOffset, header.rgctxEntriesCoun
+                rgctxEntries = ReadMetadataClassArray<Il2CppRGCTXDefinition>(header.rgctxEntriesOffset, header.rgctxEntriesCount);
+            }
+        }
+
+        private T[] ReadMetadataClassArray<T>(uint addr, int count) where T : new()
+        {
+            return ReadClassArray<T>(addr, cou
