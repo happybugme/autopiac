@@ -164,4 +164,8 @@ namespace Il2CppDumper
 
         public bool GetFieldDefaultValueFromIndex(int index, out Il2CppFieldDefaultValue value)
         {
-            return fieldDefaultValuesDic
+            return fieldDefaultValuesDic.TryGetValue(index, out value);
+        }
+
+        public bool GetParameterDefaultValueFromIndex(int index, out Il2CppParameterDefaultValue value)
+        
