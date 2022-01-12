@@ -184,4 +184,11 @@ namespace Il2CppDumper
                 result = ReadStringToNull(header.stringOffset + index);
                 stringCache.Add(index, result);
             }
-            return re
+            return result;
+        }
+
+        public int GetCustomAttributeIndex(Il2CppImageDefinition imageDef, int customAttributeIndex, uint token)
+        {
+            if (Version > 24)
+            {
+       
