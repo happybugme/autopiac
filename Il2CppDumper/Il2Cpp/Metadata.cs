@@ -159,4 +159,9 @@ namespace Il2CppDumper
 
         private T[] ReadMetadataClassArray<T>(uint addr, int count) where T : new()
         {
-            return ReadClassArray<T>(addr, cou
+            return ReadClassArray<T>(addr, count / SizeOf(typeof(T)));
+        }
+
+        public bool GetFieldDefaultValueFromIndex(int index, out Il2CppFieldDefaultValue value)
+        {
+            return fieldDefaultValuesDic
