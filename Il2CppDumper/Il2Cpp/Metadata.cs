@@ -150,3 +150,7 @@ namespace Il2CppDumper
                         }
                     }
                 }
+            }
+            if (Version <= 24.1)
+            {
+                rgctxEntries = ReadMetadataClassArray<Il2CppRGCTXDefinition>(header.rgctxEntriesOffset, header.rgctxEntriesCoun
