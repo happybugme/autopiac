@@ -144,4 +144,9 @@ namespace Il2CppDumper
                         {
                             dic.Add(attributeDataRanges[i].token, i);
                         }
-               
+                        else
+                        {
+                            dic.Add(attributeTypeRanges[i].token, i);
+                        }
+                    }
+                }
