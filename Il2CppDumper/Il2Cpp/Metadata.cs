@@ -197,4 +197,13 @@ namespace Il2CppDumper
                 }
                 else
                 {
-                
+                    return -1;
+                }
+            }
+            else
+            {
+                return customAttributeIndex;
+            }
+        }
+
+        public string Ge
