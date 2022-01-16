@@ -206,4 +206,7 @@ namespace Il2CppDumper
             }
         }
 
-        public string Ge
+        public string GetStringLiteralFromIndex(uint index)
+        {
+            var stringLiteral = stringLiterals[index];
+            Position = (uint)(header.stringLiteralDataOffset + stringLit
