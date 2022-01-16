@@ -209,4 +209,10 @@ namespace Il2CppDumper
         public string GetStringLiteralFromIndex(uint index)
         {
             var stringLiteral = stringLiterals[index];
-            Position = (uint)(header.stringLiteralDataOffset + stringLit
+            Position = (uint)(header.stringLiteralDataOffset + stringLiteral.dataIndex);
+            return Encoding.UTF8.GetString(ReadBytes((int)stringLiteral.length));
+        }
+
+        private void ProcessingMetadataUsage()
+        {
+         
