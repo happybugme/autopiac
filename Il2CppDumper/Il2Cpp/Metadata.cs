@@ -215,4 +215,7 @@ namespace Il2CppDumper
 
         private void ProcessingMetadataUsage()
         {
-         
+            metadataUsageDic = new Dictionary<Il2CppMetadataUsage, SortedDictionary<uint, uint>>();
+            for (uint i = 1; i <= 6; i++)
+            {
+                metadataUsageDic[(Il2CppMetada
