@@ -222,4 +222,9 @@ namespace Il2CppDumper
             }
             foreach (var metadataUsageList in metadataUsageLists)
             {
-                for (int i = 0; i <
+                for (int i = 0; i < metadataUsageList.count; i++)
+                {
+                    var offset = metadataUsageList.start + i;
+                    if (offset >= metadataUsagePairs.Length)
+                    {
+               
