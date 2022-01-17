@@ -227,4 +227,7 @@ namespace Il2CppDumper
                     var offset = metadataUsageList.start + i;
                     if (offset >= metadataUsagePairs.Length)
                     {
-               
+                        continue;
+                    }
+                    var metadataUsagePair = metadataUsagePairs[offset];
+                    var usage = GetEncodedIndexType(metadataUsagePair.encodedSo
