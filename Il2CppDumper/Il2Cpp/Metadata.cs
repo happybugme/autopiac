@@ -218,4 +218,8 @@ namespace Il2CppDumper
             metadataUsageDic = new Dictionary<Il2CppMetadataUsage, SortedDictionary<uint, uint>>();
             for (uint i = 1; i <= 6; i++)
             {
-                metadataUsageDic[(Il2CppMetada
+                metadataUsageDic[(Il2CppMetadataUsage)i] = new SortedDictionary<uint, uint>();
+            }
+            foreach (var metadataUsageList in metadataUsageLists)
+            {
+                for (int i = 0; i <
