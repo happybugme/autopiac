@@ -230,4 +230,6 @@ namespace Il2CppDumper
                         continue;
                     }
                     var metadataUsagePair = metadataUsagePairs[offset];
-                    var usage = GetEncodedIndexType(metadataUsagePair.encodedSo
+                    var usage = GetEncodedIndexType(metadataUsagePair.encodedSourceIndex);
+                    var decodedIndex = GetDecodedMethodIndex(metadataUsagePair.encodedSourceIndex);
+                    metadataUsageDic[(Il2CppMetadataUsage)usage][meta
