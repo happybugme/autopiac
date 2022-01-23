@@ -232,4 +232,7 @@ namespace Il2CppDumper
                     var metadataUsagePair = metadataUsagePairs[offset];
                     var usage = GetEncodedIndexType(metadataUsagePair.encodedSourceIndex);
                     var decodedIndex = GetDecodedMethodIndex(metadataUsagePair.encodedSourceIndex);
-                    metadataUsageDic[(Il2CppMetadataUsage)usage][meta
+                    metadataUsageDic[(Il2CppMetadataUsage)usage][metadataUsagePair.destinationIndex] = decodedIndex;
+                }
+            }
+            //metadataUsagesCount = metadataUsagePairs.Max(x => x.destinationInde
