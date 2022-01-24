@@ -239,4 +239,13 @@ namespace Il2CppDumper
             metadataUsagesCount = metadataUsageDic.Max(x => x.Value.Select(y => y.Key).DefaultIfEmpty().Max()) + 1;
         }
 
-        public static uint GetEncodedIndexType(uint inde
+        public static uint GetEncodedIndexType(uint index)
+        {
+            return (index & 0xE0000000) >> 29;
+        }
+
+        public uint GetDecodedMethodIndex(uint index)
+        {
+            if (Version >= 27)
+            {
+   
