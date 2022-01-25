@@ -248,4 +248,11 @@ namespace Il2CppDumper
         {
             if (Version >= 27)
             {
-   
+                return (index & 0x1FFFFFFEU) >> 1;
+            }
+            return index & 0x1FFFFFFFU;
+        }
+
+        public int SizeOf(Type type)
+        {
+            va
