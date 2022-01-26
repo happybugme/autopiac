@@ -255,4 +255,8 @@ namespace Il2CppDumper
 
         public int SizeOf(Type type)
         {
-            va
+            var size = 0;
+            foreach (var i in type.GetFields())
+            {
+                var attr = (VersionAttribute)Attribute.GetCustomAttribute(i, typeof(VersionAttribute));
+   
