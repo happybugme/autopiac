@@ -264,4 +264,9 @@ namespace Il2CppDumper
                     if (Version < attr.Min || Version > attr.Max)
                         continue;
                 }
-               
+                var fieldType = i.FieldType;
+                if (fieldType.IsPrimitive)
+                {
+                    size += GetPrimitiveTypeSize(fieldType.Name);
+                }
+          
