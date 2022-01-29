@@ -269,4 +269,8 @@ namespace Il2CppDumper
                 {
                     size += GetPrimitiveTypeSize(fieldType.Name);
                 }
+                else if (fieldType.IsEnum)
+                {
+                    var e = fieldType.GetField("value__").FieldType;
+                    size += GetPrimitiveTypeSize(e.Name);
           
