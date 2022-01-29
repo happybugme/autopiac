@@ -273,4 +273,8 @@ namespace Il2CppDumper
                 {
                     var e = fieldType.GetField("value__").FieldType;
                     size += GetPrimitiveTypeSize(e.Name);
-          
+                }
+                else if (fieldType.IsArray)
+                {
+                    var arrayLengthAttribute = i.GetCustomAttribute<ArrayLengthAttribute>();
+                  
