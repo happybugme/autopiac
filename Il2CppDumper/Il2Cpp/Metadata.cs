@@ -284,4 +284,11 @@ namespace Il2CppDumper
                     size += SizeOf(fieldType);
                 }
             }
-            re
+            return size;
+
+            static int GetPrimitiveTypeSize(string name)
+            {
+                return name switch
+                {
+                    "Int32" or "UInt32" => 4,
+                    "Int16" or "UInt
