@@ -277,4 +277,11 @@ namespace Il2CppDumper
                 else if (fieldType.IsArray)
                 {
                     var arrayLengthAttribute = i.GetCustomAttribute<ArrayLengthAttribute>();
-                  
+                    size += arrayLengthAttribute.Length;
+                }
+                else
+                {
+                    size += SizeOf(fieldType);
+                }
+            }
+            re
