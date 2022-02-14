@@ -291,4 +291,10 @@ namespace Il2CppDumper
                 return name switch
                 {
                     "Int32" or "UInt32" => 4,
-                    "Int16" or "UInt
+                    "Int16" or "UInt16" => 2,
+                    _ => 0,
+                };
+            }
+        }
+    }
+}
