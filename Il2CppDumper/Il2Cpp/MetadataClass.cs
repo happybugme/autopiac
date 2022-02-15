@@ -282,3 +282,138 @@ namespace Il2CppDumper
     {
         public int fieldIndex;
         public int typeIndex;
+        public int dataIndex;
+    }
+
+    public class Il2CppPropertyDefinition
+    {
+        public uint nameIndex;
+        public int get;
+        public int set;
+        public uint attrs;
+        [Version(Max = 24)]
+        public int customAttributeIndex;
+        [Version(Min = 19)]
+        public uint token;
+    }
+
+    public class Il2CppCustomAttributeTypeRange
+    {
+        [Version(Min = 24.1)]
+        public uint token;
+        public int start;
+        public int count;
+    }
+
+    public class Il2CppMetadataUsageList
+    {
+        public uint start;
+        public uint count;
+    }
+
+    public class Il2CppMetadataUsagePair
+    {
+        public uint destinationIndex;
+        public uint encodedSourceIndex;
+    }
+
+    public class Il2CppStringLiteral
+    {
+        public uint length;
+        public int dataIndex;
+    }
+
+    public class Il2CppParameterDefaultValue
+    {
+        public int parameterIndex;
+        public int typeIndex;
+        public int dataIndex;
+    }
+
+    public class Il2CppEventDefinition
+    {
+        public uint nameIndex;
+        public int typeIndex;
+        public int add;
+        public int remove;
+        public int raise;
+        [Version(Max = 24)]
+        public int customAttributeIndex;
+        [Version(Min = 19)]
+        public uint token;
+    }
+
+    public class Il2CppGenericContainer
+    {
+        /* index of the generic type definition or the generic method definition corresponding to this container */
+        public int ownerIndex; // either index into Il2CppClass metadata array or Il2CppMethodDefinition array
+        public int type_argc;
+        /* If true, we're a generic method, otherwise a generic type definition. */
+        public int is_method;
+        /* Our type parameters. */
+        public int genericParameterStart;
+    }
+
+    public class Il2CppFieldRef
+    {
+        public int typeIndex;
+        public int fieldIndex; // local offset into type fields
+    }
+
+    public class Il2CppGenericParameter
+    {
+        public int ownerIndex;  /* Type or method this parameter was defined in. */
+        public uint nameIndex;
+        public short constraintsStart;
+        public short constraintsCount;
+        public ushort num;
+        public ushort flags;
+    }
+
+    public enum Il2CppRGCTXDataType
+    {
+        IL2CPP_RGCTX_DATA_INVALID,
+        IL2CPP_RGCTX_DATA_TYPE,
+        IL2CPP_RGCTX_DATA_CLASS,
+        IL2CPP_RGCTX_DATA_METHOD,
+        IL2CPP_RGCTX_DATA_ARRAY,
+        IL2CPP_RGCTX_DATA_CONSTRAINED,
+    }
+
+    public class Il2CppRGCTXDefinitionData
+    {
+        public int rgctxDataDummy;
+        public int methodIndex => rgctxDataDummy;
+        public int typeIndex => rgctxDataDummy;
+    }
+
+    public class Il2CppRGCTXDefinition
+    {
+        public Il2CppRGCTXDataType type => type_post29 == 0 ? (Il2CppRGCTXDataType)type_pre29 : (Il2CppRGCTXDataType)type_post29;
+        [Version(Max = 27.1)]
+        public int type_pre29;
+        [Version(Min = 29)]
+        public ulong type_post29;
+        [Version(Max = 27.1)]
+        public Il2CppRGCTXDefinitionData data;
+        [Version(Min = 27.2)]
+        public ulong _data;
+    }
+
+    public enum Il2CppMetadataUsage
+    {
+        kIl2CppMetadataUsageInvalid,
+        kIl2CppMetadataUsageTypeInfo,
+        kIl2CppMetadataUsageIl2CppType,
+        kIl2CppMetadataUsageMethodDef,
+        kIl2CppMetadataUsageFieldInfo,
+        kIl2CppMetadataUsageStringLiteral,
+        kIl2CppMetadataUsageMethodRef,
+    };
+
+    public class Il2CppCustomAttributeDataRange
+    {
+        public uint token;
+        public uint startOffset;
+    }
+}
