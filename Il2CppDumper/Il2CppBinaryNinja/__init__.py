@@ -11,4 +11,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
         BackgroundTaskThread.__init__(self, "Il2Cpp start", True)
         self.bv = bv
         self.script_path = script_path
-        self.he
+        self.header_path = header_path
+        self.has_types = False
+    
+    def process_header(self):
+        self.progress = "Il2Cpp types (1/3)"
+        with open(self.header_path) as f
