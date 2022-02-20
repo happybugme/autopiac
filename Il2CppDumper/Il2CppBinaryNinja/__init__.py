@@ -25,4 +25,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
             if i % 100 == 0:
                 percent = i / length * 100
                 self.progress = f"Il2Cpp types: {percent:.2f}%"
-            if self.bv.get_type
+            if self.bv.get_type_by_name(name):
+                continue
+            self.bv.define_user_type(name, result.types[name])
+    
+    def process_methods(self, data: dict):
+  
