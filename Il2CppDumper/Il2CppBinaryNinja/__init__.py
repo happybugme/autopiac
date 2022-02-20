@@ -16,4 +16,10 @@ class Il2CppProcessTask(BackgroundTaskThread):
     
     def process_header(self):
         self.progress = "Il2Cpp types (1/3)"
-        with open(self.header_path) as f
+        with open(self.header_path) as f:
+            result = self.bv.parse_types_from_string(f.read())
+        length = len(result.types)
+        i = 0
+        for name in result.types:
+            i += 1
+ 
