@@ -34,4 +34,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
         scriptMethods = data["ScriptMethod"]
         length = len(scriptMethods)
         i = 0
-        for scriptMethod in scriptMet
+        for scriptMethod in scriptMethods:
+            if self.cancelled:
+                self.progress = "Il2Cpp cancelled, aborting"
+                return
+            i += 1
+            if i % 100 == 0:
