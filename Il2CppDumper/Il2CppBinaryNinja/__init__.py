@@ -30,4 +30,8 @@ class Il2CppProcessTask(BackgroundTaskThread):
             self.bv.define_user_type(name, result.types[name])
     
     def process_methods(self, data: dict):
-  
+        self.progress = f"Il2Cpp methods (2/3)"
+        scriptMethods = data["ScriptMethod"]
+        length = len(scriptMethods)
+        i = 0
+        for scriptMethod in scriptMet
