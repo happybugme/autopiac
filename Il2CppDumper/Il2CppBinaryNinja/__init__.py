@@ -40,3 +40,7 @@ class Il2CppProcessTask(BackgroundTaskThread):
                 return
             i += 1
             if i % 100 == 0:
+                percent = i / length * 100
+                self.progress = f"Il2Cpp methods: {percent:.2f}%"
+            addr = get_addr(self.bv, scriptMethod["Address"])
+            n
