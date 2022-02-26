@@ -43,4 +43,7 @@ class Il2CppProcessTask(BackgroundTaskThread):
                 percent = i / length * 100
                 self.progress = f"Il2Cpp methods: {percent:.2f}%"
             addr = get_addr(self.bv, scriptMethod["Address"])
-            n
+            name = scriptMethod["Name"].replace("$", "_").replace(".", "_")
+            signature = scriptMethod["Signature"]
+            func = self.bv.get_function_at(addr)
+            if func
