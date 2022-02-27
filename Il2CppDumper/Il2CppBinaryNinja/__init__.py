@@ -46,4 +46,8 @@ class Il2CppProcessTask(BackgroundTaskThread):
             name = scriptMethod["Name"].replace("$", "_").replace(".", "_")
             signature = scriptMethod["Signature"]
             func = self.bv.get_function_at(addr)
-            if func
+            if func != None:
+                if func.name == name:
+                    continue
+                if self.has_types:
+                    func.function_type =
