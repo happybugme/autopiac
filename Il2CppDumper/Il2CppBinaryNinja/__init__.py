@@ -50,4 +50,10 @@ class Il2CppProcessTask(BackgroundTaskThread):
                 if func.name == name:
                     continue
                 if self.has_types:
-                    func.function_type =
+                    func.function_type = signature
+                else:
+                    func.name = scriptMethod["Name"]
+        
+    def process_strings(self, data: dict):
+        self.progress = "Il2Cpp strings (3/3)"
+   
