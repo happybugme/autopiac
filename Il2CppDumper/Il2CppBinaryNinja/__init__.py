@@ -56,4 +56,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
         
     def process_strings(self, data: dict):
         self.progress = "Il2Cpp strings (3/3)"
-   
+        scriptStrings = data["ScriptString"]
+        i = 0
+        for scriptString in scriptStrings:
+            i += 1
+            if self.cancelled:
+                self.progress = "Il2Cpp cancelled, abort
