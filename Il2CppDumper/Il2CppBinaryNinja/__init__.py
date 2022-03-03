@@ -61,4 +61,8 @@ class Il2CppProcessTask(BackgroundTaskThread):
         for scriptString in scriptStrings:
             i += 1
             if self.cancelled:
-                self.progress = "Il2Cpp cancelled, abort
+                self.progress = "Il2Cpp cancelled, aborting"
+                return
+            addr = get_addr(self.bv, scriptString["Address"])
+            value = scriptString["Value"]
+            var = self.bv.get_data_var_at(a
