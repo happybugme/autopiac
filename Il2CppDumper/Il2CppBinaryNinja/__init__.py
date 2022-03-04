@@ -65,4 +65,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
                 return
             addr = get_addr(self.bv, scriptString["Address"])
             value = scriptString["Value"]
-            var = self.bv.get_data_var_at(a
+            var = self.bv.get_data_var_at(addr)
+            if var != None:
+                var.name = f"StringLiteral_{i}"
+            self.bv.set_comment_at(addr, value)
+    
+    def run(self)
