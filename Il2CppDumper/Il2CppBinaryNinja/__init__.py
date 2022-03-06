@@ -70,4 +70,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
                 var.name = f"StringLiteral_{i}"
             self.bv.set_comment_at(addr, value)
     
-    def run(self)
+    def run(self):
+        if exists(self.header_path):
+            self.process_header()
+        else:
+            log_warn("Header file not found")
+        if self.bv.get_type_by_name("Il2CppC
