@@ -79,4 +79,9 @@ class Il2CppProcessTask(BackgroundTaskThread):
             self.has_types = True
         data = json.loads(open(self.script_path, 'rb').read().decode('utf-8'))
         if "ScriptMethod" in data:
-            self.process_m
+            self.process_methods(data)
+        if "ScriptString" in data:
+            self.process_strings(data)
+
+def process(bv: BinaryView):
+    scriptDialog = OpenFileNameField("Select script
