@@ -84,4 +84,6 @@ class Il2CppProcessTask(BackgroundTaskThread):
             self.process_strings(data)
 
 def process(bv: BinaryView):
-    scriptDialog = OpenFileNameField("Select script
+    scriptDialog = OpenFileNameField("Select script.json", "script.json", "script.json")
+    headerDialog = OpenFileNameField("Select il2cpp_binja.h", "il2cpp_binja.h", "il2cpp_binja.h")
+    if not get_form_input([scriptDialog, header
