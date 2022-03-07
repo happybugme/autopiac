@@ -75,4 +75,8 @@ class Il2CppProcessTask(BackgroundTaskThread):
             self.process_header()
         else:
             log_warn("Header file not found")
-        if self.bv.get_type_by_name("Il2CppC
+        if self.bv.get_type_by_name("Il2CppClass"):
+            self.has_types = True
+        data = json.loads(open(self.script_path, 'rb').read().decode('utf-8'))
+        if "ScriptMethod" in data:
+            self.process_m
