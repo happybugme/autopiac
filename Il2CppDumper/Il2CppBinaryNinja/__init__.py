@@ -86,4 +86,7 @@ class Il2CppProcessTask(BackgroundTaskThread):
 def process(bv: BinaryView):
     scriptDialog = OpenFileNameField("Select script.json", "script.json", "script.json")
     headerDialog = OpenFileNameField("Select il2cpp_binja.h", "il2cpp_binja.h", "il2cpp_binja.h")
-    if not get_form_input([scriptDialog, header
+    if not get_form_input([scriptDialog, headerDialog], "script.json from Il2CppDumper"):
+        return log_error("File not selected, try again!")
+    if not exists(scriptDialog.result):
+        return log_error("File not found, try 
