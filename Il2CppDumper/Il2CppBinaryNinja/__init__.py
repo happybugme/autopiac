@@ -89,4 +89,8 @@ def process(bv: BinaryView):
     if not get_form_input([scriptDialog, headerDialog], "script.json from Il2CppDumper"):
         return log_error("File not selected, try again!")
     if not exists(scriptDialog.result):
-        return log_error("File not found, try 
+        return log_error("File not found, try again!")
+    task = Il2CppProcessTask(bv, scriptDialog.result, headerDialog.result)
+    task.start()
+
+PluginCommand.register("Il2CppDumper", "Process file", process)
