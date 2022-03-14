@@ -19,3 +19,16 @@
   "platforms": [
     "Darwin",
     "Linux",
+    "Windows"
+  ],
+  "installinstructions": {
+    "Darwin": "Install Il2CppDumper",
+    "Linux": "Install Il2CppDumper",
+    "Windows": "Install Il2CppDumper"
+  },
+  "dependencies": {
+  },
+  "version": "1.0.0",
+  "author": "Il2CppDumper contributors",
+  "minimumbinaryninjaversion": 3164
+}
