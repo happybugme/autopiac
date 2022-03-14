@@ -38,4 +38,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ghidra_wasm.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDire
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ghidra_with_struct.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ida.py">
+      <CopyToOutput
