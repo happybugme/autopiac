@@ -58,4 +58,6 @@
     <None Update="il2cpp_header_to_ghidra.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGro
+  </ItemGroup>
+
+</Project>
