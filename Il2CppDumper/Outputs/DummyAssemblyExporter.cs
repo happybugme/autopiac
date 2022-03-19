@@ -12,4 +12,8 @@ namespace Il2CppDumper
             Directory.CreateDirectory("DummyDll");
             Directory.SetCurrentDirectory("DummyDll");
             var dummy = new DummyAssemblyGenerator(il2CppExecutor, addToken);
-           
+            foreach (var assembly in dummy.Assemblies)
+            {
+                using var stream = new MemoryStream();
+                assembly.Write(stream);
+                File.WriteAllBytes(a
