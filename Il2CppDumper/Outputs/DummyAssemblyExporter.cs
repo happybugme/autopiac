@@ -16,4 +16,8 @@ namespace Il2CppDumper
             {
                 using var stream = new MemoryStream();
                 assembly.Write(stream);
-                File.WriteAllBytes(a
+                File.WriteAllBytes(assembly.MainModule.Name, stream.ToArray());
+            }
+        }
+    }
+}
