@@ -11,4 +11,8 @@
         public const int FIELD_ATTRIBUTE_FAM_AND_ASSEM = 0x0002;
         public const int FIELD_ATTRIBUTE_ASSEMBLY = 0x0003;
         public const int FIELD_ATTRIBUTE_FAMILY = 0x0004;
- 
+        public const int FIELD_ATTRIBUTE_FAM_OR_ASSEM = 0x0005;
+        public const int FIELD_ATTRIBUTE_PUBLIC = 0x0006;
+
+        public const int FIELD_ATTRIBUTE_STATIC = 0x0010;
+      
