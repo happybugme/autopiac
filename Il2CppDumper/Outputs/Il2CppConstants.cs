@@ -15,4 +15,10 @@
         public const int FIELD_ATTRIBUTE_PUBLIC = 0x0006;
 
         public const int FIELD_ATTRIBUTE_STATIC = 0x0010;
-      
+        public const int FIELD_ATTRIBUTE_INIT_ONLY = 0x0020;
+        public const int FIELD_ATTRIBUTE_LITERAL = 0x0040;
+
+        /*
+         * Method Attributes (22.1.9)
+         */
+        public 
