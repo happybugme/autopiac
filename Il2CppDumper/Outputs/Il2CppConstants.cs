@@ -21,4 +21,6 @@
         /*
          * Method Attributes (22.1.9)
          */
-        public 
+        public const int METHOD_ATTRIBUTE_MEMBER_ACCESS_MASK = 0x0007;
+        public const int METHOD_ATTRIBUTE_COMPILER_CONTROLLED = 0x0000;
+        public const int METHOD_ATTRIBUTE_PRIVATE = 
