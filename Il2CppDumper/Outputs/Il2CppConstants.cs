@@ -23,4 +23,8 @@
          */
         public const int METHOD_ATTRIBUTE_MEMBER_ACCESS_MASK = 0x0007;
         public const int METHOD_ATTRIBUTE_COMPILER_CONTROLLED = 0x0000;
-        public const int METHOD_ATTRIBUTE_PRIVATE = 
+        public const int METHOD_ATTRIBUTE_PRIVATE = 0x0001;
+        public const int METHOD_ATTRIBUTE_FAM_AND_ASSEM = 0x0002;
+        public const int METHOD_ATTRIBUTE_ASSEM = 0x0003;
+        public const int METHOD_ATTRIBUTE_FAMILY = 0x0004;
+ 
