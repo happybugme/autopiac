@@ -59,4 +59,11 @@
         public const int TYPE_ATTRIBUTE_INTERFACE = 0x00000020;
 
         public const int TYPE_ATTRIBUTE_ABSTRACT = 0x00000080;
-        public const int TYPE
+        public const int TYPE_ATTRIBUTE_SEALED = 0x00000100;
+
+        public const int TYPE_ATTRIBUTE_SERIALIZABLE = 0x00002000;
+
+        /*
+        * Flags for Params (22.1.12)
+        */
+        public const int PARAM_ATT
