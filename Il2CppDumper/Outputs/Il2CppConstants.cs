@@ -40,4 +40,10 @@
 
         public const int METHOD_ATTRIBUTE_ABSTRACT = 0x0400;
 
-        public const int METHOD_
+        public const int METHOD_ATTRIBUTE_PINVOKE_IMPL = 0x2000;
+
+        /*
+        * Type Attributes (21.1.13).
+        */
+        public const int TYPE_ATTRIBUTE_VISIBILITY_MASK = 0x00000007;
+        public c
