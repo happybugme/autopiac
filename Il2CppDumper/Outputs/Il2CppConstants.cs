@@ -49,4 +49,6 @@
         public const int TYPE_ATTRIBUTE_NOT_PUBLIC = 0x00000000;
         public const int TYPE_ATTRIBUTE_PUBLIC = 0x00000001;
         public const int TYPE_ATTRIBUTE_NESTED_PUBLIC = 0x00000002;
-   
+        public const int TYPE_ATTRIBUTE_NESTED_PRIVATE = 0x00000003;
+        public const int TYPE_ATTRIBUTE_NESTED_FAMILY = 0x00000004;
+        public const int TYPE_ATTRIBUTE_NESTED_ASSEMBLY = 0x
