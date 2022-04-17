@@ -66,4 +66,8 @@
         /*
         * Flags for Params (22.1.12)
         */
-        public const int PARAM_ATT
+        public const int PARAM_ATTRIBUTE_IN = 0x0001;
+        public const int PARAM_ATTRIBUTE_OUT = 0x0002;
+        public const int PARAM_ATTRIBUTE_OPTIONAL = 0x0010;
+    }
+}
