@@ -34,4 +34,10 @@
         public const int METHOD_ATTRIBUTE_FINAL = 0x0020;
         public const int METHOD_ATTRIBUTE_VIRTUAL = 0x0040;
 
-        public const int METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK = 0x0100
+        public const int METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK = 0x0100;
+        public const int METHOD_ATTRIBUTE_REUSE_SLOT = 0x0000;
+        public const int METHOD_ATTRIBUTE_NEW_SLOT = 0x0100;
+
+        public const int METHOD_ATTRIBUTE_ABSTRACT = 0x0400;
+
+        public const int METHOD_
