@@ -31,4 +31,7 @@
         public const int METHOD_ATTRIBUTE_PUBLIC = 0x0006;
 
         public const int METHOD_ATTRIBUTE_STATIC = 0x0010;
-        pub
+        public const int METHOD_ATTRIBUTE_FINAL = 0x0020;
+        public const int METHOD_ATTRIBUTE_VIRTUAL = 0x0040;
+
+        public const int METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK = 0x0100
