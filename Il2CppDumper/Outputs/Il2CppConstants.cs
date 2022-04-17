@@ -46,4 +46,7 @@
         * Type Attributes (21.1.13).
         */
         public const int TYPE_ATTRIBUTE_VISIBILITY_MASK = 0x00000007;
-        public c
+        public const int TYPE_ATTRIBUTE_NOT_PUBLIC = 0x00000000;
+        public const int TYPE_ATTRIBUTE_PUBLIC = 0x00000001;
+        public const int TYPE_ATTRIBUTE_NESTED_PUBLIC = 0x00000002;
+   
