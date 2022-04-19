@@ -227,3 +227,171 @@ namespace Il2CppDumper
                                     var propertyType = il2Cpp.types[parameterDef.typeIndex];
                                     writer.Write($"{executor.GetTypeName(propertyType, false, false)} {metadata.GetStringFromIndex(propertyDef.nameIndex)} {{ ");
                                 }
+                                if (propertyDef.get >= 0)
+                                    writer.Write("get; ");
+                                if (propertyDef.set >= 0)
+                                    writer.Write("set; ");
+                                writer.Write("}");
+                                writer.Write("\n");
+                            }
+                        }
+                        //dump method
+                        if (config.DumpMethod && typeDef.method_count > 0)
+                        {
+                            writer.Write("\n\t// Methods\n");
+                            var methodEnd = typeDef.methodStart + typeDef.method_count;
+                            for (var i = typeDef.methodStart; i < methodEnd; ++i)
+                            {
+                                writer.Write("\n");
+                                var methodDef = metadata.methodDefs[i];
+                                var isAbstract = (methodDef.flags & METHOD_ATTRIBUTE_ABSTRACT) != 0;
+                                if (config.DumpAttribute)
+                                {
+                                    writer.Write(GetCustomAttribute(imageDef, methodDef.customAttributeIndex, methodDef.token, "\t"));
+                                }
+                                if (config.DumpMethodOffset)
+                                {
+                                    var methodPointer = il2Cpp.GetMethodPointer(imageName, methodDef);
+                                    if (!isAbstract && methodPointer > 0)
+                                    {
+                                        var fixedMethodPointer = il2Cpp.GetRVA(methodPointer);
+                                        writer.Write("\t// RVA: 0x{0:X} Offset: 0x{1:X} VA: 0x{2:X}", fixedMethodPointer, il2Cpp.MapVATR(methodPointer), methodPointer);
+                                    }
+                                    else
+                                    {
+                                        writer.Write("\t// RVA: -1 Offset: -1");
+                                    }
+                                    if (methodDef.slot != ushort.MaxValue)
+                                    {
+                                        writer.Write(" Slot: {0}", methodDef.slot);
+                                    }
+                                    writer.Write("\n");
+                                }
+                                writer.Write("\t");
+                                writer.Write(GetModifiers(methodDef));
+                                var methodReturnType = il2Cpp.types[methodDef.returnType];
+                                var methodName = metadata.GetStringFromIndex(methodDef.nameIndex);
+                                if (methodDef.genericContainerIndex >= 0)
+                                {
+                                    var genericContainer = metadata.genericContainers[methodDef.genericContainerIndex];
+                                    methodName += executor.GetGenericContainerParams(genericContainer);
+                                }
+                                if (methodReturnType.byref == 1)
+                                {
+                                    writer.Write("ref ");
+                                }
+                                writer.Write($"{executor.GetTypeName(methodReturnType, false, false)} {methodName}(");
+                                var parameterStrs = new List<string>();
+                                for (var j = 0; j < methodDef.parameterCount; ++j)
+                                {
+                                    var parameterStr = "";
+                                    var parameterDef = metadata.parameterDefs[methodDef.parameterStart + j];
+                                    var parameterName = metadata.GetStringFromIndex(parameterDef.nameIndex);
+                                    var parameterType = il2Cpp.types[parameterDef.typeIndex];
+                                    var parameterTypeName = executor.GetTypeName(parameterType, false, false);
+                                    if (parameterType.byref == 1)
+                                    {
+                                        if ((parameterType.attrs & PARAM_ATTRIBUTE_OUT) != 0 && (parameterType.attrs & PARAM_ATTRIBUTE_IN) == 0)
+                                        {
+                                            parameterStr += "out ";
+                                        }
+                                        else if ((parameterType.attrs & PARAM_ATTRIBUTE_OUT) == 0 && (parameterType.attrs & PARAM_ATTRIBUTE_IN) != 0)
+                                        {
+                                            parameterStr += "in ";
+                                        }
+                                        else
+                                        {
+                                            parameterStr += "ref ";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((parameterType.attrs & PARAM_ATTRIBUTE_IN) != 0)
+                                        {
+                                            parameterStr += "[In] ";
+                                        }
+                                        if ((parameterType.attrs & PARAM_ATTRIBUTE_OUT) != 0)
+                                        {
+                                            parameterStr += "[Out] ";
+                                        }
+                                    }
+                                    parameterStr += $"{parameterTypeName} {parameterName}";
+                                    if (metadata.GetParameterDefaultValueFromIndex(methodDef.parameterStart + j, out var parameterDefault) && parameterDefault.dataIndex != -1)
+                                    {
+                                        if (executor.TryGetDefaultValue(parameterDefault.typeIndex, parameterDefault.dataIndex, out var value))
+                                        {
+                                            parameterStr += " = ";
+                                            if (value is string str)
+                                            {
+                                                parameterStr += $"\"{str.ToEscapedString()}\"";
+                                            }
+                                            else if (value is char c)
+                                            {
+                                                var v = (int)c;
+                                                parameterStr += $"'\\x{v:x}'";
+                                            }
+                                            else if (value != null)
+                                            {
+                                                parameterStr += $"{value}";
+                                            }
+                                            else
+                                            {
+                                                writer.Write("null");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            parameterStr += $" /*Metadata offset 0x{value:X}*/";
+                                        }
+                                    }
+                                    parameterStrs.Add(parameterStr);
+                                }
+                                writer.Write(string.Join(", ", parameterStrs));
+                                if (isAbstract)
+                                {
+                                    writer.Write(");\n");
+                                }
+                                else
+                                {
+                                    writer.Write(") { }\n");
+                                }
+
+                                if (il2Cpp.methodDefinitionMethodSpecs.TryGetValue(i, out var methodSpecs))
+                                {
+                                    writer.Write("\t/* GenericInstMethod :\n");
+                                    var groups = methodSpecs.GroupBy(x => il2Cpp.methodSpecGenericMethodPointers[x]);
+                                    foreach (var group in groups)
+                                    {
+                                        writer.Write("\t|\n");
+                                        var genericMethodPointer = group.Key;
+                                        if (genericMethodPointer > 0)
+                                        {
+                                            var fixedPointer = il2Cpp.GetRVA(genericMethodPointer);
+                                            writer.Write($"\t|-RVA: 0x{fixedPointer:X} Offset: 0x{il2Cpp.MapVATR(genericMethodPointer):X} VA: 0x{genericMethodPointer:X}\n");
+                                        }
+                                        else
+                                        {
+                                            writer.Write("\t|-RVA: -1 Offset: -1\n");
+                                        }
+                                        foreach (var methodSpec in group)
+                                        {
+                                            (var methodSpecTypeName, var methodSpecMethodName) = executor.GetMethodSpecName(methodSpec);
+                                            writer.Write($"\t|-{methodSpecTypeName}.{methodSpecMethodName}\n");
+                                        }
+                                    }
+                                    writer.Write("\t*/\n");
+                                }
+                            }
+                        }
+                        writer.Write("}\n");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("ERROR: Some errors in dumping");
+                    writer.Write("/*");
+                    writer.Write(e);
+                    writer.Write("*/\n}\n");
+                }
+            }
+            writer.Close();
