@@ -395,3 +395,108 @@ namespace Il2CppDumper
                 }
             }
             writer.Close();
+        }
+
+        public string GetCustomAttribute(Il2CppImageDefinition imageDef, int customAttributeIndex, uint token, string padding = "")
+        {
+            if (il2Cpp.Version < 21)
+                return string.Empty;
+            var attributeIndex = metadata.GetCustomAttributeIndex(imageDef, customAttributeIndex, token);
+            if (attributeIndex >= 0)
+            {
+                if (il2Cpp.Version < 29)
+                {
+                    var methodPointer = executor.customAttributeGenerators[attributeIndex];
+                    var fixedMethodPointer = il2Cpp.GetRVA(methodPointer);
+                    var attributeTypeRange = metadata.attributeTypeRanges[attributeIndex];
+                    var sb = new StringBuilder();
+                    for (var i = 0; i < attributeTypeRange.count; i++)
+                    {
+                        var typeIndex = metadata.attributeTypes[attributeTypeRange.start + i];
+                        sb.AppendFormat("{0}[{1}] // RVA: 0x{2:X} Offset: 0x{3:X} VA: 0x{4:X}\n",
+                            padding,
+                            executor.GetTypeName(il2Cpp.types[typeIndex], false, false),
+                            fixedMethodPointer,
+                            il2Cpp.MapVATR(methodPointer),
+                            methodPointer);
+                    }
+                    return sb.ToString();
+                }
+                else
+                {
+                    var startRange = metadata.attributeDataRanges[attributeIndex];
+                    var endRange = metadata.attributeDataRanges[attributeIndex + 1];
+                    metadata.Position = metadata.header.attributeDataOffset + startRange.startOffset;
+                    var buff = metadata.ReadBytes((int)(endRange.startOffset - startRange.startOffset));
+                    var reader = new CustomAttributeDataReader(executor, buff);
+                    if (reader.Count == 0)
+                    {
+                        return string.Empty;
+                    }
+                    var sb = new StringBuilder();
+                    for (var i = 0; i < reader.Count; i++)
+                    {
+                        sb.Append(padding);
+                        sb.Append(reader.GetStringCustomAttributeData());
+                        sb.Append('\n');
+                    }
+                    return sb.ToString();
+                }
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public string GetModifiers(Il2CppMethodDefinition methodDef)
+        {
+            if (methodModifiers.TryGetValue(methodDef, out string str))
+                return str;
+            var access = methodDef.flags & METHOD_ATTRIBUTE_MEMBER_ACCESS_MASK;
+            switch (access)
+            {
+                case METHOD_ATTRIBUTE_PRIVATE:
+                    str += "private ";
+                    break;
+                case METHOD_ATTRIBUTE_PUBLIC:
+                    str += "public ";
+                    break;
+                case METHOD_ATTRIBUTE_FAMILY:
+                    str += "protected ";
+                    break;
+                case METHOD_ATTRIBUTE_ASSEM:
+                case METHOD_ATTRIBUTE_FAM_AND_ASSEM:
+                    str += "internal ";
+                    break;
+                case METHOD_ATTRIBUTE_FAM_OR_ASSEM:
+                    str += "protected internal ";
+                    break;
+            }
+            if ((methodDef.flags & METHOD_ATTRIBUTE_STATIC) != 0)
+                str += "static ";
+            if ((methodDef.flags & METHOD_ATTRIBUTE_ABSTRACT) != 0)
+            {
+                str += "abstract ";
+                if ((methodDef.flags & METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK) == METHOD_ATTRIBUTE_REUSE_SLOT)
+                    str += "override ";
+            }
+            else if ((methodDef.flags & METHOD_ATTRIBUTE_FINAL) != 0)
+            {
+                if ((methodDef.flags & METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK) == METHOD_ATTRIBUTE_REUSE_SLOT)
+                    str += "sealed override ";
+            }
+            else if ((methodDef.flags & METHOD_ATTRIBUTE_VIRTUAL) != 0)
+            {
+                if ((methodDef.flags & METHOD_ATTRIBUTE_VTABLE_LAYOUT_MASK) == METHOD_ATTRIBUTE_NEW_SLOT)
+                    str += "virtual ";
+                else
+                    str += "override ";
+            }
+            if ((methodDef.flags & METHOD_ATTRIBUTE_PINVOKE_IMPL) != 0)
+                str += "extern ";
+            methodModifiers.Add(methodDef, str);
+            return str;
+        }
+    }
+}
