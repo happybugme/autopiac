@@ -432,3 +432,175 @@ namespace Il2CppDumper
         }
 
         private void AddMetadataUsageTypeInfo(ScriptJson json, uint index, ulong address)
+        {
+            var type = il2Cpp.types[index];
+            var typeName = executor.GetTypeName(type, true, false);
+            var scriptMetadata = new ScriptMetadata();
+            json.ScriptMetadata.Add(scriptMetadata);
+            scriptMetadata.Address = il2Cpp.GetRVA(address);
+            scriptMetadata.Name = typeName + "_TypeInfo";
+            var signature = GetIl2CppStructName(type);
+            if (signature.EndsWith("_array"))
+            {
+                scriptMetadata.Signature = "Il2CppClass*";
+            }
+            else
+            {
+                scriptMetadata.Signature = FixName(signature) + "_c*";
+            }
+        }
+
+        private void AddMetadataUsageIl2CppType(ScriptJson json, uint index, ulong address)
+        {
+            var type = il2Cpp.types[index];
+            var typeName = executor.GetTypeName(type, true, false);
+            var scriptMetadata = new ScriptMetadata();
+            json.ScriptMetadata.Add(scriptMetadata);
+            scriptMetadata.Address = il2Cpp.GetRVA(address);
+            scriptMetadata.Name = typeName + "_var";
+            scriptMetadata.Signature = "Il2CppType*";
+        }
+
+        private void AddMetadataUsageMethodDef(ScriptJson json, uint index, ulong address)
+        {
+            var methodDef = metadata.methodDefs[index];
+            var typeDef = metadata.typeDefs[methodDef.declaringType];
+            var typeName = executor.GetTypeDefName(typeDef, true, true);
+            var methodName = typeName + "." + metadata.GetStringFromIndex(methodDef.nameIndex) + "()";
+            var scriptMetadataMethod = new ScriptMetadataMethod();
+            json.ScriptMetadataMethod.Add(scriptMetadataMethod);
+            scriptMetadataMethod.Address = il2Cpp.GetRVA(address);
+            scriptMetadataMethod.Name = "Method$" + methodName;
+            var imageName = typeDefImageNames[typeDef];
+            var methodPointer = il2Cpp.GetMethodPointer(imageName, methodDef);
+            if (methodPointer > 0)
+            {
+                scriptMetadataMethod.MethodAddress = il2Cpp.GetRVA(methodPointer);
+            }
+        }
+
+        private void AddMetadataUsageFieldInfo(ScriptJson json, uint index, ulong address)
+        {
+            var fieldRef = metadata.fieldRefs[index];
+            var type = il2Cpp.types[fieldRef.typeIndex];
+            var typeDef = GetTypeDefinition(type);
+            var fieldDef = metadata.fieldDefs[typeDef.fieldStart + fieldRef.fieldIndex];
+            var fieldName = executor.GetTypeName(type, true, false) + "." + metadata.GetStringFromIndex(fieldDef.nameIndex);
+            var scriptMetadata = new ScriptMetadata();
+            json.ScriptMetadata.Add(scriptMetadata);
+            scriptMetadata.Address = il2Cpp.GetRVA(address);
+            scriptMetadata.Name = "Field$" + fieldName;
+        }
+
+        private void AddMetadataUsageStringLiteral(ScriptJson json, uint index, ulong address)
+        {
+            var scriptString = new ScriptString();
+            json.ScriptString.Add(scriptString);
+            scriptString.Address = il2Cpp.GetRVA(address);
+            scriptString.Value = metadata.GetStringLiteralFromIndex(index);
+        }
+
+        private void AddMetadataUsageMethodRef(ScriptJson json, uint index, ulong address)
+        {
+            var methodSpec = il2Cpp.methodSpecs[index];
+            var scriptMetadataMethod = new ScriptMetadataMethod();
+            json.ScriptMetadataMethod.Add(scriptMetadataMethod);
+            scriptMetadataMethod.Address = il2Cpp.GetRVA(address);
+            (var methodSpecTypeName, var methodSpecMethodName) = executor.GetMethodSpecName(methodSpec, true);
+            scriptMetadataMethod.Name = "Method$" + methodSpecTypeName + "." + methodSpecMethodName + "()";
+            if (il2Cpp.methodSpecGenericMethodPointers.ContainsKey(methodSpec))
+            {
+                var genericMethodPointer = il2Cpp.methodSpecGenericMethodPointers[methodSpec];
+                if (genericMethodPointer > 0)
+                {
+                    scriptMetadataMethod.MethodAddress = il2Cpp.GetRVA(genericMethodPointer);
+                }
+            }
+        }
+
+        private static string FixName(string str)
+        {
+            if (keyword.Contains(str))
+            {
+                str = "_" + str;
+            }
+            else if (specialKeywords.Contains(str))
+            {
+                str = "_" + str + "_";
+            }
+
+            if (Regex.IsMatch(str, "^[0-9]"))
+            {
+                return "_" + str;
+            }
+            else
+            {
+                return Regex.Replace(str, "[^a-zA-Z0-9_]", "_");
+            }
+        }
+
+        private string ParseType(Il2CppType il2CppType, Il2CppGenericContext context = null)
+        {
+            switch (il2CppType.type)
+            {
+                case Il2CppTypeEnum.IL2CPP_TYPE_VOID:
+                    return "void";
+                case Il2CppTypeEnum.IL2CPP_TYPE_BOOLEAN:
+                    return "bool";
+                case Il2CppTypeEnum.IL2CPP_TYPE_CHAR:
+                    return "uint16_t"; //Il2CppChar
+                case Il2CppTypeEnum.IL2CPP_TYPE_I1:
+                    return "int8_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_U1:
+                    return "uint8_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_I2:
+                    return "int16_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_U2:
+                    return "uint16_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_I4:
+                    return "int32_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_U4:
+                    return "uint32_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_I8:
+                    return "int64_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_U8:
+                    return "uint64_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_R4:
+                    return "float";
+                case Il2CppTypeEnum.IL2CPP_TYPE_R8:
+                    return "double";
+                case Il2CppTypeEnum.IL2CPP_TYPE_STRING:
+                    return "System_String_o*";
+                case Il2CppTypeEnum.IL2CPP_TYPE_PTR:
+                    {
+                        var oriType = il2Cpp.GetIl2CppType(il2CppType.data.type);
+                        return ParseType(oriType) + "*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_VALUETYPE:
+                    {
+                        var typeDef = executor.GetTypeDefinitionFromIl2CppType(il2CppType);
+                        if (typeDef.IsEnum)
+                        {
+                            return ParseType(il2Cpp.types[typeDef.elementTypeIndex]);
+                        }
+                        return structNameDic[typeDef] + "_o";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_CLASS:
+                    {
+                        var typeDef = executor.GetTypeDefinitionFromIl2CppType(il2CppType);
+                        return structNameDic[typeDef] + "_o*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_VAR:
+                    {
+                        if (context != null)
+                        {
+                            var genericParameter = executor.GetGenericParameteFromIl2CppType(il2CppType);
+                            var genericInst = il2Cpp.MapVATR<Il2CppGenericInst>(context.class_inst);
+                            var pointers = il2Cpp.MapVATR<ulong>(genericInst.type_argv, genericInst.type_argc);
+                            var pointer = pointers[genericParameter.num];
+                            var type = il2Cpp.GetIl2CppType(pointer);
+                            return ParseType(type);
+                        }
+                        return "Il2CppObject*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_ARRAY:
