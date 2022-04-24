@@ -604,3 +604,181 @@ namespace Il2CppDumper
                         return "Il2CppObject*";
                     }
                 case Il2CppTypeEnum.IL2CPP_TYPE_ARRAY:
+                    {
+                        var arrayType = il2Cpp.MapVATR<Il2CppArrayType>(il2CppType.data.array);
+                        var elementType = il2Cpp.GetIl2CppType(arrayType.etype);
+                        var elementStructName = GetIl2CppStructName(elementType, context);
+                        var typeStructName = elementStructName + "_array";
+                        if (structNameHashSet.Add(typeStructName))
+                        {
+                            ParseArrayClassStruct(elementType, context);
+                        }
+                        return typeStructName + "*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_GENERICINST:
+                    {
+                        var genericClass = il2Cpp.MapVATR<Il2CppGenericClass>(il2CppType.data.generic_class);
+                        var typeDef = executor.GetGenericClassTypeDefinition(genericClass);
+                        var typeStructName = genericClassStructNameDic[il2CppType.data.generic_class];
+                        if (structNameHashSet.Add(typeStructName))
+                        {
+                            genericClassList.Add(il2CppType.data.generic_class);
+                        }
+                        if (typeDef.IsValueType)
+                        {
+                            if (typeDef.IsEnum)
+                            {
+                                return ParseType(il2Cpp.types[typeDef.elementTypeIndex]);
+                            }
+                            return typeStructName + "_o";
+                        }
+                        return typeStructName + "_o*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_TYPEDBYREF:
+                    return "Il2CppObject*";
+                case Il2CppTypeEnum.IL2CPP_TYPE_I:
+                    return "intptr_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_U:
+                    return "uintptr_t";
+                case Il2CppTypeEnum.IL2CPP_TYPE_OBJECT:
+                    return "Il2CppObject*";
+                case Il2CppTypeEnum.IL2CPP_TYPE_SZARRAY:
+                    {
+                        var elementType = il2Cpp.GetIl2CppType(il2CppType.data.type);
+                        var elementStructName = GetIl2CppStructName(elementType, context);
+                        var typeStructName = elementStructName + "_array";
+                        if (structNameHashSet.Add(typeStructName))
+                        {
+                            ParseArrayClassStruct(elementType, context);
+                        }
+                        return typeStructName + "*";
+                    }
+                case Il2CppTypeEnum.IL2CPP_TYPE_MVAR:
+                    {
+                        if (context != null)
+                        {
+                            var genericParameter = executor.GetGenericParameteFromIl2CppType(il2CppType);
+                            //https://github.com/Perfare/Il2CppDumper/issues/687
+                            if (context.method_inst == 0 && context.class_inst != 0)
+                            {
+                                goto case Il2CppTypeEnum.IL2CPP_TYPE_VAR;
+                            }
+                            var genericInst = il2Cpp.MapVATR<Il2CppGenericInst>(context.method_inst);
+                            var pointers = il2Cpp.MapVATR<ulong>(genericInst.type_argv, genericInst.type_argc);
+                            var pointer = pointers[genericParameter.num];
+                            var type = il2Cpp.GetIl2CppType(pointer);
+                            return ParseType(type);
+                        }
+                        return "Il2CppObject*";
+                    }
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+        public static string GetMethodTypeSignature(List<Il2CppTypeEnum> types)
+        {
+            string signature = string.Empty;
+            foreach (Il2CppTypeEnum type in types)
+            {
+                signature += type switch
+                {
+                    Il2CppTypeEnum.IL2CPP_TYPE_VOID => "v",
+                    Il2CppTypeEnum.IL2CPP_TYPE_BOOLEAN or Il2CppTypeEnum.IL2CPP_TYPE_CHAR or Il2CppTypeEnum.IL2CPP_TYPE_I1 or Il2CppTypeEnum.IL2CPP_TYPE_U1 or Il2CppTypeEnum.IL2CPP_TYPE_I2 or Il2CppTypeEnum.IL2CPP_TYPE_U2 or Il2CppTypeEnum.IL2CPP_TYPE_I4 or Il2CppTypeEnum.IL2CPP_TYPE_U4 => "i",
+                    Il2CppTypeEnum.IL2CPP_TYPE_I8 or Il2CppTypeEnum.IL2CPP_TYPE_U8 => "j",
+                    Il2CppTypeEnum.IL2CPP_TYPE_R4 => "f",
+                    Il2CppTypeEnum.IL2CPP_TYPE_R8 => "d",
+                    Il2CppTypeEnum.IL2CPP_TYPE_STRING or Il2CppTypeEnum.IL2CPP_TYPE_PTR or Il2CppTypeEnum.IL2CPP_TYPE_VALUETYPE or Il2CppTypeEnum.IL2CPP_TYPE_CLASS or Il2CppTypeEnum.IL2CPP_TYPE_VAR or Il2CppTypeEnum.IL2CPP_TYPE_ARRAY or Il2CppTypeEnum.IL2CPP_TYPE_GENERICINST or Il2CppTypeEnum.IL2CPP_TYPE_TYPEDBYREF or Il2CppTypeEnum.IL2CPP_TYPE_I or Il2CppTypeEnum.IL2CPP_TYPE_U or Il2CppTypeEnum.IL2CPP_TYPE_OBJECT or Il2CppTypeEnum.IL2CPP_TYPE_SZARRAY or Il2CppTypeEnum.IL2CPP_TYPE_MVAR => "i",
+                    _ => throw new NotSupportedException(),
+                };
+            }
+            return signature;
+        }
+
+        private void AddStruct(Il2CppTypeDefinition typeDef)
+        {
+            var structInfo = new StructInfo();
+            structInfoList.Add(structInfo);
+            structInfo.TypeName = structNameDic[typeDef];
+            structInfo.IsValueType = typeDef.IsValueType;
+            AddParents(typeDef, structInfo);
+            AddFields(typeDef, structInfo, null);
+            AddVTableMethod(structInfo, typeDef);
+            AddRGCTX(structInfo, typeDef);
+        }
+
+        private void AddGenericClassStruct(ulong pointer)
+        {
+            var genericClass = il2Cpp.MapVATR<Il2CppGenericClass>(pointer);
+            var typeDef = executor.GetGenericClassTypeDefinition(genericClass);
+            var structInfo = new StructInfo();
+            structInfoList.Add(structInfo);
+            structInfo.TypeName = genericClassStructNameDic[pointer];
+            structInfo.IsValueType = typeDef.IsValueType;
+            AddParents(typeDef, structInfo);
+            AddFields(typeDef, structInfo, genericClass.context);
+            AddVTableMethod(structInfo, typeDef);
+        }
+
+        private void AddParents(Il2CppTypeDefinition typeDef, StructInfo structInfo)
+        {
+            if (!typeDef.IsValueType && !typeDef.IsEnum)
+            {
+                if (typeDef.parentIndex >= 0)
+                {
+                    var parent = il2Cpp.types[typeDef.parentIndex];
+                    if (parent.type != Il2CppTypeEnum.IL2CPP_TYPE_OBJECT)
+                    {
+                        structInfo.Parent = GetIl2CppStructName(parent);
+                    }
+                }
+            }
+        }
+
+        private void AddFields(Il2CppTypeDefinition typeDef, StructInfo structInfo, Il2CppGenericContext context)
+        {
+            if (typeDef.field_count > 0)
+            {
+                var fieldEnd = typeDef.fieldStart + typeDef.field_count;
+                var cache = new HashSet<string>(StringComparer.Ordinal);
+                for (var i = typeDef.fieldStart; i < fieldEnd; ++i)
+                {
+                    var fieldDef = metadata.fieldDefs[i];
+                    var fieldType = il2Cpp.types[fieldDef.typeIndex];
+                    if ((fieldType.attrs & FIELD_ATTRIBUTE_LITERAL) != 0)
+                    {
+                        continue;
+                    }
+                    var structFieldInfo = new StructFieldInfo
+                    {
+                        FieldTypeName = ParseType(fieldType, context)
+                    };
+                    var fieldName = FixName(metadata.GetStringFromIndex(fieldDef.nameIndex));
+                    if (!cache.Add(fieldName))
+                    {
+                        fieldName = $"_{i - typeDef.fieldStart}_{fieldName}";
+                    }
+                    structFieldInfo.FieldName = fieldName;
+                    structFieldInfo.IsValueType = IsValueType(fieldType, context);
+                    structFieldInfo.IsCustomType = IsCustomType(fieldType, context);
+                    if ((fieldType.attrs & FIELD_ATTRIBUTE_STATIC) != 0)
+                    {
+                        structInfo.StaticFields.Add(structFieldInfo);
+                    }
+                    else
+                    {
+                        structInfo.Fields.Add(structFieldInfo);
+                    }
+                }
+            }
+        }
+
+        private void AddVTableMethod(StructInfo structInfo, Il2CppTypeDefinition typeDef)
+        {
+            var dic = new SortedDictionary<int, Il2CppMethodDefinition>();
+            for (int i = 0; i < typeDef.vtable_count; i++)
+            {
+                var vTableIndex = typeDef.vtableStart + i;
+                var encodedMethodIndex = metadata.vtableMethods[vTableIndex];
+                var usage = Metadata.GetEncodedIndexType(encodedMethodIndex);
+                var index = metadata.GetDecodedMethodIndex(encodedMethodIndex);
+                Il2CppMethodDefinition methodDef;
