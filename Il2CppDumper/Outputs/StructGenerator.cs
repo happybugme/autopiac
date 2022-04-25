@@ -782,3 +782,172 @@ namespace Il2CppDumper
                 var usage = Metadata.GetEncodedIndexType(encodedMethodIndex);
                 var index = metadata.GetDecodedMethodIndex(encodedMethodIndex);
                 Il2CppMethodDefinition methodDef;
+                if (usage == 6) //kIl2CppMetadataUsageMethodRef
+                {
+                    var methodSpec = il2Cpp.methodSpecs[index];
+                    methodDef = metadata.methodDefs[methodSpec.methodDefinitionIndex];
+                }
+                else
+                {
+                    methodDef = metadata.methodDefs[index];
+                }
+                if (methodDef.slot != ushort.MaxValue)
+                {
+                    dic[methodDef.slot] = methodDef;
+                }
+            }
+            if (dic.Count > 0)
+            {
+                structInfo.VTableMethod = new StructVTableMethodInfo[dic.Last().Key + 1];
+                foreach (var i in dic)
+                {
+                    var methodInfo = new StructVTableMethodInfo();
+                    structInfo.VTableMethod[i.Key] = methodInfo;
+                    var methodDef = i.Value;
+                    methodInfo.MethodName = $"{FixName(metadata.GetStringFromIndex(methodDef.nameIndex))}";
+                }
+            }
+        }
+
+        private void AddRGCTX(StructInfo structInfo, Il2CppTypeDefinition typeDef)
+        {
+            var imageName = typeDefImageNames[typeDef];
+            var collection = executor.GetRGCTXDefinition(imageName, typeDef);
+            if (collection != null)
+            {
+                foreach (var definitionData in collection)
+                {
+                    var structRGCTXInfo = new StructRGCTXInfo();
+                    structInfo.RGCTXs.Add(structRGCTXInfo);
+                    structRGCTXInfo.Type = definitionData.type;
+                    Il2CppRGCTXDefinitionData rgctxDefData;
+                    if (il2Cpp.Version >= 27.2)
+                    {
+                        rgctxDefData = il2Cpp.MapVATR<Il2CppRGCTXDefinitionData>(definitionData._data);
+                    }
+                    else
+                    {
+                        rgctxDefData = definitionData.data;
+                    }
+                    switch (definitionData.type)
+                    {
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_TYPE:
+                            {
+                                var il2CppType = il2Cpp.types[rgctxDefData.typeIndex];
+                                structRGCTXInfo.TypeName = FixName(executor.GetTypeName(il2CppType, true, false));
+                                break;
+                            }
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_CLASS:
+                            {
+                                var il2CppType = il2Cpp.types[rgctxDefData.typeIndex];
+                                structRGCTXInfo.ClassName = FixName(executor.GetTypeName(il2CppType, true, false));
+                                break;
+                            }
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_METHOD:
+                            {
+                                var methodSpec = il2Cpp.methodSpecs[rgctxDefData.methodIndex];
+                                (var methodSpecTypeName, var methodSpecMethodName) = executor.GetMethodSpecName(methodSpec, true);
+                                structRGCTXInfo.MethodName = FixName(methodSpecTypeName + "." + methodSpecMethodName);
+                                break;
+                            }
+                    }
+                }
+            }
+        }
+
+        private List<StructRGCTXInfo> GenerateRGCTX(string imageName, Il2CppMethodDefinition methodDef)
+        {
+            var rgctxs = new List<StructRGCTXInfo>();
+            var collection = executor.GetRGCTXDefinition(imageName, methodDef);
+            if (collection != null)
+            {
+                foreach (var definitionData in collection)
+                {
+                    var structRGCTXInfo = new StructRGCTXInfo();
+                    rgctxs.Add(structRGCTXInfo);
+                    structRGCTXInfo.Type = definitionData.type;
+                    Il2CppRGCTXDefinitionData rgctxDefData;
+                    if (il2Cpp.Version >= 27.2)
+                    {
+                        rgctxDefData = il2Cpp.MapVATR<Il2CppRGCTXDefinitionData>(definitionData._data);
+                    }
+                    else
+                    {
+                        rgctxDefData = definitionData.data;
+                    }
+                    switch (definitionData.type)
+                    {
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_TYPE:
+                            {
+                                var il2CppType = il2Cpp.types[rgctxDefData.typeIndex];
+                                structRGCTXInfo.TypeName = FixName(executor.GetTypeName(il2CppType, true, false));
+                                break;
+                            }
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_CLASS:
+                            {
+                                var il2CppType = il2Cpp.types[rgctxDefData.typeIndex];
+                                structRGCTXInfo.ClassName = FixName(executor.GetTypeName(il2CppType, true, false));
+                                break;
+                            }
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_METHOD:
+                            {
+                                var methodSpec = il2Cpp.methodSpecs[rgctxDefData.methodIndex];
+                                (var methodSpecTypeName, var methodSpecMethodName) = executor.GetMethodSpecName(methodSpec, true);
+                                structRGCTXInfo.MethodName = FixName(methodSpecTypeName + "." + methodSpecMethodName);
+                                break;
+                            }
+                    }
+                }
+            }
+            return rgctxs;
+        }
+
+        private void ParseArrayClassStruct(Il2CppType il2CppType, Il2CppGenericContext context)
+        {
+            var structName = GetIl2CppStructName(il2CppType, context);
+            arrayClassHeader.Append($"struct {structName}_array {{\n" +
+                $"\tIl2CppObject obj;\n" +
+                $"\tIl2CppArrayBounds *bounds;\n" +
+                $"\til2cpp_array_size_t max_length;\n" +
+                $"\t{ParseType(il2CppType, context)} m_Items[65535];\n" +
+                $"}};\n");
+        }
+
+        private Il2CppTypeDefinition GetTypeDefinition(Il2CppType il2CppType)
+        {
+            switch (il2CppType.type)
+            {
+                case Il2CppTypeEnum.IL2CPP_TYPE_VOID:
+                case Il2CppTypeEnum.IL2CPP_TYPE_BOOLEAN:
+                case Il2CppTypeEnum.IL2CPP_TYPE_CHAR:
+                case Il2CppTypeEnum.IL2CPP_TYPE_I1:
+                case Il2CppTypeEnum.IL2CPP_TYPE_U1:
+                case Il2CppTypeEnum.IL2CPP_TYPE_I2:
+                case Il2CppTypeEnum.IL2CPP_TYPE_U2:
+                case Il2CppTypeEnum.IL2CPP_TYPE_I4:
+                case Il2CppTypeEnum.IL2CPP_TYPE_U4:
+                case Il2CppTypeEnum.IL2CPP_TYPE_I8:
+                case Il2CppTypeEnum.IL2CPP_TYPE_U8:
+                case Il2CppTypeEnum.IL2CPP_TYPE_R4:
+                case Il2CppTypeEnum.IL2CPP_TYPE_R8:
+                case Il2CppTypeEnum.IL2CPP_TYPE_STRING:
+                case Il2CppTypeEnum.IL2CPP_TYPE_TYPEDBYREF:
+                case Il2CppTypeEnum.IL2CPP_TYPE_I:
+                case Il2CppTypeEnum.IL2CPP_TYPE_U:
+                case Il2CppTypeEnum.IL2CPP_TYPE_VALUETYPE:
+                case Il2CppTypeEnum.IL2CPP_TYPE_CLASS:
+                case Il2CppTypeEnum.IL2CPP_TYPE_OBJECT:
+                    return executor.GetTypeDefinitionFromIl2CppType(il2CppType);
+                case Il2CppTypeEnum.IL2CPP_TYPE_GENERICINST:
+                    var genericClass = il2Cpp.MapVATR<Il2CppGenericClass>(il2CppType.data.generic_class);
+                    return executor.GetGenericClassTypeDefinition(genericClass);
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        private void CreateStructNameDic(Il2CppTypeDefinition typeDef)
+        {
+            var typeName = executor.GetTypeDefName(typeDef, true, true);
+            var typeStructName = FixName(typeName);
+            var uniqueName = GetUniqueName(typeStructName);
