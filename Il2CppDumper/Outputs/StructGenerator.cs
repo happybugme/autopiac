@@ -951,3 +951,179 @@ namespace Il2CppDumper
             var typeName = executor.GetTypeDefName(typeDef, true, true);
             var typeStructName = FixName(typeName);
             var uniqueName = GetUniqueName(typeStructName);
+            structNameDic.Add(typeDef, uniqueName);
+        }
+
+        private string GetUniqueName(string name)
+        {
+            var fixName = name;
+            int i = 1;
+            while (!structNameHashSet.Add(fixName))
+            {
+                fixName = $"{name}_{i++}";
+            }
+            return fixName;
+        }
+
+        private string RecursionStructInfo(StructInfo info)
+        {
+            if (!structCache.Add(info))
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder();
+            var pre = new StringBuilder();
+
+            if (info.Parent != null)
+            {
+                var parentStructName = info.Parent + "_o";
+                pre.Append(RecursionStructInfo(structInfoWithStructName[parentStructName]));
+                sb.Append($"struct {info.TypeName}_Fields : {info.Parent}_Fields {{\n");
+                // C style
+                //sb.Append($"struct {info.TypeName}_Fields {{\n");
+                //sb.Append($"\t{info.Parent}_Fields _;\n");
+            }
+            else
+            {
+                if (il2Cpp is PE && !info.IsValueType)
+                {
+                    if (il2Cpp.Is32Bit)
+                    {
+                        sb.Append($"struct __declspec(align(4)) {info.TypeName}_Fields {{\n");
+                    }
+                    else
+                    {
+                        sb.Append($"struct __declspec(align(8)) {info.TypeName}_Fields {{\n");
+                    }
+                }
+                else
+                {
+                    sb.Append($"struct {info.TypeName}_Fields {{\n");
+                }
+            }
+            foreach (var field in info.Fields)
+            {
+                if (field.IsValueType)
+                {
+                    var fieldInfo = structInfoWithStructName[field.FieldTypeName];
+                    pre.Append(RecursionStructInfo(fieldInfo));
+                }
+                if (field.IsCustomType)
+                {
+                    sb.Append($"\tstruct {field.FieldTypeName} {field.FieldName};\n");
+                }
+                else
+                {
+                    sb.Append($"\t{field.FieldTypeName} {field.FieldName};\n");
+                }
+            }
+            sb.Append("};\n");
+
+            if (info.RGCTXs.Count > 0)
+            {
+                sb.Append($"struct {info.TypeName}_RGCTXs {{\n");
+                for (int i = 0; i < info.RGCTXs.Count; i++)
+                {
+                    var rgctx = info.RGCTXs[i];
+                    switch (rgctx.Type)
+                    {
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_TYPE:
+                            sb.Append($"\tIl2CppType* _{i}_{rgctx.TypeName};\n");
+                            break;
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_CLASS:
+                            sb.Append($"\tIl2CppClass* _{i}_{rgctx.ClassName};\n");
+                            break;
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_METHOD:
+                            sb.Append($"\tMethodInfo* _{i}_{rgctx.MethodName};\n");
+                            break;
+                    }
+                }
+                sb.Append("};\n");
+            }
+
+            if (info.VTableMethod.Length > 0)
+            {
+                sb.Append($"struct {info.TypeName}_VTable {{\n");
+                for (int i = 0; i < info.VTableMethod.Length; i++)
+                {
+                    sb.Append($"\tVirtualInvokeData _{i}_");
+                    var method = info.VTableMethod[i];
+                    if (method != null)
+                    {
+                        sb.Append(method.MethodName);
+                    }
+                    else
+                    {
+                        sb.Append("unknown");
+                    }
+                    sb.Append(";\n");
+                }
+                sb.Append("};\n");
+            }
+
+            sb.Append($"struct {info.TypeName}_c {{\n");
+            sb.Append($"\tIl2CppClass_1 _1;\n");
+            if (info.StaticFields.Count > 0)
+            {
+                sb.Append($"\tstruct {info.TypeName}_StaticFields* static_fields;\n");
+            }
+            else
+            {
+                sb.Append("\tvoid* static_fields;\n");
+            }
+            if (info.RGCTXs.Count > 0)
+            {
+                sb.Append($"\t{info.TypeName}_RGCTXs* rgctx_data;\n");
+            }
+            else
+            {
+                sb.Append("\tIl2CppRGCTXData* rgctx_data;\n");
+            }
+            sb.Append($"\tIl2CppClass_2 _2;\n");
+            if (info.VTableMethod.Length > 0)
+            {
+                sb.Append($"\t{info.TypeName}_VTable vtable;\n");
+            }
+            else
+            {
+                sb.Append("\tVirtualInvokeData vtable[32];\n");
+            }
+            sb.Append($"}};\n");
+
+            sb.Append($"struct {info.TypeName}_o {{\n");
+            if (!info.IsValueType)
+            {
+                sb.Append($"\t{info.TypeName}_c *klass;\n");
+                sb.Append($"\tvoid *monitor;\n");
+            }
+            sb.Append($"\t{info.TypeName}_Fields fields;\n");
+            sb.Append("};\n");
+
+            if (info.StaticFields.Count > 0)
+            {
+                sb.Append($"struct {info.TypeName}_StaticFields {{\n");
+                foreach (var field in info.StaticFields)
+                {
+                    if (field.IsValueType)
+                    {
+                        var fieldInfo = structInfoWithStructName[field.FieldTypeName];
+                        pre.Append(RecursionStructInfo(fieldInfo));
+                    }
+                    if (field.IsCustomType)
+                    {
+                        sb.Append($"\tstruct {field.FieldTypeName} {field.FieldName};\n");
+                    }
+                    else
+                    {
+                        sb.Append($"\t{field.FieldTypeName} {field.FieldName};\n");
+                    }
+                }
+                sb.Append("};\n");
+            }
+
+            return pre.Append(sb).ToString();
+        }
+
+        private string GetIl2CppStructName(Il2CppType il2CppType, Il2CppGenericContext context = null)
+        {
