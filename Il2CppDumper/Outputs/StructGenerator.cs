@@ -1316,3 +1316,107 @@ namespace Il2CppDumper
                         return false;
                     }
                 case Il2CppTypeEnum.IL2CPP_TYPE_MVAR:
+                    {
+                        if (context != null)
+                        {
+                            var genericParameter = executor.GetGenericParameteFromIl2CppType(il2CppType);
+                            var genericInst = il2Cpp.MapVATR<Il2CppGenericInst>(context.method_inst);
+                            var pointers = il2Cpp.MapVATR<ulong>(genericInst.type_argv, genericInst.type_argc);
+                            var pointer = pointers[genericParameter.num];
+                            var type = il2Cpp.GetIl2CppType(pointer);
+                            return IsCustomType(type, null);
+                        }
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+        }
+
+        private void GenerateMethodInfo(string methodInfoName, string structTypeName, List<StructRGCTXInfo> rgctxs)
+        {
+            if (rgctxs.Count > 0)
+            {
+                methodInfoHeader.Append($"struct {methodInfoName}_RGCTXs {{\n");
+                for (int i = 0; i < rgctxs.Count; i++)
+                {
+                    var rgctx = rgctxs[i];
+                    switch (rgctx.Type)
+                    {
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_TYPE:
+                            methodInfoHeader.Append($"\tIl2CppType* _{i}_{rgctx.TypeName};\n");
+                            break;
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_CLASS:
+                            methodInfoHeader.Append($"\tIl2CppClass* _{i}_{rgctx.ClassName};\n");
+                            break;
+                        case Il2CppRGCTXDataType.IL2CPP_RGCTX_DATA_METHOD:
+                            methodInfoHeader.Append($"\tMethodInfo* _{i}_{rgctx.MethodName};\n");
+                            break;
+                    }
+                }
+                methodInfoHeader.Append("};\n");
+            }
+
+            methodInfoHeader.Append($"struct {methodInfoName} {{\n");
+            methodInfoHeader.Append($"\tIl2CppMethodPointer methodPointer;\n");
+            if (il2Cpp.Version >= 29)
+            {
+                methodInfoHeader.Append($"\tIl2CppMethodPointer virtualMethodPointer;\n");
+                methodInfoHeader.Append($"\tInvokerMethod invoker_method;\n");
+            }
+            else
+            {
+                methodInfoHeader.Append($"\tvoid* invoker_method;\n"); //TODO
+            }
+            methodInfoHeader.Append($"\tconst char* name;\n");
+            if (il2Cpp.Version <= 24)
+            {
+                methodInfoHeader.Append($"\t{structTypeName}_c *declaring_type;\n");
+            }
+            else
+            {
+                methodInfoHeader.Append($"\t{structTypeName}_c *klass;\n");
+            }
+            methodInfoHeader.Append($"\tconst Il2CppType *return_type;\n");
+            if (il2Cpp.Version >= 29)
+            {
+                methodInfoHeader.Append($"\tconst Il2CppType** parameters;\n");
+            }
+            else
+            {
+                methodInfoHeader.Append($"\tconst void* parameters;\n"); //ParameterInfo*
+            }
+            if (rgctxs.Count > 0)
+            {
+                methodInfoHeader.Append($"\tconst {methodInfoName}_RGCTXs* rgctx_data;\n");
+            }
+            else
+            {
+                methodInfoHeader.Append($"\tconst Il2CppRGCTXData* rgctx_data;\n");
+            }
+            methodInfoHeader.Append($"\tunion\n");
+            methodInfoHeader.Append($"\t{{\n");
+            methodInfoHeader.Append($"\t\tconst void* genericMethod;\n");
+            if (il2Cpp.Version >= 27)
+            {
+                methodInfoHeader.Append($"\t\tconst void* genericContainerHandle;\n");
+            }
+            else
+            {
+                methodInfoHeader.Append($"\t\tconst void* genericContainer;\n");
+            }
+            methodInfoHeader.Append($"\t}};\n");
+            if (il2Cpp.Version <= 24)
+            {
+                methodInfoHeader.Append($"\tint32_t customAttributeIndex;\n");
+            }
+            methodInfoHeader.Append($"\tuint32_t token;\n");
+            methodInfoHeader.Append($"\tuint16_t flags;\n");
+            methodInfoHeader.Append($"\tuint16_t iflags;\n");
+            methodInfoHeader.Append($"\tuint16_t slot;\n");
+            methodInfoHeader.Append($"\tuint8_t parameters_count;\n");
+            methodInfoHeader.Append($"\tuint8_t bitflags;\n");
+            methodInfoHeader.Append($"}};\n");
+        }
+    }
+}
