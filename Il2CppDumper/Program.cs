@@ -11,4 +11,7 @@ namespace Il2CppDumper
         private static Config config;
 
         [STAThread]
-        static void Main(string[
+        static void Main(string[] args)
+        {
+            config = JsonSerializer.Deserialize<Config>(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"config.json"));
+            str
