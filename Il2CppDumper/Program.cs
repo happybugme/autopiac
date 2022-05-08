@@ -23,4 +23,12 @@ namespace Il2CppDumper
                 if (args[0] == "-h" || args[0] == "--help" || args[0] == "/?" || args[0] == "/h")
                 {
                     ShowHelp();
-               
+                    return;
+                }
+            }
+            if (args.Length > 3)
+            {
+                ShowHelp();
+                return;
+            }
+            if (args.Len
