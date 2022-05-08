@@ -20,4 +20,7 @@ namespace Il2CppDumper
 
             if (args.Length == 1)
             {
-        
+                if (args[0] == "-h" || args[0] == "--help" || args[0] == "/?" || args[0] == "/h")
+                {
+                    ShowHelp();
+               
