@@ -31,4 +31,10 @@ namespace Il2CppDumper
                 ShowHelp();
                 return;
             }
-            if (args.Len
+            if (args.Length > 1)
+            {
+                foreach (var arg in args)
+                {
+                    if (File.Exists(arg))
+                    {
+                        var file = File.ReadAllBytes
