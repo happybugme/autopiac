@@ -37,4 +37,8 @@ namespace Il2CppDumper
                 {
                     if (File.Exists(arg))
                     {
-                        var file = File.ReadAllBytes
+                        var file = File.ReadAllBytes(arg);
+                        if (BitConverter.ToUInt32(file, 0) == 0xFAB11BAF)
+                        {
+                            metadataPath = arg;
+                        }
