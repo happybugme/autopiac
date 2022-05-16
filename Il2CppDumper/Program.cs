@@ -42,3 +42,9 @@ namespace Il2CppDumper
                         {
                             metadataPath = arg;
                         }
+                        else
+                        {
+                            il2cppPath = arg;
+                        }
+                    }
+                   
