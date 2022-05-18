@@ -47,4 +47,8 @@ namespace Il2CppDumper
                             il2cppPath = arg;
                         }
                     }
-                   
+                    else if (Directory.Exists(arg))
+                    {
+                        outputDir = Path.GetFullPath(arg) + Path.DirectorySeparatorChar;
+                    }
+                
