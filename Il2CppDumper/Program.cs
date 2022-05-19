@@ -51,4 +51,9 @@ namespace Il2CppDumper
                     {
                         outputDir = Path.GetFullPath(arg) + Path.DirectorySeparatorChar;
                     }
-                
+                }
+            }
+            outputDir ??= AppDomain.CurrentDomain.BaseDirectory;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (
