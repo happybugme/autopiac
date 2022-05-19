@@ -71,4 +71,12 @@ namespace Il2CppDumper
                             metadataPath = ofd.FileName;
                         }
                         else
-          
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+ 
