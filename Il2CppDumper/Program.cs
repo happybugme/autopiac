@@ -56,4 +56,10 @@ namespace Il2CppDumper
             outputDir ??= AppDomain.CurrentDomain.BaseDirectory;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                if (
+                if (il2cppPath == null)
+                {
+                    var ofd = new OpenFileDialog
+                    {
+                        Filter = "Il2Cpp binary file|*.*"
+                    };
+       
