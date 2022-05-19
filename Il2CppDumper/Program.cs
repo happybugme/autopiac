@@ -62,4 +62,8 @@ namespace Il2CppDumper
                     {
                         Filter = "Il2Cpp binary file|*.*"
                     };
-       
+                    if (ofd.ShowDialog())
+                    {
+                        il2cppPath = ofd.FileName;
+                        ofd.Filter = "global-metadata|global-metadata.dat";
+                     
