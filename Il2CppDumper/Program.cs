@@ -87,4 +87,10 @@ namespace Il2CppDumper
                 return;
             }
             if (metadataPath == null)
-        
+            {
+                Console.WriteLine($"ERROR: Metadata file not found or encrypted.");
+            }
+            else
+            {
+                try
+              
