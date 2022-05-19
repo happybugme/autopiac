@@ -66,4 +66,9 @@ namespace Il2CppDumper
                     {
                         il2cppPath = ofd.FileName;
                         ofd.Filter = "global-metadata|global-metadata.dat";
-                     
+                        if (ofd.ShowDialog())
+                        {
+                            metadataPath = ofd.FileName;
+                        }
+                        else
+          
