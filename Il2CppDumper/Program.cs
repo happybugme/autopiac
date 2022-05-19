@@ -79,4 +79,12 @@ namespace Il2CppDumper
                     {
                         return;
                     }
- 
+                }
+            }
+            if (il2cppPath == null)
+            {
+                ShowHelp();
+                return;
+            }
+            if (metadataPath == null)
+        
