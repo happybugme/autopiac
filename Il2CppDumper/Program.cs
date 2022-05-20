@@ -93,4 +93,8 @@ namespace Il2CppDumper
             else
             {
                 try
-              
+                {
+                    if (Init(il2cppPath, metadataPath, out var metadata, out var il2Cpp))
+                    {
+                        Dump(metadata, il2Cpp, outputDir);
+ 
