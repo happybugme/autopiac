@@ -97,4 +97,11 @@ namespace Il2CppDumper
                     if (Init(il2cppPath, metadataPath, out var metadata, out var il2Cpp))
                     {
                         Dump(metadata, il2Cpp, outputDir);
- 
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            if 
