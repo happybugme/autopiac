@@ -111,4 +111,8 @@ namespace Il2CppDumper
             }
         }
 
-  
+        static void ShowHelp()
+        {
+            Console.WriteLine($"usage: {AppDomain.CurrentDomain.FriendlyName} <executable-file> <global-metadata> <output-directory>");
+        }
+
