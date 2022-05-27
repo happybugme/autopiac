@@ -121,4 +121,8 @@ namespace Il2CppDumper
             Console.WriteLine("Initializing metadata...");
             var metadataBytes = File.ReadAllBytes(metadataPath);
             metadata = new Metadata(new MemoryStream(metadataBytes));
-            Console.WriteLine($
+            Console.WriteLine($"Metadata Version: {metadata.Version}");
+
+            Console.WriteLine("Initializing il2cpp file...");
+            var il2cppBytes = File.ReadAllBytes(il2cppPath);
+  
