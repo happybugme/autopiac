@@ -130,4 +130,7 @@ namespace Il2CppDumper
             switch (il2cppMagic)
             {
                 default:
-             
+                    throw new NotSupportedException("ERROR: il2cpp file not supported.");
+                case 0x6D736100:
+                    var web = new WebAssembly(il2CppMemory);
+    
