@@ -133,4 +133,8 @@ namespace Il2CppDumper
                     throw new NotSupportedException("ERROR: il2cpp file not supported.");
                 case 0x6D736100:
                     var web = new WebAssembly(il2CppMemory);
-    
+                    il2Cpp = web.CreateMemory();
+                    break;
+                case 0x304F534E:
+                    var nso = new NSO(il2CppMemory);
+                    il2Cpp = nso.UnC
