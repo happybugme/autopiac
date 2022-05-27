@@ -137,4 +137,10 @@ namespace Il2CppDumper
                     break;
                 case 0x304F534E:
                     var nso = new NSO(il2CppMemory);
-                    il2Cpp = nso.UnC
+                    il2Cpp = nso.UnCompress();
+                    break;
+                case 0x905A4D: //PE
+                    il2Cpp = new PE(il2CppMemory);
+                    break;
+                case 0x464c457f: //ELF
+     
