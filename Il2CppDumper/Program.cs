@@ -143,4 +143,8 @@ namespace Il2CppDumper
                     il2Cpp = new PE(il2CppMemory);
                     break;
                 case 0x464c457f: //ELF
-     
+                    if (il2cppBytes[4] == 2) //ELF64
+                    {
+                        il2Cpp = new Elf64(il2CppMemory);
+                    }
+                    el
