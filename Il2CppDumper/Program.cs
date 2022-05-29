@@ -155,4 +155,8 @@ namespace Il2CppDumper
                 case 0xCAFEBABE: //FAT Mach-O
                 case 0xBEBAFECA:
                     var machofat = new MachoFat(new MemoryStream(il2cppBytes));
-                    Console.Write("Select Platfo
+                    Console.Write("Select Platform: ");
+                    for (var i = 0; i < machofat.fats.Length; i++)
+                    {
+                        var fat = machofat.fats[i];
+                        Co
