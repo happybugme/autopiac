@@ -147,4 +147,9 @@ namespace Il2CppDumper
                     {
                         il2Cpp = new Elf64(il2CppMemory);
                     }
-                    el
+                    else
+                    {
+                        il2Cpp = new Elf(il2CppMemory);
+                    }
+                    break;
+                case 0xCAFEBABE: //FAT Ma
