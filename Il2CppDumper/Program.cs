@@ -152,4 +152,7 @@ namespace Il2CppDumper
                         il2Cpp = new Elf(il2CppMemory);
                     }
                     break;
-                case 0xCAFEBABE: //FAT Ma
+                case 0xCAFEBABE: //FAT Mach-O
+                case 0xBEBAFECA:
+                    var machofat = new MachoFat(new MemoryStream(il2cppBytes));
+                    Console.Write("Select Platfo
