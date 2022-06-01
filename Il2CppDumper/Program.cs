@@ -181,4 +181,9 @@ namespace Il2CppDumper
             var version = config.ForceIl2CppVersion ? config.ForceVersion : metadata.Version;
             il2Cpp.SetProperties(version, metadata.metadataUsagesCount);
             Console.WriteLine($"Il2Cpp Version: {il2Cpp.Version}");
-            if (config.F
+            if (config.ForceDump || il2Cpp.CheckDump())
+            {
+                if (il2Cpp is ElfBase elf)
+                {
+                    Console.WriteLine("Detected this may be a dump file.");
+              
