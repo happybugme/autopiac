@@ -178,4 +178,7 @@ namespace Il2CppDumper
                     il2Cpp = new Macho(il2CppMemory);
                     break;
             }
-            var version = config.ForceIl2CppVersion ? conf
+            var version = config.ForceIl2CppVersion ? config.ForceVersion : metadata.Version;
+            il2Cpp.SetProperties(version, metadata.metadataUsagesCount);
+            Console.WriteLine($"Il2Cpp Version: {il2Cpp.Version}");
+            if (config.F
