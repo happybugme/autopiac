@@ -165,4 +165,8 @@ namespace Il2CppDumper
                     var key = Console.ReadKey(true);
                     var index = int.Parse(key.KeyChar.ToString()) - 1;
                     var magic = machofat.fats[index % 2].magic;
-                    il2cppBytes = machofat.GetMacho(in
+                    il2cppBytes = machofat.GetMacho(index % 2);
+                    il2CppMemory = new MemoryStream(il2cppBytes);
+                    if (magic == 0xFEEDFACF)
+                        goto case 0xFEEDFACF;
+         
