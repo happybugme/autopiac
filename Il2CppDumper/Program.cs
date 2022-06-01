@@ -173,4 +173,9 @@ namespace Il2CppDumper
                         goto case 0xFEEDFACE;
                 case 0xFEEDFACF: // 64bit Mach-O
                     il2Cpp = new Macho64(il2CppMemory);
-                    break
+                    break;
+                case 0xFEEDFACE: // 32bit Mach-O
+                    il2Cpp = new Macho(il2CppMemory);
+                    break;
+            }
+            var version = config.ForceIl2CppVersion ? conf
