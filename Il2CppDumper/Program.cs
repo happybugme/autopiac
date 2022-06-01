@@ -163,4 +163,6 @@ namespace Il2CppDumper
                     }
                     Console.WriteLine();
                     var key = Console.ReadKey(true);
-                 
+                    var index = int.Parse(key.KeyChar.ToString()) - 1;
+                    var magic = machofat.fats[index % 2].magic;
+                    il2cppBytes = machofat.GetMacho(in
