@@ -159,4 +159,8 @@ namespace Il2CppDumper
                     for (var i = 0; i < machofat.fats.Length; i++)
                     {
                         var fat = machofat.fats[i];
-                        Co
+                        Console.Write(fat.magic == 0xFEEDFACF ? $"{i + 1}.64bit " : $"{i + 1}.32bit ");
+                    }
+                    Console.WriteLine();
+                    var key = Console.ReadKey(true);
+                 
