@@ -169,4 +169,8 @@ namespace Il2CppDumper
                     il2CppMemory = new MemoryStream(il2cppBytes);
                     if (magic == 0xFEEDFACF)
                         goto case 0xFEEDFACF;
-         
+                    else
+                        goto case 0xFEEDFACE;
+                case 0xFEEDFACF: // 64bit Mach-O
+                    il2Cpp = new Macho64(il2CppMemory);
+                    break
