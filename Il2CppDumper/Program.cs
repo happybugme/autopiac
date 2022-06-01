@@ -188,4 +188,8 @@ namespace Il2CppDumper
                     Console.WriteLine("Detected this may be a dump file.");
                     Console.WriteLine("Input il2cpp dump address or input 0 to force continue:");
                     var DumpAddr = Convert.ToUInt64(Console.ReadLine(), 16);
-                    
+                    if (DumpAddr != 0)
+                    {
+                        il2Cpp.ImageBase = DumpAddr;
+                        il2Cpp.IsDumped = true;
+                        if (!config.NoRedirectedPoint
