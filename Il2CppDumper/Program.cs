@@ -192,4 +192,12 @@ namespace Il2CppDumper
                     {
                         il2Cpp.ImageBase = DumpAddr;
                         il2Cpp.IsDumped = true;
-                        if (!config.NoRedirectedPoint
+                        if (!config.NoRedirectedPointer)
+                        {
+                            elf.Reload();
+                        }
+                    }
+                }
+                else
+                {
+                   
