@@ -200,4 +200,11 @@ namespace Il2CppDumper
                 }
                 else
                 {
-                   
+                    il2Cpp.IsDumped = true;
+                }
+            }
+
+            Console.WriteLine("Searching...");
+            try
+            {
+                var flag = il2Cpp.PlusSea
