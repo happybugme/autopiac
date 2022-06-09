@@ -220,4 +220,11 @@ namespace Il2CppDumper
                 }
                 if (!flag)
                 {
-                    flag = il2Cpp.Sea
+                    flag = il2Cpp.Search();
+                }
+                if (!flag)
+                {
+                    flag = il2Cpp.SymbolSearch();
+                }
+                if (!flag)
+      
