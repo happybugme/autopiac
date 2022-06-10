@@ -227,4 +227,6 @@ namespace Il2CppDumper
                     flag = il2Cpp.SymbolSearch();
                 }
                 if (!flag)
-      
+                {
+                    Console.WriteLine("ERROR: Can't use auto mode to process file, try manual mode.");
+                    Console.Write("Input CodeRegistration: ");
