@@ -230,3 +230,6 @@ namespace Il2CppDumper
                 {
                     Console.WriteLine("ERROR: Can't use auto mode to process file, try manual mode.");
                     Console.Write("Input CodeRegistration: ");
+                    var codeRegistration = Convert.ToUInt64(Console.ReadLine(), 16);
+                    Console.Write("Input MetadataRegistration: ");
+                    var metadataR
