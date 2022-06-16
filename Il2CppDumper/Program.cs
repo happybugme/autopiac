@@ -239,4 +239,10 @@ namespace Il2CppDumper
                 {
                     var typeDef = metadata.typeDefs[0];
                     var il2CppType = il2Cpp.types[typeDef.byvalTypeIndex];
-                    metadata.ImageBase = 
+                    metadata.ImageBase = il2CppType.data.typeHandle - metadata.header.typeDefinitionsOffset;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+              
