@@ -245,4 +245,10 @@ namespace Il2CppDumper
             catch (Exception e)
             {
                 Console.WriteLine(e);
-              
+                Console.WriteLine("ERROR: An error occurred while processing.");
+                return false;
+            }
+            return true;
+        }
+
+        private static void Dump(Me
