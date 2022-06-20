@@ -251,4 +251,8 @@ namespace Il2CppDumper
             return true;
         }
 
-        private static void Dump(Me
+        private static void Dump(Metadata metadata, Il2Cpp il2Cpp, string outputDir)
+        {
+            Console.WriteLine("Dumping...");
+            var executor = new Il2CppExecutor(metadata, il2Cpp);
+            var decompil
