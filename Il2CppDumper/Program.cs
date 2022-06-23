@@ -258,4 +258,8 @@ namespace Il2CppDumper
             var decompiler = new Il2CppDecompiler(executor);
             decompiler.Decompile(config, outputDir);
             Console.WriteLine("Done!");
-            if (config.Generate
+            if (config.GenerateStruct)
+            {
+                Console.WriteLine("Generate struct...");
+                var scriptGenerator = new StructGenerator(executor);
+                scriptGenerator.
