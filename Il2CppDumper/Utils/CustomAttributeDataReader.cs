@@ -162,3 +162,8 @@ namespace Il2CppDumper
 
             var typeIndex = this.ReadCompressedUInt32();
             var declaringClass = metadata.typeDefs[typeIndex];
+
+            return (declaringClass, memberIndex);
+        }
+    }
+}
