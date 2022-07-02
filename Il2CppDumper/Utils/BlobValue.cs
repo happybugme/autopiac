@@ -4,4 +4,6 @@
     {
         public object Value;
         public Il2CppTypeEnum il2CppTypeEnum;
-        public Il2CppType Enu
+        public Il2CppType EnumType;
+    }
+}
