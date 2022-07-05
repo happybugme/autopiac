@@ -172,3 +172,194 @@ namespace Il2CppDumper
                     //field
                     var fieldEnd = typeDef.fieldStart + typeDef.field_count;
                     for (var i = typeDef.fieldStart; i < fieldEnd; ++i)
+                    {
+                        var fieldDef = metadata.fieldDefs[i];
+                        var fieldType = il2Cpp.types[fieldDef.typeIndex];
+                        var fieldName = metadata.GetStringFromIndex(fieldDef.nameIndex);
+                        var fieldTypeRef = GetTypeReference(typeDefinition, fieldType);
+                        var fieldDefinition = new FieldDefinition(fieldName, (FieldAttributes)fieldType.attrs, fieldTypeRef);
+                        typeDefinition.Fields.Add(fieldDefinition);
+                        fieldDefinitionDic.Add(i, fieldDefinition);
+
+                        if (addToken)
+                        {
+                            var customTokenAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(tokenAttribute));
+                            customTokenAttribute.Fields.Add(new CustomAttributeNamedArgument("Token", new CustomAttributeArgument(stringType, $"0x{fieldDef.token:X}")));
+                            fieldDefinition.CustomAttributes.Add(customTokenAttribute);
+                        }
+
+                        //fieldDefault
+                        if (metadata.GetFieldDefaultValueFromIndex(i, out var fieldDefault) && fieldDefault.dataIndex != -1)
+                        {
+                            if (executor.TryGetDefaultValue(fieldDefault.typeIndex, fieldDefault.dataIndex, out var value))
+                            {
+                                fieldDefinition.Constant = value;
+                            }
+                            else
+                            {
+                                var customAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(metadataOffsetAttribute));
+                                var offset = new CustomAttributeNamedArgument("Offset", new CustomAttributeArgument(stringType, $"0x{value:X}"));
+                                customAttribute.Fields.Add(offset);
+                                fieldDefinition.CustomAttributes.Add(customAttribute);
+                            }
+                        }
+                        //fieldOffset
+                        if (!fieldDefinition.IsLiteral)
+                        {
+                            var fieldOffset = il2Cpp.GetFieldOffsetFromIndex(index, i - typeDef.fieldStart, i, typeDefinition.IsValueType, fieldDefinition.IsStatic);
+                            if (fieldOffset >= 0)
+                            {
+                                var customAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(fieldOffsetAttribute));
+                                var offset = new CustomAttributeNamedArgument("Offset", new CustomAttributeArgument(stringType, $"0x{fieldOffset:X}"));
+                                customAttribute.Fields.Add(offset);
+                                fieldDefinition.CustomAttributes.Add(customAttribute);
+                            }
+                        }
+                    }
+                    //method
+                    var methodEnd = typeDef.methodStart + typeDef.method_count;
+                    for (var i = typeDef.methodStart; i < methodEnd; ++i)
+                    {
+                        var methodDef = metadata.methodDefs[i];
+                        var methodName = metadata.GetStringFromIndex(methodDef.nameIndex);
+                        var methodDefinition = new MethodDefinition(methodName, (MethodAttributes)methodDef.flags, typeDefinition.Module.ImportReference(typeSystem.Void))
+                        {
+                            ImplAttributes = (MethodImplAttributes)methodDef.iflags
+                        };
+                        typeDefinition.Methods.Add(methodDefinition);
+                        //genericParameter
+                        if (methodDef.genericContainerIndex >= 0)
+                        {
+                            var genericContainer = metadata.genericContainers[methodDef.genericContainerIndex];
+                            for (int j = 0; j < genericContainer.type_argc; j++)
+                            {
+                                var genericParameterIndex = genericContainer.genericParameterStart + j;
+                                var param = metadata.genericParameters[genericParameterIndex];
+                                var genericParameter = CreateGenericParameter(param, methodDefinition);
+                                methodDefinition.GenericParameters.Add(genericParameter);
+                            }
+                        }
+                        var methodReturnType = il2Cpp.types[methodDef.returnType];
+                        var returnType = GetTypeReferenceWithByRef(methodDefinition, methodReturnType);
+                        methodDefinition.ReturnType = returnType;
+
+                        if (addToken)
+                        {
+                            var customTokenAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(tokenAttribute));
+                            customTokenAttribute.Fields.Add(new CustomAttributeNamedArgument("Token", new CustomAttributeArgument(stringType, $"0x{methodDef.token:X}")));
+                            methodDefinition.CustomAttributes.Add(customTokenAttribute);
+                        }
+
+                        if (methodDefinition.HasBody && typeDefinition.BaseType?.FullName != "System.MulticastDelegate")
+                        {
+                            var ilprocessor = methodDefinition.Body.GetILProcessor();
+                            if (returnType.FullName == "System.Void")
+                            {
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ret));
+                            }
+                            else if (returnType.IsValueType)
+                            {
+                                var variable = new VariableDefinition(returnType);
+                                methodDefinition.Body.Variables.Add(variable);
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ldloca_S, variable));
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Initobj, returnType));
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ldloc_0));
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ret));
+                            }
+                            else
+                            {
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ldnull));
+                                ilprocessor.Append(ilprocessor.Create(OpCodes.Ret));
+                            }
+                        }
+                        methodDefinitionDic.Add(i, methodDefinition);
+                        //method parameter
+                        for (var j = 0; j < methodDef.parameterCount; ++j)
+                        {
+                            var parameterDef = metadata.parameterDefs[methodDef.parameterStart + j];
+                            var parameterName = metadata.GetStringFromIndex(parameterDef.nameIndex);
+                            var parameterType = il2Cpp.types[parameterDef.typeIndex];
+                            var parameterTypeRef = GetTypeReferenceWithByRef(methodDefinition, parameterType);
+                            var parameterDefinition = new ParameterDefinition(parameterName, (ParameterAttributes)parameterType.attrs, parameterTypeRef);
+                            methodDefinition.Parameters.Add(parameterDefinition);
+                            parameterDefinitionDic.Add(methodDef.parameterStart + j, parameterDefinition);
+                            //ParameterDefault
+                            if (metadata.GetParameterDefaultValueFromIndex(methodDef.parameterStart + j, out var parameterDefault) && parameterDefault.dataIndex != -1)
+                            {
+                                if (executor.TryGetDefaultValue(parameterDefault.typeIndex, parameterDefault.dataIndex, out var value))
+                                {
+                                    parameterDefinition.Constant = value;
+                                }
+                                else
+                                {
+                                    var customAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(metadataOffsetAttribute));
+                                    var offset = new CustomAttributeNamedArgument("Offset", new CustomAttributeArgument(stringType, $"0x{value:X}"));
+                                    customAttribute.Fields.Add(offset);
+                                    parameterDefinition.CustomAttributes.Add(customAttribute);
+                                }
+                            }
+                        }
+                        //methodAddress
+                        if (!methodDefinition.IsAbstract)
+                        {
+                            var methodPointer = il2Cpp.GetMethodPointer(imageName, methodDef);
+                            if (methodPointer > 0)
+                            {
+                                var customAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(addressAttribute));
+                                var fixedMethodPointer = il2Cpp.GetRVA(methodPointer);
+                                var rva = new CustomAttributeNamedArgument("RVA", new CustomAttributeArgument(stringType, $"0x{fixedMethodPointer:X}"));
+                                var offset = new CustomAttributeNamedArgument("Offset", new CustomAttributeArgument(stringType, $"0x{il2Cpp.MapVATR(methodPointer):X}"));
+                                var va = new CustomAttributeNamedArgument("VA", new CustomAttributeArgument(stringType, $"0x{methodPointer:X}"));
+                                customAttribute.Fields.Add(rva);
+                                customAttribute.Fields.Add(offset);
+                                customAttribute.Fields.Add(va);
+                                if (methodDef.slot != ushort.MaxValue)
+                                {
+                                    var slot = new CustomAttributeNamedArgument("Slot", new CustomAttributeArgument(stringType, methodDef.slot.ToString()));
+                                    customAttribute.Fields.Add(slot);
+                                }
+                                methodDefinition.CustomAttributes.Add(customAttribute);
+                            }
+                        }
+                    }
+                    //property
+                    var propertyEnd = typeDef.propertyStart + typeDef.property_count;
+                    for (var i = typeDef.propertyStart; i < propertyEnd; ++i)
+                    {
+                        var propertyDef = metadata.propertyDefs[i];
+                        var propertyName = metadata.GetStringFromIndex(propertyDef.nameIndex);
+                        TypeReference propertyType = null;
+                        MethodDefinition GetMethod = null;
+                        MethodDefinition SetMethod = null;
+                        if (propertyDef.get >= 0)
+                        {
+                            GetMethod = methodDefinitionDic[typeDef.methodStart + propertyDef.get];
+                            propertyType = GetMethod.ReturnType;
+                        }
+                        if (propertyDef.set >= 0)
+                        {
+                            SetMethod = methodDefinitionDic[typeDef.methodStart + propertyDef.set];
+                            propertyType ??= SetMethod.Parameters[0].ParameterType;
+                        }
+                        var propertyDefinition = new PropertyDefinition(propertyName, (PropertyAttributes)propertyDef.attrs, propertyType)
+                        {
+                            GetMethod = GetMethod,
+                            SetMethod = SetMethod
+                        };
+                        typeDefinition.Properties.Add(propertyDefinition);
+                        propertyDefinitionDic.Add(i, propertyDefinition);
+
+                        if (addToken)
+                        {
+                            var customTokenAttribute = new CustomAttribute(typeDefinition.Module.ImportReference(tokenAttribute));
+                            customTokenAttribute.Fields.Add(new CustomAttributeNamedArgument("Token", new CustomAttributeArgument(stringType, $"0x{propertyDef.token:X}")));
+                            propertyDefinition.CustomAttributes.Add(customTokenAttribute);
+                        }
+                    }
+                    //event
+                    var eventEnd = typeDef.eventStart + typeDef.event_count;
+                    for (var i = typeDef.eventStart; i < eventEnd; ++i)
+                    {
+                        var eventDef = metadata.eventDefs[i];
+                        var eventName = metadata.GetStringFromIndex(eventDef.nameIndex);
+                        var eventType = il2Cpp.types[eventDef.typeIndex];
