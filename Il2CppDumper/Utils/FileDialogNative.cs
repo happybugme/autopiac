@@ -7,4 +7,11 @@ namespace Il2CppDumper
     {
         [ComImport]
         [ClassInterface(ClassInterfaceType.None)]
-        [TypeLibType(TypeLibTy
+        [TypeLibType(TypeLibTypeFlags.FCanCreate)]
+        [Guid(CLSIDGuid.FileOpenDialog)]
+        internal class FileOpenDialogRCW
+        { }
+
+        internal class IIDGuid
+        {
+            private II
