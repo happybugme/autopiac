@@ -14,4 +14,6 @@ namespace Il2CppDumper
 
         internal class IIDGuid
         {
-            private II
+            private IIDGuid() { } // Avoid FxCop violation AvoidUninstantiatedInternalClasses
+            // IID GUID strings for relevant COM interfaces
+            internal const st
