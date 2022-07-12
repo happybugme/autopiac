@@ -20,4 +20,6 @@ namespace Il2CppDumper
             internal const string IFileDialog = "42f85136-db7e-439c-85f1-e4075d135fc8";
             internal const string IFileOpenDialog = "d57c7288-d4ad-4768-be02-9d969532d960";
             internal const string IFileSaveDialog = "84bccd23-5fde-4cdb-aea4-af64b83d78ab";
-            internal
+            internal const string IFileDialogEvents = "973510DB-7D7F-452B-8975-74A85828D354";
+            internal const string IShellItem = "43826D1E-E718-42EE-BC55-A1E261C37BFE";
+            internal const string IS
