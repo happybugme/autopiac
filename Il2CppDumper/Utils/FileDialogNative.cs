@@ -37,4 +37,7 @@ namespace Il2CppDumper
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IFileDialog
         {
-            [Pres
+            [PreserveSig]
+            int Show([In] IntPtr parent);
+
+            void SetFileTypes([In] uint cFileTypes, [In][MarshalAs(UnmanagedType.LPArray)] COMDLG_FILTERSPEC[] rgFilterSp
