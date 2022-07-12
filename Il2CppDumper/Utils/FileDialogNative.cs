@@ -18,4 +18,6 @@ namespace Il2CppDumper
             // IID GUID strings for relevant COM interfaces
             internal const string IModalWindow = "b4db1657-70d7-485e-8e3e-6fcb5a5c1802";
             internal const string IFileDialog = "42f85136-db7e-439c-85f1-e4075d135fc8";
-            internal const str
+            internal const string IFileOpenDialog = "d57c7288-d4ad-4768-be02-9d969532d960";
+            internal const string IFileSaveDialog = "84bccd23-5fde-4cdb-aea4-af64b83d78ab";
+            internal
