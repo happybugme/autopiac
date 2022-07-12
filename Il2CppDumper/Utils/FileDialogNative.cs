@@ -40,4 +40,10 @@ namespace Il2CppDumper
             [PreserveSig]
             int Show([In] IntPtr parent);
 
-            void SetFileTypes([In] uint cFileTypes, [In][MarshalAs(UnmanagedType.LPArray)] COMDLG_FILTERSPEC[] rgFilterSp
+            void SetFileTypes([In] uint cFileTypes, [In][MarshalAs(UnmanagedType.LPArray)] COMDLG_FILTERSPEC[] rgFilterSpec);
+
+            void SetFileTypeIndex([In] uint iFileType);
+
+            void GetFileTypeIndex(out uint piFileType);
+
+            void Advise([In, MarshalAs(UnmanagedType.Interface)] IFileDialogEvents pfde, ou
