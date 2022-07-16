@@ -54,4 +54,8 @@ namespace Il2CppDumper
 
             void GetOptions(out FOS pfos);
 
-            void SetDefaul
+            void SetDefaultFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
+
+            void SetFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
+
+            void GetFolder([MarshalAs(U
