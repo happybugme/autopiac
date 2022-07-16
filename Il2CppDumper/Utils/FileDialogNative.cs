@@ -46,4 +46,12 @@ namespace Il2CppDumper
 
             void GetFileTypeIndex(out uint piFileType);
 
-            void Advise([In, MarshalAs(UnmanagedType.Interface)] IFileDialogEvents pfde, ou
+            void Advise([In, MarshalAs(UnmanagedType.Interface)] IFileDialogEvents pfde, out uint pdwCookie);
+
+            void Unadvise([In] uint dwCookie);
+
+            void SetOptions([In] FOS fos);
+
+            void GetOptions(out FOS pfos);
+
+            void SetDefaul
