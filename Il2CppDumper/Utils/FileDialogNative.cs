@@ -66,4 +66,8 @@ namespace Il2CppDumper
 
             void GetFileName([MarshalAs(UnmanagedType.LPWStr)] out string pszName);
 
-            void SetTitle([In, MarshalAs(Unman
+            void SetTitle([In, MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+
+            void SetOkButtonLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszText);
+
+            void SetFileNameLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
