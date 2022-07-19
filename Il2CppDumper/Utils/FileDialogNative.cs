@@ -58,4 +58,8 @@ namespace Il2CppDumper
 
             void SetFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
 
-            void GetFolder([MarshalAs(U
+            void GetFolder([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+
+            void GetCurrentSelection([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+
+            void SetFileName([In, Mars
