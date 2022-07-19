@@ -62,4 +62,8 @@ namespace Il2CppDumper
 
             void GetCurrentSelection([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
-            void SetFileName([In, Mars
+            void SetFileName([In, MarshalAs(UnmanagedType.LPWStr)] string pszName);
+
+            void GetFileName([MarshalAs(UnmanagedType.LPWStr)] out string pszName);
+
+            void SetTitle([In, MarshalAs(Unman
