@@ -71,3 +71,7 @@ namespace Il2CppDumper
             void SetOkButtonLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszText);
 
             void SetFileNameLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+            void GetResult([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+
+            void AddPlace([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, int a
