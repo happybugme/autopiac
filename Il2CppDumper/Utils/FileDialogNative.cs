@@ -74,4 +74,10 @@ namespace Il2CppDumper
 
             void GetResult([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
-            void AddPlace([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, int a
+            void AddPlace([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, int alignment);
+
+            void SetDefaultExtension([In, MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+
+            void Close([MarshalAs(UnmanagedType.Error)] int hr);
+
+          
