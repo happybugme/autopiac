@@ -80,4 +80,12 @@ namespace Il2CppDumper
 
             void Close([MarshalAs(UnmanagedType.Error)] int hr);
 
-          
+            void SetClientGuid([In] ref Guid guid);
+
+            void ClearClientData();
+
+            void SetFilter([MarshalAs(UnmanagedType.Interface)] IntPtr pFilter);
+        }
+
+        [ComImport,
+     
