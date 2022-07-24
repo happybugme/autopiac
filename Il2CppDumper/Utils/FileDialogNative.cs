@@ -88,4 +88,8 @@ namespace Il2CppDumper
         }
 
         [ComImport,
-     
+        Guid(IIDGuid.IFileDialogEvents),
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IFileDialogEvents
+        {
+            // NOTE: some of t
