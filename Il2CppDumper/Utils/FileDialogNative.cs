@@ -94,4 +94,7 @@ namespace Il2CppDumper
         {
             // NOTE: some of these callbacks are cancelable - returning S_FALSE means that 
             // the dialog should not proceed (e.g. with closing, changing folder); to 
-         
+            // support this, we need to use the PreserveSig attribute to enable us to return
+            // the proper HRESULT
+            [PreserveSig]
+            int OnFileOk([In, MarshalAs(Unmana
