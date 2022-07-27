@@ -92,4 +92,6 @@ namespace Il2CppDumper
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IFileDialogEvents
         {
-            // NOTE: some of t
+            // NOTE: some of these callbacks are cancelable - returning S_FALSE means that 
+            // the dialog should not proceed (e.g. with closing, changing folder); to 
+         
