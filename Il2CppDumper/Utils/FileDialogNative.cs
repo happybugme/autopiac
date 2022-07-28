@@ -100,4 +100,8 @@ namespace Il2CppDumper
             int OnFileOk([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
 
             [PreserveSig]
-            int OnFolderChanging([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd, [In, MarshalAs(Unmana
+            int OnFolderChanging([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd, [In, MarshalAs(UnmanagedType.Interface)] IShellItem psiFolder);
+
+            void OnFolderChange([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
+
+            void OnSelectionChange([In, MarshalAs(UnmanagedType.I
