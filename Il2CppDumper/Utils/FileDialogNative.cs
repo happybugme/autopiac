@@ -97,4 +97,7 @@ namespace Il2CppDumper
             // support this, we need to use the PreserveSig attribute to enable us to return
             // the proper HRESULT
             [PreserveSig]
-            int OnFileOk([In, MarshalAs(Unmana
+            int OnFileOk([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
+
+            [PreserveSig]
+            int OnFolderChanging([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd, [In, MarshalAs(Unmana
