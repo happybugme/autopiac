@@ -104,4 +104,6 @@ namespace Il2CppDumper
 
             void OnFolderChange([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
 
-            void OnSelectionChange([In, MarshalAs(UnmanagedType.I
+            void OnSelectionChange([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
+
+            void OnShareViolation([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd, [In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, out FDE_SH
