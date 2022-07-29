@@ -110,4 +110,8 @@ namespace Il2CppDumper
 
             void OnTypeChange([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd);
 
-            void OnOverwrite([In, MarshalAs(Unmanaged
+            void OnOverwrite([In, MarshalAs(UnmanagedType.Interface)] IFileDialog pfd, [In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, out FDE_OVERWRITE_RESPONSE pResponse);
+        }
+
+        [ComImport,
+        Guid(IIDGuid.IShellItem)
