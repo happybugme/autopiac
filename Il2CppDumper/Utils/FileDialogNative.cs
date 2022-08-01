@@ -118,4 +118,8 @@ namespace Il2CppDumper
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IShellItem
         {
-            void BindToHandler([In, MarshalAs(UnmanagedType.Interface)] IntPtr pbc, [In] ref 
+            void BindToHandler([In, MarshalAs(UnmanagedType.Interface)] IntPtr pbc, [In] ref Guid bhid, [In] ref Guid riid, out IntPtr ppv);
+
+            void GetParent([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+
+            void GetDisplayName([In] SIGDN sigdnName, [Ma
