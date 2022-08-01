@@ -122,4 +122,8 @@ namespace Il2CppDumper
 
             void GetParent([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
-            void GetDisplayName([In] SIGDN sigdnName, [Ma
+            void GetDisplayName([In] SIGDN sigdnName, [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
+
+            void GetAttributes([In] uint sfgaoMask, out uint psfgaoAttribs);
+
+            void Compare([In, MarshalAs(Unma
