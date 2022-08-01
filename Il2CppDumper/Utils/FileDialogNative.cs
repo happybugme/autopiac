@@ -114,4 +114,8 @@ namespace Il2CppDumper
         }
 
         [ComImport,
-        Guid(IIDGuid.IShellItem)
+        Guid(IIDGuid.IShellItem),
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IShellItem
+        {
+            void BindToHandler([In, MarshalAs(UnmanagedType.Interface)] IntPtr pbc, [In] ref 
