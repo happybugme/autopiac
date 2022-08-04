@@ -126,4 +126,9 @@ namespace Il2CppDumper
 
             void GetAttributes([In] uint sfgaoMask, out uint psfgaoAttribs);
 
-            void Compare([In, MarshalAs(Unma
+            void Compare([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, [In] uint hint, out int piOrder);
+        }
+
+        internal enum SIGDN : uint
+        {
+            SIGDN_NORMALDISPLAY = 0x00000000,           /
