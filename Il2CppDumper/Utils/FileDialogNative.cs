@@ -131,4 +131,7 @@ namespace Il2CppDumper
 
         internal enum SIGDN : uint
         {
-            SIGDN_NORMALDISPLAY = 0x00000000,           /
+            SIGDN_NORMALDISPLAY = 0x00000000,           // SHGDN_NORMAL
+            SIGDN_PARENTRELATIVEPARSING = 0x80018001,   // SHGDN_INFOLDER | SHGDN_FORPARSING
+            SIGDN_DESKTOPABSOLUTEPARSING = 0x80028000,  // SHGDN_FORPARSING
+            SIGDN_PAR
