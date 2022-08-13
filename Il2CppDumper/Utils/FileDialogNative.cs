@@ -142,4 +142,8 @@ namespace Il2CppDumper
             SIGDN_PARENTRELATIVE = 0x80080001           // SHGDN_INFOLDER
         }
 
-        [StructLayout(L
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+        internal struct COMDLG_FILTERSPEC
+        {
+            [MarshalAs(UnmanagedType.LPWStr)]
+        
