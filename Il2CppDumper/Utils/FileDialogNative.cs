@@ -146,4 +146,10 @@ namespace Il2CppDumper
         internal struct COMDLG_FILTERSPEC
         {
             [MarshalAs(UnmanagedType.LPWStr)]
-        
+            internal string pszName;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszSpec;
+        }
+
+        [Flags]
+        internal enum FOS : ui
