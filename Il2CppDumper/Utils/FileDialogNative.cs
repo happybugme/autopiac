@@ -157,4 +157,6 @@ namespace Il2CppDumper
             FOS_OVERWRITEPROMPT = 0x00000002,
             FOS_STRICTFILETYPES = 0x00000004,
             FOS_NOCHANGEDIR = 0x00000008,
-            FOS_PICKFOLDERS
+            FOS_PICKFOLDERS = 0x00000020,
+            FOS_FORCEFILESYSTEM = 0x00000040, // Ensure that items returned are filesystem items.
+            FOS_ALLNONSTORAGEITEMS = 0x00000080, // Allow choosing
