@@ -159,4 +159,8 @@ namespace Il2CppDumper
             FOS_NOCHANGEDIR = 0x00000008,
             FOS_PICKFOLDERS = 0x00000020,
             FOS_FORCEFILESYSTEM = 0x00000040, // Ensure that items returned are filesystem items.
-            FOS_ALLNONSTORAGEITEMS = 0x00000080, // Allow choosing
+            FOS_ALLNONSTORAGEITEMS = 0x00000080, // Allow choosing items that have no storage.
+            FOS_NOVALIDATE = 0x00000100,
+            FOS_ALLOWMULTISELECT = 0x00000200,
+            FOS_PATHMUSTEXIST = 0x00000800,
+            FOS_FILEMUST
