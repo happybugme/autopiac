@@ -172,3 +172,10 @@ namespace Il2CppDumper
             FOS_HIDEPINNEDPLACES = 0x00040000,
             FOS_NODEREFERENCELINKS = 0x00100000,
             FOS_DONTADDTORECENT = 0x02000000,
+            FOS_FORCESHOWHIDDEN = 0x10000000,
+            FOS_DEFAULTNOMINIMODE = 0x20000000
+        }
+
+        internal enum FDE_SHAREVIOLATION_RESPONSE
+        {
+            F
