@@ -178,4 +178,10 @@ namespace Il2CppDumper
 
         internal enum FDE_SHAREVIOLATION_RESPONSE
         {
-            F
+            FDESVR_DEFAULT = 0x00000000,
+            FDESVR_ACCEPT = 0x00000001,
+            FDESVR_REFUSE = 0x00000002
+        }
+
+        internal enum FDE_OVERWRITE_RESPONSE
+     
