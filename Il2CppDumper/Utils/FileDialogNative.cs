@@ -152,4 +152,9 @@ namespace Il2CppDumper
         }
 
         [Flags]
-        internal enum FOS : ui
+        internal enum FOS : uint
+        {
+            FOS_OVERWRITEPROMPT = 0x00000002,
+            FOS_STRICTFILETYPES = 0x00000004,
+            FOS_NOCHANGEDIR = 0x00000008,
+            FOS_PICKFOLDERS
