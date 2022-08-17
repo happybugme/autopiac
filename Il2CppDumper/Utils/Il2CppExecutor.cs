@@ -390,3 +390,90 @@ namespace Il2CppDumper
                 case Il2CppTypeEnum.IL2CPP_TYPE_U8:
                     value.Value = reader.ReadUInt64();
                     return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_I8:
+                    value.Value = reader.ReadInt64();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_R4:
+                    value.Value = reader.ReadSingle();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_R8:
+                    value.Value = reader.ReadDouble();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_STRING:
+                    int length;
+                    if (il2Cpp.Version >= 29)
+                    {
+                        length = reader.ReadCompressedInt32();
+                        if (length == -1)
+                        {
+                            value.Value = null;
+                        }
+                        else
+                        {
+                            value.Value = Encoding.UTF8.GetString(reader.ReadBytes(length));
+                        }
+                    }
+                    else
+                    {
+                        length = reader.ReadInt32();
+                        value.Value = reader.ReadString(length);
+                    }
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_SZARRAY:
+                    var arrayLen = reader.ReadCompressedInt32();
+                    if (arrayLen == -1)
+                    {
+                        value.Value = null;
+                    }
+                    else
+                    {
+                        var array = new BlobValue[arrayLen];
+                        var arrayElementType = ReadEncodedTypeEnum(reader, out var enumType);
+                        var arrayElementsAreDifferent = reader.ReadByte();
+                        for (int i = 0; i < arrayLen; i++)
+                        {
+                            var elementType = arrayElementType;
+                            if (arrayElementsAreDifferent == 1)
+                            {
+                                elementType = ReadEncodedTypeEnum(reader, out enumType);
+                            }
+                            GetConstantValueFromBlob(elementType, reader, out var data);
+                            data.il2CppTypeEnum = elementType;
+                            data.EnumType = enumType;
+                            array[i] = data;
+                        }
+                        value.Value = array;
+                    }
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_IL2CPP_TYPE_INDEX:
+                    var typeIndex = reader.ReadCompressedInt32();
+                    if (typeIndex == -1)
+                    {
+                        value.Value = null;
+                    }
+                    else
+                    {
+                        value.Value = il2Cpp.types[typeIndex];
+                    }
+                    return true;
+                default:
+                    value = null;
+                    return false;
+            }
+        }
+
+        public Il2CppTypeEnum ReadEncodedTypeEnum(BinaryReader reader, out Il2CppType enumType)
+        {
+            enumType = null;
+            var type = (Il2CppTypeEnum)reader.ReadByte();
+            if (type == Il2CppTypeEnum.IL2CPP_TYPE_ENUM)
+            {
+                var enumTypeIndex = reader.ReadCompressedInt32();
+                enumType = il2Cpp.types[enumTypeIndex];
+                var typeDef = GetTypeDefinitionFromIl2CppType(enumType);
+                type = il2Cpp.types[typeDef.elementTypeIndex].type;
+            }
+            return type;
+        }
+    }
+}
