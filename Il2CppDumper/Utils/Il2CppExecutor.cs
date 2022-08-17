@@ -207,3 +207,186 @@ namespace Il2CppDumper
         {
             var methodDef = metadata.methodDefs[methodSpec.methodDefinitionIndex];
             var typeDef = metadata.typeDefs[methodDef.declaringType];
+            var typeName = GetTypeDefName(typeDef, addNamespace, false);
+            if (methodSpec.classIndexIndex != -1)
+            {
+                var classInst = il2Cpp.genericInsts[methodSpec.classIndexIndex];
+                typeName += GetGenericInstParams(classInst);
+            }
+            var methodName = metadata.GetStringFromIndex(methodDef.nameIndex);
+            if (methodSpec.methodIndexIndex != -1)
+            {
+                var methodInst = il2Cpp.genericInsts[methodSpec.methodIndexIndex];
+                methodName += GetGenericInstParams(methodInst);
+            }
+            return (typeName, methodName);
+        }
+
+        public Il2CppGenericContext GetMethodSpecGenericContext(Il2CppMethodSpec methodSpec)
+        {
+            var classInstPointer = 0ul;
+            var methodInstPointer = 0ul;
+            if (methodSpec.classIndexIndex != -1)
+            {
+                classInstPointer = il2Cpp.genericInstPointers[methodSpec.classIndexIndex];
+            }
+            if (methodSpec.methodIndexIndex != -1)
+            {
+                methodInstPointer = il2Cpp.genericInstPointers[methodSpec.methodIndexIndex];
+            }
+            return new Il2CppGenericContext { class_inst = classInstPointer, method_inst = methodInstPointer };
+        }
+
+        public Il2CppRGCTXDefinition[] GetRGCTXDefinition(string imageName, Il2CppTypeDefinition typeDef)
+        {
+            Il2CppRGCTXDefinition[] collection = null;
+            if (il2Cpp.Version >= 24.2)
+            {
+                il2Cpp.rgctxsDictionary[imageName].TryGetValue(typeDef.token, out collection);
+            }
+            else
+            {
+                if (typeDef.rgctxCount > 0)
+                {
+                    collection = new Il2CppRGCTXDefinition[typeDef.rgctxCount];
+                    Array.Copy(metadata.rgctxEntries, typeDef.rgctxStartIndex, collection, 0, typeDef.rgctxCount);
+                }
+            }
+            return collection;
+        }
+
+        public Il2CppRGCTXDefinition[] GetRGCTXDefinition(string imageName, Il2CppMethodDefinition methodDef)
+        {
+            Il2CppRGCTXDefinition[] collection = null;
+            if (il2Cpp.Version >= 24.2)
+            {
+                il2Cpp.rgctxsDictionary[imageName].TryGetValue(methodDef.token, out collection);
+            }
+            else
+            {
+                if (methodDef.rgctxCount > 0)
+                {
+                    collection = new Il2CppRGCTXDefinition[methodDef.rgctxCount];
+                    Array.Copy(metadata.rgctxEntries, methodDef.rgctxStartIndex, collection, 0, methodDef.rgctxCount);
+                }
+            }
+            return collection;
+        }
+
+        public Il2CppTypeDefinition GetGenericClassTypeDefinition(Il2CppGenericClass genericClass)
+        {
+            if (il2Cpp.Version >= 27)
+            {
+                var il2CppType = il2Cpp.GetIl2CppType(genericClass.type);
+                if (il2CppType == null)
+                {
+                    return null;
+                }
+                return GetTypeDefinitionFromIl2CppType(il2CppType);
+            }
+            if (genericClass.typeDefinitionIndex == 4294967295 || genericClass.typeDefinitionIndex == -1)
+            {
+                return null;
+            }
+            return metadata.typeDefs[genericClass.typeDefinitionIndex];
+        }
+
+        public Il2CppTypeDefinition GetTypeDefinitionFromIl2CppType(Il2CppType il2CppType)
+        {
+            if (il2Cpp.Version >= 27 && il2Cpp.IsDumped)
+            {
+                var offset = il2CppType.data.typeHandle - metadata.ImageBase - metadata.header.typeDefinitionsOffset;
+                var index = offset / (ulong)metadata.SizeOf(typeof(Il2CppTypeDefinition));
+                return metadata.typeDefs[index];
+            }
+            else
+            {
+                return metadata.typeDefs[il2CppType.data.klassIndex];
+            }
+        }
+
+        public Il2CppGenericParameter GetGenericParameteFromIl2CppType(Il2CppType il2CppType)
+        {
+            if (il2Cpp.Version >= 27 && il2Cpp.IsDumped)
+            {
+                var offset = il2CppType.data.genericParameterHandle - metadata.ImageBase - metadata.header.genericParametersOffset;
+                var index = offset / (ulong)metadata.SizeOf(typeof(Il2CppGenericParameter));
+                return metadata.genericParameters[index];
+            }
+            else
+            {
+                return metadata.genericParameters[il2CppType.data.genericParameterIndex];
+            }
+        }
+
+        public SectionHelper GetSectionHelper()
+        {
+            return il2Cpp.GetSectionHelper(metadata.methodDefs.Count(x => x.methodIndex >= 0), metadata.typeDefs.Length, metadata.imageDefs.Length);
+        }
+
+        public bool TryGetDefaultValue(int typeIndex, int dataIndex, out object value)
+        {
+            var pointer = metadata.GetDefaultValueFromIndex(dataIndex);
+            var defaultValueType = il2Cpp.types[typeIndex];
+            metadata.Position = pointer;
+            if (GetConstantValueFromBlob(defaultValueType.type, metadata.Reader, out var blobValue))
+            {
+                value = blobValue.Value;
+                return true;
+            }
+            else
+            {
+                value = pointer;
+                return false;
+            }
+        }
+
+        public bool GetConstantValueFromBlob(Il2CppTypeEnum type, BinaryReader reader, out BlobValue value)
+        {
+            value = new BlobValue
+            {
+                il2CppTypeEnum = type
+            };
+            switch (type)
+            {
+                case Il2CppTypeEnum.IL2CPP_TYPE_BOOLEAN:
+                    value.Value = reader.ReadBoolean();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_U1:
+                    value.Value = reader.ReadByte();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_I1:
+                    value.Value = reader.ReadSByte();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_CHAR:
+                    value.Value = BitConverter.ToChar(reader.ReadBytes(2), 0);
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_U2:
+                    value.Value = reader.ReadUInt16();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_I2:
+                    value.Value = reader.ReadInt16();
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_U4:
+                    if (il2Cpp.Version >= 29)
+                    {
+                        value.Value = reader.ReadCompressedUInt32();
+                    }
+                    else
+                    {
+                        value.Value = reader.ReadUInt32();
+                    }
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_I4:
+                    if (il2Cpp.Version >= 29)
+                    {
+                        value.Value = reader.ReadCompressedInt32();
+                    }
+                    else
+                    {
+                        value.Value = reader.ReadInt32();
+                    }
+                    return true;
+                case Il2CppTypeEnum.IL2CPP_TYPE_U8:
+                    value.Value = reader.ReadUInt64();
+                    return true;
