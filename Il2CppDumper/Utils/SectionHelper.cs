@@ -16,3 +16,8 @@ namespace Il2CppDumper
         private readonly int imageCount;
         private bool pointerInExec;
 
+        public List<SearchSection> Exec => exec;
+        public List<SearchSection> Data => data;
+        public List<SearchSection> Bss => bss;
+
+        public SectionHelper(Il2Cpp il
