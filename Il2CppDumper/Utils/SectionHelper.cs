@@ -11,3 +11,8 @@ namespace Il2CppDumper
         private List<SearchSection> bss;
         private readonly Il2Cpp il2Cpp;
         private readonly int methodCount;
+        private readonly int typeDefinitionsCount;
+        private readonly long metadataUsagesCount;
+        private readonly int imageCount;
+        private bool pointerInExec;
+
