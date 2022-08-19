@@ -20,4 +20,7 @@ namespace Il2CppDumper
         public List<SearchSection> Data => data;
         public List<SearchSection> Bss => bss;
 
-        public SectionHelper(Il2Cpp il
+        public SectionHelper(Il2Cpp il2Cpp, int methodCount, int typeDefinitionsCount, long metadataUsagesCount, int imageCount)
+        {
+            this.il2Cpp = il2Cpp;
+            this.methodCount = methodCou
