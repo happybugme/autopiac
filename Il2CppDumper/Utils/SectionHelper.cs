@@ -23,4 +23,9 @@ namespace Il2CppDumper
         public SectionHelper(Il2Cpp il2Cpp, int methodCount, int typeDefinitionsCount, long metadataUsagesCount, int imageCount)
         {
             this.il2Cpp = il2Cpp;
-            this.methodCount = methodCou
+            this.methodCount = methodCount;
+            this.typeDefinitionsCount = typeDefinitionsCount;
+            this.metadataUsagesCount = metadataUsagesCount;
+            this.imageCount = imageCount;
+        }
+
