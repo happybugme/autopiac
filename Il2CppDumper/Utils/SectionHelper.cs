@@ -58,4 +58,8 @@ namespace Il2CppDumper
                     secs.Add(new SearchSection
                     {
                         offset = section.p_offset,
-                        offsetEnd
+                        offsetEnd = section.p_offset + section.p_filesz,
+                        address = section.p_vaddr,
+                        addressEnd = section.p_vaddr + section.p_memsz
+                    });
+         
