@@ -53,3 +53,9 @@ namespace Il2CppDumper
             var secs = new List<SearchSection>();
             foreach (var section in sections)
             {
+                if (section != null)
+                {
+                    secs.Add(new SearchSection
+                    {
+                        offset = section.p_offset,
+                        offsetEnd
