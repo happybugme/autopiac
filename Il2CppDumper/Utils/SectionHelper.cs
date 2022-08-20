@@ -41,4 +41,11 @@ namespace Il2CppDumper
                         offset = section.p_offset,
                         offsetEnd = section.p_offset + section.p_filesz,
                         address = section.p_vaddr,
-                     
+                        addressEnd = section.p_vaddr + section.p_memsz
+                    });
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public v
