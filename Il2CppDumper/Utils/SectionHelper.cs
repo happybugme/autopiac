@@ -48,4 +48,8 @@ namespace Il2CppDumper
             SetSection(type, secs);
         }
 
-        public v
+        public void SetSection(SearchSectionType type, Elf64_Phdr[] sections)
+        {
+            var secs = new List<SearchSection>();
+            foreach (var section in sections)
+            {
