@@ -29,3 +29,7 @@ namespace Il2CppDumper
             this.imageCount = imageCount;
         }
 
+        public void SetSection(SearchSectionType type, Elf32_Phdr[] sections)
+        {
+            var secs = new List<SearchSection>();
+            foreach (var section in
