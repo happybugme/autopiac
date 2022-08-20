@@ -32,4 +32,10 @@ namespace Il2CppDumper
         public void SetSection(SearchSectionType type, Elf32_Phdr[] sections)
         {
             var secs = new List<SearchSection>();
-            foreach (var section in
+            foreach (var section in sections)
+            {
+                if (section != null)
+                {
+                    secs.Add(new SearchSection
+                    {
+                    
