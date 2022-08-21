@@ -96,4 +96,7 @@ namespace Il2CppDumper
                     secs.Add(new SearchSection
                     {
                         offset = section.offset,
-                  
+                        offsetEnd = section.offset + section.size,
+                        address = section.addr,
+                        addressEnd = section.addr + section.size
+                   
