@@ -78,4 +78,12 @@ namespace Il2CppDumper
                     {
                         offset = section.offset,
                         offsetEnd = section.offset + section.size,
-                        address = section
+                        address = section.addr,
+                        addressEnd = section.addr + section.size
+                    });
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public void SetSection(Searc
