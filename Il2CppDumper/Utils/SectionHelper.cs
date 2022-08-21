@@ -75,4 +75,7 @@ namespace Il2CppDumper
                 if (section != null)
                 {
                     secs.Add(new SearchSection
- 
+                    {
+                        offset = section.offset,
+                        offsetEnd = section.offset + section.size,
+                        address = section
