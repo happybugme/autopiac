@@ -69,4 +69,10 @@ namespace Il2CppDumper
 
         public void SetSection(SearchSectionType type, MachoSection[] sections)
         {
-            var secs = new 
+            var secs = new List<SearchSection>();
+            foreach (var section in sections)
+            {
+                if (section != null)
+                {
+                    secs.Add(new SearchSection
+ 
