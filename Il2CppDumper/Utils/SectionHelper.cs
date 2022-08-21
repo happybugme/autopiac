@@ -86,4 +86,9 @@ namespace Il2CppDumper
             SetSection(type, secs);
         }
 
-        public void SetSection(Searc
+        public void SetSection(SearchSectionType type, MachoSection64Bit[] sections)
+        {
+            var secs = new List<SearchSection>();
+            foreach (var section in sections)
+            {
+           
