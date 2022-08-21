@@ -105,4 +105,9 @@ namespace Il2CppDumper
             SetSection(type, secs);
         }
 
-        public void SetSection(SearchSectionType type, ulong imag
+        public void SetSection(SearchSectionType type, ulong imageBase, SectionHeader[] sections)
+        {
+            var secs = new List<SearchSection>();
+            foreach (var section in sections)
+            {
+                if (section != null)
