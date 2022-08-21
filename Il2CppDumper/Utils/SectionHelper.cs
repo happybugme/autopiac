@@ -99,4 +99,10 @@ namespace Il2CppDumper
                         offsetEnd = section.offset + section.size,
                         address = section.addr,
                         addressEnd = section.addr + section.size
-                   
+                    });
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public void SetSection(SearchSectionType type, ulong imag
