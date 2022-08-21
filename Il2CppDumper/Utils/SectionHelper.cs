@@ -62,4 +62,11 @@ namespace Il2CppDumper
                         address = section.p_vaddr,
                         addressEnd = section.p_vaddr + section.p_memsz
                     });
-         
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public void SetSection(SearchSectionType type, MachoSection[] sections)
+        {
+            var secs = new 
