@@ -115,4 +115,7 @@ namespace Il2CppDumper
                     secs.Add(new SearchSection
                     {
                         offset = section.PointerToRawData,
-                        offsetEnd = section.PointerT
+                        offsetEnd = section.PointerToRawData + section.SizeOfRawData,
+                        address = section.VirtualAddress + imageBase,
+                        addressEnd = section.VirtualAddress + section.VirtualSize + imageBase
+   
