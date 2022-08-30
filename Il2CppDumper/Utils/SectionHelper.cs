@@ -124,4 +124,10 @@ namespace Il2CppDumper
             SetSection(type, secs);
         }
 
-        public void SetSection(SearchSectionType type, params NSOSegmentH
+        public void SetSection(SearchSectionType type, params NSOSegmentHeader[] sections)
+        {
+            var secs = new List<SearchSection>();
+            foreach (var section in sections)
+            {
+                if (section != null)
+    
