@@ -118,4 +118,10 @@ namespace Il2CppDumper
                         offsetEnd = section.PointerToRawData + section.SizeOfRawData,
                         address = section.VirtualAddress + imageBase,
                         addressEnd = section.VirtualAddress + section.VirtualSize + imageBase
-   
+                    });
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public void SetSection(SearchSectionType type, params NSOSegmentH
