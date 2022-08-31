@@ -130,4 +130,8 @@ namespace Il2CppDumper
             foreach (var section in sections)
             {
                 if (section != null)
-    
+                {
+                    secs.Add(new SearchSection
+                    {
+                        offset = section.FileOffset,
+        
