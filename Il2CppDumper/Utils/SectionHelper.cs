@@ -134,4 +134,6 @@ namespace Il2CppDumper
                     secs.Add(new SearchSection
                     {
                         offset = section.FileOffset,
-        
+                        offsetEnd = section.FileOffset + section.DecompressedSize,
+                        address = section.MemoryOffset,
+                        addre
