@@ -143,4 +143,11 @@ namespace Il2CppDumper
             SetSection(type, secs);
         }
 
-        public void SetSection(SearchSectio
+        public void SetSection(SearchSectionType type, params SearchSection[] secs)
+        {
+            SetSection(type, secs.ToList());
+        }
+
+        private void SetSection(SearchSectionType type, List<SearchSection> secs)
+        {
+  
