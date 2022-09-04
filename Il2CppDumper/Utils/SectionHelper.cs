@@ -156,4 +156,9 @@ namespace Il2CppDumper
                     exec = secs;
                     break;
                 case SearchSectionType.Data:
- 
+                    data = secs;
+                    break;
+                case SearchSectionType.Bss:
+                    bss = secs;
+                    break;
+        
