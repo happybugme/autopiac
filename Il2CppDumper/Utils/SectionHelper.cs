@@ -161,4 +161,12 @@ namespace Il2CppDumper
                 case SearchSectionType.Bss:
                     bss = secs;
                     break;
-        
+            }
+        }
+
+        public ulong FindCodeRegistration()
+        {
+            if (il2Cpp.Version >= 24.2)
+            {
+                ulong codeRegistration;
+      
