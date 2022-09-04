@@ -169,4 +169,8 @@ namespace Il2CppDumper
             if (il2Cpp.Version >= 24.2)
             {
                 ulong codeRegistration;
+                if (il2Cpp is ElfBase)
+                {
+                    codeRegistration = FindCodeRegistrationExec();
+                    if (codeRegistration == 0)
       
