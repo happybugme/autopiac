@@ -150,4 +150,10 @@ namespace Il2CppDumper
 
         private void SetSection(SearchSectionType type, List<SearchSection> secs)
         {
-  
+            switch (type)
+            {
+                case SearchSectionType.Exec:
+                    exec = secs;
+                    break;
+                case SearchSectionType.Data:
+ 
