@@ -136,4 +136,11 @@ namespace Il2CppDumper
                         offset = section.FileOffset,
                         offsetEnd = section.FileOffset + section.DecompressedSize,
                         address = section.MemoryOffset,
-                        addre
+                        addressEnd = section.MemoryOffset + section.DecompressedSize
+                    });
+                }
+            }
+            SetSection(type, secs);
+        }
+
+        public void SetSection(SearchSectio
