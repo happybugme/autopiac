@@ -173,4 +173,10 @@ namespace Il2CppDumper
                 {
                     codeRegistration = FindCodeRegistrationExec();
                     if (codeRegistration == 0)
-      
+                    {
+                        codeRegistration = FindCodeRegistrationData();
+                    }
+                    else
+                    {
+                        pointerInExec = true;
+         
