@@ -216,4 +216,8 @@ namespace Il2CppDumper
                 while (il2Cpp.Position < section.offsetEnd)
                 {
                     var addr = il2Cpp.Position;
-                    i
+                    if (il2Cpp.ReadIntPtr() == methodCount)
+                    {
+                        try
+                        {
+                            var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr())
