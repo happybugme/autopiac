@@ -212,4 +212,8 @@ namespace Il2CppDumper
         {
             foreach (var section in data)
             {
-                il2Cpp.Po
+                il2Cpp.Position = section.offset;
+                while (il2Cpp.Position < section.offsetEnd)
+                {
+                    var addr = il2Cpp.Position;
+                    i
