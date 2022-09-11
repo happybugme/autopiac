@@ -205,4 +205,11 @@ namespace Il2CppDumper
             {
                 return FindMetadataRegistrationV21();
             }
-     
+            return FindMetadataRegistrationOld();
+        }
+
+        private ulong FindCodeRegistrationOld()
+        {
+            foreach (var section in data)
+            {
+                il2Cpp.Po
