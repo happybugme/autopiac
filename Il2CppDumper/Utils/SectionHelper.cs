@@ -197,4 +197,12 @@ namespace Il2CppDumper
 
         public ulong FindMetadataRegistration()
         {
-            if (il2Cpp.Ver
+            if (il2Cpp.Version < 19)
+            {
+                return 0;
+            }
+            if (il2Cpp.Version >= 27)
+            {
+                return FindMetadataRegistrationV21();
+            }
+     
