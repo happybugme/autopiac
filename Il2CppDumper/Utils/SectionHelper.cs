@@ -190,4 +190,11 @@ namespace Il2CppDumper
                         pointerInExec = true;
                     }
                 }
-                return co
+                return codeRegistration;
+            }
+            return FindCodeRegistrationOld();
+        }
+
+        public ulong FindMetadataRegistration()
+        {
+            if (il2Cpp.Ver
