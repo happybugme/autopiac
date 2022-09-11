@@ -220,4 +220,7 @@ namespace Il2CppDumper
                     {
                         try
                         {
-                            var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr())
+                            var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr());
+                            if (CheckPointerRangeDataRa(pointer))
+                            {
+                                var pointers = il2Cpp.ReadClassArray
