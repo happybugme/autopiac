@@ -226,4 +226,10 @@ namespace Il2CppDumper
                                 var pointers = il2Cpp.ReadClassArray<ulong>(pointer, methodCount);
                                 if (CheckPointerRangeExecVa(pointers))
                                 {
-                                    return add
+                                    return addr - section.offset + section.address;
+                                }
+                            }
+                        }
+                        catch
+                        {
+  
