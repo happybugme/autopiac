@@ -239,4 +239,11 @@ namespace Il2CppDumper
                 }
             }
 
-  
+            return 0ul;
+        }
+
+        private ulong FindMetadataRegistrationOld()
+        {
+            foreach (var section in data)
+            {
+                il2Cpp.Positi
