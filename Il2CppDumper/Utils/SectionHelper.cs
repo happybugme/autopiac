@@ -246,4 +246,7 @@ namespace Il2CppDumper
         {
             foreach (var section in data)
             {
-                il2Cpp.Positi
+                il2Cpp.Position = section.offset;
+                var end = Math.Min(section.offsetEnd, il2Cpp.Length) - il2Cpp.PointerSize;
+                while (il2Cpp.Position < end)
+                {
