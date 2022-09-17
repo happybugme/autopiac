@@ -250,3 +250,8 @@ namespace Il2CppDumper
                 var end = Math.Min(section.offsetEnd, il2Cpp.Length) - il2Cpp.PointerSize;
                 while (il2Cpp.Position < end)
                 {
+                    var addr = il2Cpp.Position;
+                    if (il2Cpp.ReadIntPtr() == typeDefinitionsCount)
+                    {
+                        try
+                    
