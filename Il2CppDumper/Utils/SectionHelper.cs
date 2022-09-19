@@ -254,4 +254,7 @@ namespace Il2CppDumper
                     if (il2Cpp.ReadIntPtr() == typeDefinitionsCount)
                     {
                         try
-                    
+                        {
+                            il2Cpp.Position += il2Cpp.PointerSize * 2;
+                            var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr());
+                      
