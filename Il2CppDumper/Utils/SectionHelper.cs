@@ -260,4 +260,7 @@ namespace Il2CppDumper
                             if (CheckPointerRangeDataRa(pointer))
                             {
                                 var pointers = il2Cpp.ReadClassArray<ulong>(pointer, metadataUsagesCount);
-                                if
+                                if (CheckPointerRangeBssVa(pointers))
+                                {
+                                    return addr - il2Cpp.PointerSize * 12 - section.offset + section.address;
+                               
