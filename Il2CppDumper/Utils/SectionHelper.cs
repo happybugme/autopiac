@@ -257,4 +257,7 @@ namespace Il2CppDumper
                         {
                             il2Cpp.Position += il2Cpp.PointerSize * 2;
                             var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr());
-                      
+                            if (CheckPointerRangeDataRa(pointer))
+                            {
+                                var pointers = il2Cpp.ReadClassArray<ulong>(pointer, metadataUsagesCount);
+                                if
