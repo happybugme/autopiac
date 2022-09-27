@@ -263,4 +263,12 @@ namespace Il2CppDumper
                                 if (CheckPointerRangeBssVa(pointers))
                                 {
                                     return addr - il2Cpp.PointerSize * 12 - section.offset + section.address;
-                               
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+                    }
+     
