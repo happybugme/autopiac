@@ -271,4 +271,11 @@ namespace Il2CppDumper
                             // ignored
                         }
                     }
-     
+                    il2Cpp.Position = addr + il2Cpp.PointerSize;
+                }
+            }
+
+            return 0ul;
+        }
+
+        private ulong FindMetada
