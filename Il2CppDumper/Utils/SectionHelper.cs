@@ -278,4 +278,9 @@ namespace Il2CppDumper
             return 0ul;
         }
 
-        private ulong FindMetada
+        private ulong FindMetadataRegistrationV21()
+        {
+            foreach (var section in data)
+            {
+                il2Cpp.Position = section.offset;
+                var end = Math.Min(section.offsetEnd, il2Cpp
