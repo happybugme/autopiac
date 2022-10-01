@@ -297,4 +297,8 @@ namespace Il2CppDumper
                                 var pointer = il2Cpp.MapVATR(il2Cpp.ReadUIntPtr());
                                 if (CheckPointerRangeDataRa(pointer))
                                 {
-                                    var pointers = il2Cpp.ReadClassArray<ulong>(pointer, typeDefinitionsCo
+                                    var pointers = il2Cpp.ReadClassArray<ulong>(pointer, typeDefinitionsCount);
+                                    bool flag;
+                                    if (pointerInExec)
+                                    {
+                     
