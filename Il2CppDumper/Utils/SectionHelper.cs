@@ -287,4 +287,8 @@ namespace Il2CppDumper
                 while (il2Cpp.Position < end)
                 {
                     var addr = il2Cpp.Position;
-                    if (il2Cpp.ReadIntPtr
+                    if (il2Cpp.ReadIntPtr() == typeDefinitionsCount)
+                    {
+                        il2Cpp.Position += il2Cpp.PointerSize;
+                        if (il2Cpp.ReadIntPtr() == typeDefinitionsCount)
+      
