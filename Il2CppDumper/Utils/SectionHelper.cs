@@ -311,4 +311,9 @@ namespace Il2CppDumper
                                     {
                                         return addr - il2Cpp.PointerSize * 10 - section.offset + section.address;
                                     }
-           
+                                }
+                            }
+                            catch
+                            {
+                                // ignored
+        
