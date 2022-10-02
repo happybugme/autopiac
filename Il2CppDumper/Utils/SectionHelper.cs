@@ -308,4 +308,7 @@ namespace Il2CppDumper
                                         flag = CheckPointerRangeDataVa(pointers);
                                     }
                                     if (flag)
-                    
+                                    {
+                                        return addr - il2Cpp.PointerSize * 10 - section.offset + section.address;
+                                    }
+           
