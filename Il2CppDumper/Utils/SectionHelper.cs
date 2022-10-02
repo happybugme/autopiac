@@ -301,4 +301,8 @@ namespace Il2CppDumper
                                     bool flag;
                                     if (pointerInExec)
                                     {
-                     
+                                        flag = CheckPointerRangeExecVa(pointers);
+                                    }
+                                    else
+                                    {
+             
