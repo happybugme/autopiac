@@ -305,4 +305,7 @@ namespace Il2CppDumper
                                     }
                                     else
                                     {
-             
+                                        flag = CheckPointerRangeDataVa(pointers);
+                                    }
+                                    if (flag)
+                    
