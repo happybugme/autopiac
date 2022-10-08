@@ -323,4 +323,10 @@ namespace Il2CppDumper
                 }
             }
 
-            
+            return 0ul;
+        }
+
+        private bool CheckPointerRangeDataRa(ulong pointer)
+        {
+            return data.Any(x => pointer >= x.offset && pointer <= x.offsetEnd);
+  
