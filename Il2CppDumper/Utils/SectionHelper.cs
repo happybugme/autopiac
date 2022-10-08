@@ -316,4 +316,11 @@ namespace Il2CppDumper
                             catch
                             {
                                 // ignored
-        
+                            }
+                        }
+                    }
+                    il2Cpp.Position = addr + il2Cpp.PointerSize;
+                }
+            }
+
+            
