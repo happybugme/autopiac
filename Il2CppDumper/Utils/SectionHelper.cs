@@ -335,3 +335,10 @@ namespace Il2CppDumper
         {
             return pointers.All(x => exec.Any(y => x >= y.address && x <= y.addressEnd));
         }
+
+        private bool CheckPointerRangeDataVa(ulong[] pointers)
+        {
+            return pointers.All(x => data.Any(y => x >= y.address && x <= y.addressEnd));
+        }
+
+        private bool CheckPo
