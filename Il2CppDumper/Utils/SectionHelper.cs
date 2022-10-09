@@ -346,4 +346,8 @@ namespace Il2CppDumper
             return pointers.All(x => bss.Any(y => x >= y.address && x <= y.addressEnd));
         }
 
-        private static readonly byte[] featureBytes = { 0x6D, 0
+        private static readonly byte[] featureBytes = { 0x6D, 0x73, 0x63, 0x6F, 0x72, 0x6C, 0x69, 0x62, 0x2E, 0x64, 0x6C, 0x6C, 0x00 }; //mscorlib.dll
+
+        private ulong FindCodeRegistrationData()
+        {
+            return FindCodeRegi
