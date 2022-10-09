@@ -341,4 +341,9 @@ namespace Il2CppDumper
             return pointers.All(x => data.Any(y => x >= y.address && x <= y.addressEnd));
         }
 
-        private bool CheckPo
+        private bool CheckPointerRangeBssVa(ulong[] pointers)
+        {
+            return pointers.All(x => bss.Any(y => x >= y.address && x <= y.addressEnd));
+        }
+
+        private static readonly byte[] featureBytes = { 0x6D, 0
