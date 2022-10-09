@@ -329,4 +329,9 @@ namespace Il2CppDumper
         private bool CheckPointerRangeDataRa(ulong pointer)
         {
             return data.Any(x => pointer >= x.offset && pointer <= x.offsetEnd);
-  
+        }
+
+        private bool CheckPointerRangeExecVa(ulong[] pointers)
+        {
+            return pointers.All(x => exec.Any(y => x >= y.address && x <= y.addressEnd));
+        }
