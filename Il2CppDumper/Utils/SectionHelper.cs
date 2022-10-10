@@ -350,4 +350,12 @@ namespace Il2CppDumper
 
         private ulong FindCodeRegistrationData()
         {
-            return FindCodeRegi
+            return FindCodeRegistration2019(data);
+        }
+
+        private ulong FindCodeRegistrationExec()
+        {
+            return FindCodeRegistration2019(exec);
+        }
+
+        private ulong FindCodeRegistration2019(List<S
