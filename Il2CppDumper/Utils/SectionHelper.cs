@@ -358,4 +358,9 @@ namespace Il2CppDumper
             return FindCodeRegistration2019(exec);
         }
 
-        private ulong FindCodeRegistration2019(List<S
+        private ulong FindCodeRegistration2019(List<SearchSection> secs)
+        {
+            foreach (var sec in secs)
+            {
+                il2Cpp.Position = sec.offset;
+                var buff = il2Cpp.ReadBytes((int)(sec.offsetEnd - sec.offse
