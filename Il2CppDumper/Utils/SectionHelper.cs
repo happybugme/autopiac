@@ -363,4 +363,8 @@ namespace Il2CppDumper
             foreach (var sec in secs)
             {
                 il2Cpp.Position = sec.offset;
-                var buff = il2Cpp.ReadBytes((int)(sec.offsetEnd - sec.offse
+                var buff = il2Cpp.ReadBytes((int)(sec.offsetEnd - sec.offset));
+                foreach (var index in buff.Search(featureBytes))
+                {
+                    var dllva = (ulong)index + sec.address;
+                    foreach (var ref
