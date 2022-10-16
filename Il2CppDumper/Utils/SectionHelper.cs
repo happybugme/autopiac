@@ -367,4 +367,8 @@ namespace Il2CppDumper
                 foreach (var index in buff.Search(featureBytes))
                 {
                     var dllva = (ulong)index + sec.address;
-                    foreach (var ref
+                    foreach (var refva in FindReference(dllva))
+                    {
+                        foreach (var refva2 in FindReference(refva))
+                        {
+                            if (il2Cpp
