@@ -371,4 +371,8 @@ namespace Il2CppDumper
                     {
                         foreach (var refva2 in FindReference(refva))
                         {
-                            if (il2Cpp
+                            if (il2Cpp.Version >= 27)
+                            {
+                                for (int i = imageCount - 1; i >= 0; i--)
+                                {
+                                    foreach (var refva3 in Fi
