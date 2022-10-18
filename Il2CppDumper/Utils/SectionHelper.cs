@@ -377,4 +377,7 @@ namespace Il2CppDumper
                                 {
                                     foreach (var refva3 in FindReference(refva2 - (ulong)i * il2Cpp.PointerSize))
                                     {
-                                        il2Cpp.Position = il2Cpp.MapVATR(refva3 - il2Cpp
+                                        il2Cpp.Position = il2Cpp.MapVATR(refva3 - il2Cpp.PointerSize);
+                                        if (il2Cpp.ReadIntPtr() == imageCount)
+                                        {
+                        
