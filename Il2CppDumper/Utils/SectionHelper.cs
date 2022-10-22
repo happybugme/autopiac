@@ -383,4 +383,7 @@ namespace Il2CppDumper
                                             if (il2Cpp.Version >= 29)
                                             {
                                                 return refva3 - il2Cpp.PointerSize * 14;
-            
+                                            }
+                                            return refva3 - il2Cpp.PointerSize * 13;
+                                        }
+                                 
