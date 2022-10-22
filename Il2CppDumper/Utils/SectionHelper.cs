@@ -386,4 +386,9 @@ namespace Il2CppDumper
                                             }
                                             return refva3 - il2Cpp.PointerSize * 13;
                                         }
-                                 
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 
