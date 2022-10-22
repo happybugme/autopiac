@@ -394,4 +394,7 @@ namespace Il2CppDumper
                                 for (int i = 0; i < imageCount; i++)
                                 {
                                     foreach (var refva3 in FindReference(refva2 - (ulong)i * il2Cpp.PointerSize))
-      
+                                    {
+                                        return refva3 - il2Cpp.PointerSize * 13;
+                                    }
+                             
