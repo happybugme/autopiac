@@ -406,4 +406,9 @@ namespace Il2CppDumper
             return 0ul;
         }
 
-        private IEnumerable<ulong> FindRefe
+        private IEnumerable<ulong> FindReference(ulong addr)
+        {
+            foreach (var dataSec in data)
+            {
+                var position = dataSec.offset;
+                var end = Math.Min(dataSec.offsetEnd, il2Cpp.Length) - il
