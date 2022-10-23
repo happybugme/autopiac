@@ -416,4 +416,9 @@ namespace Il2CppDumper
                 {
                     il2Cpp.Position = position;
                     if (il2Cpp.ReadUIntPtr() == addr)
-      
+                    {
+                        yield return position - dataSec.offset + dataSec.address;
+                    }
+                    position += il2Cpp.PointerSize;
+                }
+            
