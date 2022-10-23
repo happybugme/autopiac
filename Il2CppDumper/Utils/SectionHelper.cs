@@ -397,4 +397,13 @@ namespace Il2CppDumper
                                     {
                                         return refva3 - il2Cpp.PointerSize * 13;
                                     }
-                             
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return 0ul;
+        }
+
+        private IEnumerable<ulong> FindRefe
