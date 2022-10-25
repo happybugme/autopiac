@@ -421,4 +421,7 @@ namespace Il2CppDumper
                     }
                     position += il2Cpp.PointerSize;
                 }
-            
+            }
+        }
+    }
+}
