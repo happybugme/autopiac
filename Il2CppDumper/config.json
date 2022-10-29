@@ -13,4 +13,5 @@
   "ForceIl2CppVersion": false,
   "ForceVersion": 16,
   "ForceDump": false,
-  "NoRedirectedPointer": 
+  "NoRedirectedPointer": false
+}
