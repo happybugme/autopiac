@@ -9,4 +9,9 @@ processFields = [
 	"Addresses",
 ]
 
-functionManager = cu
+functionManager = currentProgram.getFunctionManager()
+baseAddress = currentProgram.getImageBase()
+USER_DEFINED = ghidra.program.model.symbol.SourceType.USER_DEFINED
+
+def get_addr(addr):
+	return baseAddress.add
