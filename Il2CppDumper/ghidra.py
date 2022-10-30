@@ -23,4 +23,9 @@ def set_name(addr, name):
 def make_function(start):
 	func = getFunctionAt(start)
 	if func is None:
-		createFun
+		createFunction(start, None)
+
+f = askFile("script.json from Il2cppdumper", "Open")
+data = json.loads(open(f.absolutePath, 'rb').read().decode('utf-8'))
+
+if "ScriptMethod" in data and "ScriptMethod" in pro
