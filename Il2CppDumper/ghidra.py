@@ -28,4 +28,9 @@ def make_function(start):
 f = askFile("script.json from Il2cppdumper", "Open")
 data = json.loads(open(f.absolutePath, 'rb').read().decode('utf-8'))
 
-if "ScriptMethod" in data and "ScriptMethod" in pro
+if "ScriptMethod" in data and "ScriptMethod" in processFields:
+	scriptMethods = data["ScriptMethod"]
+	monitor.initialize(len(scriptMethods))
+	monitor.setMessage("Methods")
+	for scriptMethod in scriptMethods:
+		addr = get_addr(scriptMethod["Address"])
