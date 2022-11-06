@@ -50,4 +50,9 @@ if "ScriptString" in data and "ScriptString" in processFields:
 		createLabel(addr, name, True, USER_DEFINED)
 		setEOLComment(addr, value)
 		index += 1
-		monitor.increment
+		monitor.incrementProgress(1)
+
+if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
+	scriptMetadatas = data["ScriptMetadata"]
+	monitor.initialize(len(scriptMetadatas))
+	monitor.setMessag
