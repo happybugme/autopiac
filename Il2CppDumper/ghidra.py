@@ -55,4 +55,9 @@ if "ScriptString" in data and "ScriptString" in processFields:
 if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 	scriptMetadatas = data["ScriptMetadata"]
 	monitor.initialize(len(scriptMetadatas))
-	monitor.setMessag
+	monitor.setMessage("Metadata")
+	for scriptMetadata in scriptMetadatas:
+		addr = get_addr(scriptMetadata["Address"])
+		name = scriptMetadata["Name"].encode("utf-8")
+		set_name(addr, name)
+		se
