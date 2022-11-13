@@ -60,4 +60,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 		addr = get_addr(scriptMetadata["Address"])
 		name = scriptMetadata["Name"].encode("utf-8")
 		set_name(addr, name)
-		se
+		setEOLComment(addr, name)
+		monitor.incrementProgress(1)
+
+if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
+	scriptMetadataMethods = data["ScriptMet
