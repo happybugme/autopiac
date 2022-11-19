@@ -64,4 +64,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 		monitor.incrementProgress(1)
 
 if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
-	scriptMetadataMethods = data["ScriptMet
+	scriptMetadataMethods = data["ScriptMetadataMethod"]
+	monitor.initialize(len(scriptMetadataMethods))
+	monitor.setMessage("Metadata Methods")
+	for scriptMetadataMethod in scriptMetadataMethods:
+		addr = get
