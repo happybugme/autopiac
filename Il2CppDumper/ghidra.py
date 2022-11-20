@@ -68,4 +68,7 @@ if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	monitor.initialize(len(scriptMetadataMethods))
 	monitor.setMessage("Metadata Methods")
 	for scriptMetadataMethod in scriptMetadataMethods:
-		addr = get
+		addr = get_addr(scriptMetadataMethod["Address"])
+		name = scriptMetadataMethod["Name"].encode("utf-8")
+		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
+		set_name(addr, nam
