@@ -78,4 +78,10 @@ if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 if "Addresses" in data and "Addresses" in processFields:
 	addresses = data["Addresses"]
 	monitor.initialize(len(addresses))
-	
+	monitor.setMessage("Addresses")
+	for index in range(len(addresses) - 1):
+		start = get_addr(addresses[index])
+		make_function(start)
+		monitor.incrementProgress(1)
+
+print 'Scr
