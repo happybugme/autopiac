@@ -5,4 +5,9 @@ from wasm import WasmLoader
 from wasm.analysis import WasmAnalysis
 from ghidra.util.task import ConsoleTaskMonitor
 
-monitor = Consol
+monitor = ConsoleTaskMonitor()
+WasmLoader.loadElementsToTable(currentProgram, WasmAnalysis.getState(currentProgram).module, 0, 0, 0, monitor)
+
+runScript("analyze_dyncalls.py")
+
+processFields 
