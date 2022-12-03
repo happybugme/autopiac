@@ -10,4 +10,13 @@ WasmLoader.loadElementsToTable(currentProgram, WasmAnalysis.getState(currentProg
 
 runScript("analyze_dyncalls.py")
 
-processFields 
+processFields = [
+	"ScriptMethod",
+	"ScriptString",
+	"ScriptMetadata",
+	"ScriptMetadataMethod",
+	"Addresses",
+]
+
+functionManager = currentProgram.getFunctionManager()
+progspace = currentProgram.addr
