@@ -19,4 +19,11 @@ processFields = [
 ]
 
 functionManager = currentProgram.getFunctionManager()
-progspace = currentProgram.addr
+progspace = currentProgram.addressFactory.getAddressSpace("ram")
+USER_DEFINED = ghidra.program.model.symbol.SourceType.USER_DEFINED
+
+def get_addr(addr):
+	return progspace.getAddress(addr)
+
+def set_name(addr, name):
+	name = name.replace(' '
