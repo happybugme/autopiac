@@ -26,4 +26,12 @@ def get_addr(addr):
 	return progspace.getAddress(addr)
 
 def set_name(addr, name):
-	name = name.replace(' '
+	name = name.replace(' ', '-')
+	createLabel(addr, name, True, USER_DEFINED)
+
+def make_function(start):
+	func = getFunctionAt(start)
+	if func is None:
+		createFunction(start, None)
+
+f = askFile("script.json from 
