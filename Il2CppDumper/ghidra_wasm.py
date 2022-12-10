@@ -42,4 +42,9 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 	scriptMethods = data["ScriptMethod"]
 	dynCallNamespace =  currentProgram.symbolTable.getNamespace("dynCall", None)
 	monitor.initialize(len(scriptMethods))
-	monitor.setMessage("Metho
+	monitor.setMessage("Methods")
+	for scriptMethod in scriptMethods:
+		offset = scriptMethod["Address"]
+		sig = scriptMethod["TypeSignature"]
+		symbolName = "func_%s_%d" % (sig, offset)
+		symbol = currentProgram.symbolTable.getSy
