@@ -39,4 +39,7 @@ data = json.loads(open(f.absolutePath, 'rb').read().decode('utf-8'))
 
 
 if "ScriptMethod" in data and "ScriptMethod" in processFields:
-	scriptMethods =
+	scriptMethods = data["ScriptMethod"]
+	dynCallNamespace =  currentProgram.symbolTable.getNamespace("dynCall", None)
+	monitor.initialize(len(scriptMethods))
+	monitor.setMessage("Metho
