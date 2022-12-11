@@ -53,4 +53,9 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 			name = scriptMethod["Name"].encode("utf-8")
 			set_name(addr, name)
 		else:
-			print "Wa
+			print "Warning at %s:" % scriptMethod["Name"]
+			print "Symbol %s not found!" % symbolName
+		monitor.incrementProgress(1)
+
+if "ScriptString" in data and "ScriptString" in processFields:
+	index = 1
