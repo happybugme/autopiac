@@ -59,3 +59,9 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 
 if "ScriptString" in data and "ScriptString" in processFields:
 	index = 1
+	scriptStrings = data["ScriptString"]
+	monitor.initialize(len(scriptStrings))
+	monitor.setMessage("Strings")
+	for scriptString in scriptStrings:
+		addr = get_addr(scriptString["Address"])
+		value = scriptSt
