@@ -64,4 +64,11 @@ if "ScriptString" in data and "ScriptString" in processFields:
 	monitor.setMessage("Strings")
 	for scriptString in scriptStrings:
 		addr = get_addr(scriptString["Address"])
-		value = scriptSt
+		value = scriptString["Value"].encode("utf-8")
+		name = "StringLiteral_" + str(index)
+		createLabel(addr, name, True, USER_DEFINED)
+		setEOLComment(addr, value)
+		index += 1
+		monitor.incrementProgress(1)
+
+if "S
