@@ -75,4 +75,9 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 	scriptMetadatas = data["ScriptMetadata"]
 	monitor.initialize(len(scriptMetadatas))
 	monitor.setMessage("Metadata")
-	for scrip
+	for scriptMetadata in scriptMetadatas:
+		addr = get_addr(scriptMetadata["Address"])
+		name = scriptMetadata["Name"].encode("utf-8")
+		set_name(addr, name)
+		setEOLComment(addr, name)
+		monitor.incremen
