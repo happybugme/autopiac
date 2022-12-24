@@ -71,4 +71,8 @@ if "ScriptString" in data and "ScriptString" in processFields:
 		index += 1
 		monitor.incrementProgress(1)
 
-if "S
+if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
+	scriptMetadatas = data["ScriptMetadata"]
+	monitor.initialize(len(scriptMetadatas))
+	monitor.setMessage("Metadata")
+	for scrip
