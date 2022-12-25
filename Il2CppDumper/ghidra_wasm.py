@@ -80,4 +80,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 		name = scriptMetadata["Name"].encode("utf-8")
 		set_name(addr, name)
 		setEOLComment(addr, name)
-		monitor.incremen
+		monitor.incrementProgress(1)
+
+if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
+	scriptMetadataMethods = data["ScriptMetadataMethod"]
+	monitor.initialize(len(scriptMetadat
