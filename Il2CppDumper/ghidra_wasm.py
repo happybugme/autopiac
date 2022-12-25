@@ -84,4 +84,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 
 if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	scriptMetadataMethods = data["ScriptMetadataMethod"]
-	monitor.initialize(len(scriptMetadat
+	monitor.initialize(len(scriptMetadataMethods))
+	monitor.setMessage("Metadata Methods")
+	for scriptMetadataMethod in scriptMetadataMethods:
+		addr = get_addr(scriptMetadataMethod["Address"])
+		name = scriptMetadataMethod["Name"
