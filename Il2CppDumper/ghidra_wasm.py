@@ -94,4 +94,7 @@ if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 		setEOLComment(addr, name)
 		monitor.incrementProgress(1)
 
-if "Addresses" in
+if "Addresses" in data and "Addresses" in processFields:
+	pass
+
+print 'Script finished!'
