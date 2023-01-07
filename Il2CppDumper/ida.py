@@ -28,4 +28,8 @@ def make_function(start, end):
 		ida_funcs.del_func(start)
 	ida_funcs.add_func(start, end)
 
-path = idaapi.ask_file(False,
+path = idaapi.ask_file(False, '*.json', 'script.json from Il2cppdumper')
+data = json.loads(open(path, 'rb').read().decode('utf-8'))
+
+if "Addresses" in data and "Addresses" in processFields:
+	addre
