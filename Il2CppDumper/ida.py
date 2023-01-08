@@ -32,4 +32,10 @@ path = idaapi.ask_file(False, '*.json', 'script.json from Il2cppdumper')
 data = json.loads(open(path, 'rb').read().decode('utf-8'))
 
 if "Addresses" in data and "Addresses" in processFields:
-	addre
+	addresses = data["Addresses"]
+	for index in range(len(addresses) - 1):
+		start = get_addr(addresses[index])
+		end = get_addr(addresses[index + 1])
+		make_function(start, end)
+
+if "ScriptMe
