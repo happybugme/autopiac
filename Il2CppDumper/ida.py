@@ -38,4 +38,8 @@ if "Addresses" in data and "Addresses" in processFields:
 		end = get_addr(addresses[index + 1])
 		make_function(start, end)
 
-if "ScriptMe
+if "ScriptMethod" in data and "ScriptMethod" in processFields:
+	scriptMethods = data["ScriptMethod"]
+	for scriptMethod in scriptMethods:
+		addr = get_addr(scriptMethod["Address"])
+		name
