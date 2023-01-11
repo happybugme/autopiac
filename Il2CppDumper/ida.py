@@ -47,4 +47,9 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 
 if "ScriptString" in data and "ScriptString" in processFields:
 	index = 1
-	scriptStrings = data["Scrip
+	scriptStrings = data["ScriptString"]
+	for scriptString in scriptStrings:
+		addr = get_addr(scriptString["Address"])
+		value = scriptString["Value"].encode("utf-8")
+		name = "StringLiteral_" + str(index)
+		idc.set_n
