@@ -57,4 +57,9 @@ if "ScriptString" in data and "ScriptString" in processFields:
 		index += 1
 
 if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
-	scriptMetadatas = data["ScriptMetadata
+	scriptMetadatas = data["ScriptMetadata"]
+	for scriptMetadata in scriptMetadatas:
+		addr = get_addr(scriptMetadata["Address"])
+		name = scriptMetadata["Name"].encode("utf-8")
+		set_name(addr, name)
+		idc.set_cmt(addr, name,
