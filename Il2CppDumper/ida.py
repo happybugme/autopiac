@@ -52,4 +52,9 @@ if "ScriptString" in data and "ScriptString" in processFields:
 		addr = get_addr(scriptString["Address"])
 		value = scriptString["Value"].encode("utf-8")
 		name = "StringLiteral_" + str(index)
-		idc.set_n
+		idc.set_name(addr, name, SN_NOWARN)
+		idc.set_cmt(addr, value, 1)
+		index += 1
+
+if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
+	scriptMetadatas = data["ScriptMetadata
