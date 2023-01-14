@@ -62,4 +62,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 		addr = get_addr(scriptMetadata["Address"])
 		name = scriptMetadata["Name"].encode("utf-8")
 		set_name(addr, name)
-		idc.set_cmt(addr, name,
+		idc.set_cmt(addr, name, 1)
+
+if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
+	scriptMetadataMethods = data["ScriptMetadataMethod"]
+	for scriptMetadataMethod in scriptMet
