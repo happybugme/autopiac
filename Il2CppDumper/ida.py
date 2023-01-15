@@ -66,4 +66,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 
 if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	scriptMetadataMethods = data["ScriptMetadataMethod"]
-	for scriptMetadataMethod in scriptMet
+	for scriptMetadataMethod in scriptMetadataMethods:
+		addr = get_addr(scriptMetadataMethod["Address"])
+		name = scriptMetadataMethod["Name"].encode("utf-8")
+		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
+		set_name(a
