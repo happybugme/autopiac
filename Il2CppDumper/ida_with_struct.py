@@ -30,6 +30,8 @@ def make_function(start, end):
 	ida_funcs.add_func(start, end)
 
 path = idaapi.ask_file(False, '*.json', 'script.json from Il2cppdumper')
+hpath = idaapi.ask_file(False, '*.h', 'il2cpp.h from Il2cppdumper')
+parse_decls(open(hpath, 'rb').read(), 0)
 data = json.loads(open(path, 'rb').read().decode('utf-8'))
 
 if "Addresses" in data and "Addresses" in processFields:
@@ -43,15 +45,18 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 	scriptMethods = data["ScriptMethod"]
 	for scriptMethod in scriptMethods:
 		addr = get_addr(scriptMethod["Address"])
-		name = scriptMethod["Name"]
+		name = scriptMethod["Name"].encode("utf-8")
 		set_name(addr, name)
+		signature = scriptMethod["Signature"].encode("utf-8")
+		if apply_type(addr, parse_decl(signature, 0), 1) == False:
+			print "apply_type failed:", hex(addr), signature
 
 if "ScriptString" in data and "ScriptString" in processFields:
 	index = 1
 	scriptStrings = data["ScriptString"]
 	for scriptString in scriptStrings:
 		addr = get_addr(scriptString["Address"])
-		value = scriptString["Value"]
+		value = scriptString["Value"].encode("utf-8")
 		name = "StringLiteral_" + str(index)
 		idc.set_name(addr, name, SN_NOWARN)
 		idc.set_cmt(addr, value, 1)
@@ -61,18 +66,22 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 	scriptMetadatas = data["ScriptMetadata"]
 	for scriptMetadata in scriptMetadatas:
 		addr = get_addr(scriptMetadata["Address"])
-		name = scriptMetadata["Name"]
+		name = scriptMetadata["Name"].encode("utf-8")
 		set_name(addr, name)
 		idc.set_cmt(addr, name, 1)
+		if scriptMetadata["Signature"] is not None:
+			signature = scriptMetadata["Signature"].encode("utf-8")
+			if apply_type(addr, parse_decl(signature, 0), 1) == False:
+				print "apply_type failed:", hex(addr), signature
 
 if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	scriptMetadataMethods = data["ScriptMetadataMethod"]
 	for scriptMetadataMethod in scriptMetadataMethods:
 		addr = get_addr(scriptMetadataMethod["Address"])
-		name = scriptMetadataMethod["Name"]
+		name = scriptMetadataMethod["Name"].encode("utf-8")
 		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
 		set_name(addr, name)
 		idc.set_cmt(addr, name, 1)
 		idc.set_cmt(addr, '{0:X}'.format(methodAddr), 0)
 
-print('Script finished!')
+print 'Script finished!'
