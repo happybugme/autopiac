@@ -28,4 +28,7 @@ def make_function(start, end):
 		ida_funcs.del_func(start)
 	ida_funcs.add_func(start, end)
 
-path = idaapi.ask_fil
+path = idaapi.ask_file(False, '*.json', 'script.json from Il2cppdumper')
+hpath = idaapi.ask_file(False, '*.h', 'il2cpp.h from Il2cppdumper')
+parse_decls(open(hpath, 'r').read(), 0)
+data = js
