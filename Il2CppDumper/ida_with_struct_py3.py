@@ -31,4 +31,9 @@ def make_function(start, end):
 path = idaapi.ask_file(False, '*.json', 'script.json from Il2cppdumper')
 hpath = idaapi.ask_file(False, '*.h', 'il2cpp.h from Il2cppdumper')
 parse_decls(open(hpath, 'r').read(), 0)
-data = js
+data = json.loads(open(path, 'rb').read().decode('utf-8'))
+
+if "Addresses" in data and "Addresses" in processFields:
+	addresses = data["Addresses"]
+	for index in range(len(addresses) - 1):
+		sta
