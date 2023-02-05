@@ -36,4 +36,9 @@ data = json.loads(open(path, 'rb').read().decode('utf-8'))
 if "Addresses" in data and "Addresses" in processFields:
 	addresses = data["Addresses"]
 	for index in range(len(addresses) - 1):
-		sta
+		start = get_addr(addresses[index])
+		end = get_addr(addresses[index + 1])
+		make_function(start, end)
+
+if "ScriptMethod" in data and "ScriptMethod" in processFields:
+	scriptMethods = data["Scri
