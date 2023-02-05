@@ -41,4 +41,9 @@ if "Addresses" in data and "Addresses" in processFields:
 		make_function(start, end)
 
 if "ScriptMethod" in data and "ScriptMethod" in processFields:
-	scriptMethods = data["Scri
+	scriptMethods = data["ScriptMethod"]
+	for scriptMethod in scriptMethods:
+		addr = get_addr(scriptMethod["Address"])
+		name = scriptMethod["Name"]
+		set_name(addr, name)
+		signature = scriptMethod["S
