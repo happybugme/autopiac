@@ -56,4 +56,9 @@ if "ScriptString" in data and "ScriptString" in processFields:
 	for scriptString in scriptStrings:
 		addr = get_addr(scriptString["Address"])
 		value = scriptString["Value"]
-		name 
+		name = "StringLiteral_" + str(index)
+		idc.set_name(addr, name, SN_NOWARN)
+		idc.set_cmt(addr, value, 1)
+		index += 1
+
+if "ScriptMetadata" in data and "ScriptMetadata" in
