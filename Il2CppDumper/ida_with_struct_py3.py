@@ -50,4 +50,10 @@ if "ScriptMethod" in data and "ScriptMethod" in processFields:
 		if apply_type(addr, parse_decl(signature, 0), 1) == False:
 			print("apply_type failed:", hex(addr), signature)
 
-if "ScriptString" in data and "ScriptString" in proce
+if "ScriptString" in data and "ScriptString" in processFields:
+	index = 1
+	scriptStrings = data["ScriptString"]
+	for scriptString in scriptStrings:
+		addr = get_addr(scriptString["Address"])
+		value = scriptString["Value"]
+		name 
