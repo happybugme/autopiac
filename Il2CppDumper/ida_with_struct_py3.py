@@ -78,4 +78,10 @@ if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
 	for scriptMetadataMethod in scriptMetadataMethods:
 		addr = get_addr(scriptMetadataMethod["Address"])
 		name = scriptMetadataMethod["Name"]
-		methodAddr = get_addr(scriptMetadataMethod["M
+		methodAddr = get_addr(scriptMetadataMethod["MethodAddress"])
+		set_name(addr, name)
+		idc.set_cmt(addr, name, 1)
+		idc.set_cmt(addr, '{0:X}'.format(methodAddr), 0)
+
+print('Script finished!')
+
