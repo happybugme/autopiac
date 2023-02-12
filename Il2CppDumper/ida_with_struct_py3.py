@@ -70,4 +70,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 		idc.set_cmt(addr, name, 1)
 		if scriptMetadata["Signature"] is not None:
 			signature = scriptMetadata["Signature"]
-			if apply_type(addr, parse_decl(signature, 0), 1)
+			if apply_type(addr, parse_decl(signature, 0), 1) == False:
+				print("apply_type failed:", hex(addr), signature)
+
+if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
+	scriptMetadataMethods = data["ScriptMeta
