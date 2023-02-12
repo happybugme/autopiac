@@ -74,4 +74,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 				print("apply_type failed:", hex(addr), signature)
 
 if "ScriptMetadataMethod" in data and "ScriptMetadataMethod" in processFields:
-	scriptMetadataMethods = data["ScriptMeta
+	scriptMetadataMethods = data["ScriptMetadataMethod"]
+	for scriptMetadataMethod in scriptMetadataMethods:
+		addr = get_addr(scriptMetadataMethod["Address"])
+		name = scriptMetadataMethod["Name"]
+		methodAddr = get_addr(scriptMetadataMethod["M
