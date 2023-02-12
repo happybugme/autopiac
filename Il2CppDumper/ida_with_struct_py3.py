@@ -66,4 +66,8 @@ if "ScriptMetadata" in data and "ScriptMetadata" in processFields:
 	for scriptMetadata in scriptMetadatas:
 		addr = get_addr(scriptMetadata["Address"])
 		name = scriptMetadata["Name"]
-		set_name(
+		set_name(addr, name)
+		idc.set_cmt(addr, name, 1)
+		if scriptMetadata["Signature"] is not None:
+			signature = scriptMetadata["Signature"]
+			if apply_type(addr, parse_decl(signature, 0), 1)
