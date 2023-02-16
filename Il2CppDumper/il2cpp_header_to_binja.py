@@ -25,3 +25,18 @@ for line in data.splitlines():
             struct = struct[:-1]
         if struct.endswith("*"):
             struct = struct[:-1]
+        if struct in builtin:
+            continue
+        if struct not in structs and struct not in notfound:
+            notfound.append(struct)
+for struct in notfound:
+    header += f"struct {struct};" + "\n"
+to_replace = re.findall("struct (.*) {\n};", data)
+for item in to_replace:
+    data = data.replace("struct "+item+" {\n};", "")
+    data = data.replace("\t"+item.split()[0]+" ", "\tvoid *")
+    data = data.replace("\t struct "+item.split()[0]+" ", "\t void *")
+    data = re.sub(r": (\w+) {", r"{\n\t\1 super;", data)
+with open("./il2cpp_binja.h", "w") as f:
+    f.write(header)
+    f.write(data)
