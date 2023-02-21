@@ -19,4 +19,8 @@ def main():
     with open("il2cpp.h", 'r') as f:
         print("il2cpp.h opened...")
         original_header_data = f.read()
-        print("il2cp
+        print("il2cpp.h read...")
+        fixed_header_data = re.sub(r": (\w+) {", r"{\n \1 super;", original_header_data)
+        print("il2cpp.h data fixed...")
+    print("il2cpp.h closed.")
+    with 
