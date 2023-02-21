@@ -23,4 +23,9 @@ def main():
         fixed_header_data = re.sub(r": (\w+) {", r"{\n \1 super;", original_header_data)
         print("il2cpp.h data fixed...")
     print("il2cpp.h closed.")
-    with 
+    with open("il2cpp_ghidra.h", 'w') as f:
+        print("il2cpp_ghidra.h opened...")
+        f.write(header)
+        print("header written...")
+        f.write(fixed_header_data)
+        print
