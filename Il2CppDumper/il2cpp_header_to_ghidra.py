@@ -28,4 +28,10 @@ def main():
         f.write(header)
         print("header written...")
         f.write(fixed_header_data)
-        print
+        print("fixed data written...")
+    print("il2cpp_ghidra.h closed.")
+
+
+if __name__ == '__main__':
+    print("Script started...")
+    main()
